@@ -1,0 +1,122 @@
+.container-profil{
+
+}
+
+
+/*.container-profil h5{
+	text-align: left;
+ 	clear: both;
+ 	text-shadow: 0 0 1px rgba(20,255,250,0.8);
+}*/
+
+.text-decorator{
+	text-shadow: 0 0 1px rgba(20,255,250,0.8);
+}
+
+#text-subject-container{
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -1000;
+	font-size: 4rem;
+	text-align: center;
+}
+
+#text-profil-container-opac{
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -1000;
+	font-size: 2rem;
+	text-align: center;
+}
+
+.text-profil-opac{
+	position: relative;
+	top: 250px;
+	font-size: 6rem;
+	opacity: 0.03;
+}
+
+.text-subject{
+	position: relative;
+	top: 270px;
+	font-size: 6rem;
+	opacity: 0.2;
+}
+
+
+.profil-school h3{
+ 	text-shadow: 0 0 2px #3dd374;
+}
+
+.profil-img span{
+
+}
+
+.profil-class{
+	position: relative;
+	top: 10px;
+	font-size: 4rem;
+}
+
+.profil-class small{
+	position: relative;
+	bottom: 20px;
+}
+.profil-img .photo img{
+	position: relative;
+	left: 8%;
+	top: 5px;
+	border: 2px solid orange;
+	display: inline-block;
+	box-shadow: 0 0 5px #3dd374;
+}
+
+.profil-chat img:hover{
+	cursor: pointer;
+	transform: scale(1.2);
+}
+
+.table-profil{
+	width: 100%;
+	border: thin solid gray;
+}
+
+.table-profil tr{
+	background-color: rgba(200,0,250,0.2) !important;
+}
+
+.table-profil td{
+	padding: 0.3rem;
+}
+
+.table-profil tr>td{
+	text-shadow: 0 0 2px orange;
+	font-size: 0.8rem;
+}
+
+.div-profil{
+	background-color: rgba(200,0,250,0.2) !important;
+}
+
+.onetable{
+
+}
+
+.teacher-classes img:hover{
+	transform: scale(1.2);
+}
+
+.teacher-classes button{
+	border-style: none;
+	background: none;
+}
+
+.w-20{
+	width: 50% !important;
+}

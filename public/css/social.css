@@ -1,0 +1,183 @@
+
+#social-content a{
+	text-decoration: none;
+	display: inline-block;
+}
+
+header{
+	margin:0px auto;
+	padding: 10px 10px;
+	width: 100%;
+	min-height: 80px;
+	background-color: #006567;
+}
+
+#social-content header #details{
+	border-style: none;
+	color:white;
+	background-color: #006567;
+}
+
+#social-content .add a.contacts{
+	display: inline-block;
+	padding: 7px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border: thin solid;
+	border-radius: 5px;
+	background-color:  #d1e002;
+	width: 100%;
+}
+
+#social-content .add a{
+	color: white;
+}
+
+#social-content .add a:hover{
+	transform: scale(0.9);
+}	
+
+#social-content nav{
+	width: auto;
+	padding: 7px;
+	min-height: 20px;
+
+}
+
+#social-content aside{
+	/*position: fixed;*/
+	left:0;
+	display: inline-block;
+	width: 20%;
+	min-height: 490px;
+}
+
+#social-content .container{
+	display: inline-block;
+	float: right;
+	width: 78%;
+	margin:2px;
+	padding: 1px;
+	margin-top: 5px;
+	/*border: thin solid;*/
+	min-height: 600px;
+}
+
+#social-content .container div{
+	background-color: #fff;
+	display: inline-block;
+}
+
+#social-content .container .container-header{
+	width: 99%;
+	padding: 5px;
+}
+
+
+#social-content .container .container-header .h-left h4,.container .container-header .h-left form {
+	display: inline-block;
+}
+#social-content .container .container-header .h-left form{
+
+	width: 25%;
+	float: left;
+}
+
+
+#social-content .container .container-header .h-left p{
+	font-size: 13px;
+	clear: both;
+}
+#social-content .container .container-header button{
+	border-style: none;
+}
+
+#social-content .container .container-header .h-left button{
+	color: white;
+	font-weight: bold;
+	width: 90%;
+	padding: 7px 1px;
+	background: -moz-linear-gradient(190deg,#ff0,#00ee88);
+	background: -ms-linear-gradient(190deg,#ff0,#00ee88);
+	background: -o-linear-gradient(190deg,#ff0,#00ee88);
+	background: -webkit-linear-gradient(190deg,#ff0,#00ee88);
+	background: -linear-gradient(190deg,#ff0,#00ee88);
+}
+
+#social-content .container .container-header .h-right button{
+	border-style: none;
+	background-color: #fff;
+}
+
+#social-content .container .container-header .h-right select{
+	border-style: none;
+	color:#00ee88;
+	font-weight: bold;
+}
+
+
+
+
+#social-content aside .user-photo{
+	display: inline-block;
+	min-height: 100px;
+}
+
+#social-content aside .article-top{
+	background-color: #fff;
+	font-size: 11px;
+}
+#social-content aside .article-bottom{
+	padding-top:0;
+	background-color:#efefef;
+	font-size: 11px;
+}
+
+
+#social-content aside .user-name{
+	display: inline-block;
+	color: #006567;
+	min-height: 100px;
+	position: relative;
+}
+
+#social-content aside .user-views{
+	margin:0;
+	margin-top: -20px;
+	padding: 1px 10px;
+	padding-top: 0;
+}
+
+#social-content aside a{
+	padding: 0;
+	margin:0;
+	color:#111;
+}
+
+#social-content aside .user-views a img{
+	margin-right: 20px;
+}
+
+#social-content aside .user-views a:hover{
+	transform: scale(0.9);
+}
+
+#social-content aside .infos-views{
+	padding: 1px 10px;
+}
+
+#social-content aside .infos-views a img{
+	margin-right: 20px;
+}
+
+#social-content aside .infos-views a:hover{
+	transform: scale(0.9);
+}
+
+a.post{
+	opacity: 0.6;
+}
+
+a.post:hover{
+	opacity: 1;
+}
