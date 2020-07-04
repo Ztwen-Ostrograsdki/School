@@ -13,9 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-           App\Models\Classe::class => App\Policies\ClassePolicy::class,
-           // App\User::class => App\Policies\AdminPolicy::class,
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+           // App\Models\Classe::class => App\Policies\ClassePolicy::class,
     ];
 
     /**
@@ -34,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('gateIsAdmin', function(){
             return auth()->user()->role == "admin" || auth()->user()->id == 1;
         });
+
         Gate::define('errors', function(){
             return false;
         });

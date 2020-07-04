@@ -17,7 +17,7 @@ class TeacherController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin')->except('show');
+        $this->middleware('admin');
     }
     /**
      * Display a listing of the resource.

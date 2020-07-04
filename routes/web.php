@@ -24,6 +24,10 @@ Route::group(['prefix' => 'errors'], function() {
     Route::get('404', 'AdminErrorsController@type404')->name('error404');
 });
 
+Route::group(['prefix' => 't'], function() {
+    Route::resource('teacherAuthorized', 'AdminTeacherAuthorizedController')->middleware('onlyTeacher');
+});
+
 Route::group(['prefix' => 'admin'], function(){
 	Route::get('/', 'AdminController@index')->name('admin.index');
 	Route::post('registrationToTeacher/id={adminID}', 'AdminController@setAdminTeacher')->name('admin.teacher.registration');

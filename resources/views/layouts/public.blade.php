@@ -60,7 +60,7 @@
                 <div class="position-absolute d-none d-lg-inline text-left mt-2" style="top: 10px; left: 0%; width: 28%;">
                     <a class="link-float" href="#" id="link-home-school-name">
                         <span class="fa fa-school mr-2" style="font-size: 30px"></span>
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Complexe Scolaire Mon Ecole</span>
+                        <span class="mr-2 d-none d-lg-inline text-black-50 small">Complexe Scolaire Mon Ecole</span>
                     </a>
                 </div>
                 <div class="d-none w-100 d-lg-flex justify-content-center mx-auto position-absolute" style="top: 35px">
@@ -82,13 +82,13 @@
             {{-- EndNavigation modal for lg or md screen --}}
 
             {{-- Navigation MENU aside modal for small screen --}}
-            <nav class="navbar d-lg-none shadow-sm navbar-home">
+            <nav class="navbar d-lg-none shadow-sm navbar-home py-3">
                 <div class="w-50" id="modal-home-nav-btn" style="cursor: pointer;">
                     <span class="">
                         <img src="{{asset('media/icons/menu.ico')}}" alt="" width="30">
                         <i class="fa fa-chevron-down" style="font-size: 25px; font-weight: small; position: relative; top: 5px; display: none"></i>
                     </span>
-                    <span class="text-muted d-md-inline d-none">Complexe Scolaire MON ECOLE</span>
+                    <span class="text-dark text-shadow d-md-inline d-none">Complexe Scolaire MON ECOLE</span>
                     <span class="text-muted d-sm-inline d-md-none">CS MON ECOLE</span>
                 </div>
                 
@@ -151,7 +151,7 @@
                 <div class="position-absolute justify-content-center admins-link mt-2 d-none d-lg-flex" style="top: 10px; right: 20px; width: 15%;">
                     <div class="text-center" style="min-width:45%;">
                         <a class="nav-link w-100 home-link-profil marker link-float" href="#">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                            <span class="mr-2 d-none d-lg-inline text-white-600 small">{{ Auth::user()->name }}</span>
                              @admin
                                 <span class="fa fa-user-secret m-0 p-0" style="font-size: 20px"></span>
                             
@@ -162,16 +162,16 @@
                     </div>
                 </div>
                 {{-- For small screen --}}
-                <div class="row position-absolute admins-link mt-2 d-lg-none" style="top: -10px; width: 20%; right: 30px">
+                <div class="row position-absolute admins-link mt-2 d-lg-none" style="top: -10px; width: 25%; right: 30px">
                
-                    <div class="col-6 text-center mb-2">
-                        <a class="nav-link w-100 home-link-profil-sm link-float" href="#">
+                    <div class="col-12 text-center mb-2 px-0">
+                        <a class="nav-link w-100 home-link-profil-sm link-float px-1" href="#">
                             @admin
                             <span class="fa fa-user-secret m-0 p-0" style="font-size: 20px"></span>
                             @else
                             <img class="img-profile rounded-circle" src="/media/profil.png" alt="administration" width="25">
                             @endadmin
-                            <span class="text-gray-600 small text-center">{{ mb_substr(Auth::user()->name, 0, 11) }}</span>
+                            <span class="d-block text-white-600 small text-center w-100">{{ mb_substr(Auth::user()->name, 0, 11) }}...</span>
 
                         </a>
                     </div>
@@ -186,7 +186,7 @@
                           <!-- Dropdown - User Information -->
                         <div class="w-100 border">
                             @isTeacher
-                                <a class="w-100 my-1 hover link-float" href="{{route('teachers.show', Auth::user()->teacher()->id)}}" style="border-radius: 30px;">
+                                <a class="w-100 my-1 hover link-float" href="{{route('teacherAuthorized.show', Auth::user()->teacher()->id)}}" style="border-radius: 30px;">
                                     <i class="fas fa-user fa-sm fa-fw mr-2"></i>
                                   Profile
                                 </a>
@@ -229,7 +229,7 @@
                                 <a href="#" id="register-link-home" class="register-link py-1 link-float">Register</a>
                             @endif
                         </div>
-                        <div class="position-absolute row register-home-links d-lg-none text-center mt-2" style="top:0; right: 50px; width: auto; border-radius: 10px">
+                        <div class="position-absolute row register-home-links d-lg-none text-center mt-2" style="top:10px; right: 50px; width: auto; border-radius: 10px">
                             <div class="container-lg d-inline m-0 p-0 mr-3">
                                 <a href="{{ route('login') }}" class="py-1 col-5 link-float">Login</a>
                                 @if (Route::has('register'))
