@@ -16,7 +16,7 @@ class CreatePupilsTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::create('pupils', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('sexe');
             $table->string('level');
             $table->date('birth');

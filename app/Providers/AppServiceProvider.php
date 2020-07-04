@@ -41,6 +41,13 @@ class AppServiceProvider extends ServiceProvider
             $view->with('secondarySubjects', Subject::whereLevel('secondary')->get());
         });
 
+        View::composer(['layouts.public'], function($view){
+
+            $view->with('subjects', Subject::whereLevel('secondary')->get());
+            $view->with('classes', Classe::whereLevel('primary')->get());
+            $view->with('months', Tools::months());
+        });
+
         
 
         View::composer(['admin.pupils.index'], function($view){
@@ -52,10 +59,19 @@ class AppServiceProvider extends ServiceProvider
             return auth()->check() && (auth()->user()->role === 'admin' || auth()->user()->id === 1); 
         });
         Blade::if ('notAdmin', function () {
-            return (!auth()->check()) || auth()->check() && auth()->user()->role !== 'admin'; 
+            return auth()->check() && auth()->user()->role !== 'admin'; 
         });
         Blade::if ('isAdmin', function ($user) {
             return $user->role === 'admin';
+        });
+        Blade::if ('isTeacher', function () {
+            return auth()->user()->teachers->toArray() !== [];
+        });
+        Blade::if ('isNotTeacher', function () {
+            return auth()->user()->teachers->toArray() == [];
+        });
+        Blade::if ('selfTeacher', function ($teacher) {
+            return (auth()->user()->teachers->toArray() !== []) && (auth()->user()->teacher()->id === $teacher->id);
         });
         Blade::if ('isUser', function ($user) {
             return $user->role === 'user'; 

@@ -99,14 +99,30 @@ $(function(){
 $(function(){
     let home_link_profil = $('a.home-link-profil, a.home-link-profil-sm')
     let profil_modal = $('.profil-modal')
+    let home = $('#container-contents-home')
 
 
 
     home_link_profil.click(function(){
-        $(this).parent().parent().css({
-            'opacity' : '0.6'
-        })
-        profil_modal.toggle('drop', {direction: 'right'})
+
+        if(profil_modal.css('display') !== 'none'){
+            home.css({
+                'opacity' : '1'
+            })
+            $(this).parent().parent().css({
+                'opacity' : '1'
+            })
+        }
+        else{
+            home.css({
+                'opacity' : '0.3'
+            })
+            $(this).parent().parent().css({
+                'opacity' : '0.6'
+            })
+        }
+        
+        profil_modal.toggle('size', {direction: 'right'})
     })
 
     $(document).dblclick(function(e){
@@ -115,6 +131,9 @@ $(function(){
                 if(!$(e.target).closest(".profil-modal").length){
                     profil_modal.hide('drop', {direction: 'right'}, function(){
                         home_link_profil.parent().parent().css({
+                            'opacity' : '1'
+                        })
+                        home.css({
                             'opacity' : '1'
                         })
                     })
@@ -183,22 +202,91 @@ $(function(){
 })
 
 $(function() {   
-let menu_ul = $('.menu > li > ul')
-let menu_a  = $('.menu > li > a')
+    let menu_ul = $('.menu > li > ul')
+    let menu_a  = $('.menu > li > a')
 
-menu_ul.hide()
+    menu_ul.hide()
 
-menu_a.click(function(e) {
-    e.preventDefault();
-    if(!$(this).hasClass('activeLink')) {
-        menu_a.removeClass('activeLink')
-        menu_ul.filter(':visible').slideUp('normal')
-        $(this).addClass('activeLink').next().stop(true, true).slideDown('normal')
-    } 
-    else {
-        $(this).removeClass('activeLink')
-        $(this).next().stop(true, true).slideUp('normal')
+    menu_a.click(function(e) {
+        e.preventDefault();
+        if(!$(this).hasClass('activeLink')) {
+            menu_a.removeClass('activeLink')
+            menu_ul.filter(':visible').slideUp('normal')
+            $(this).addClass('activeLink').next().stop(true, true).slideDown('normal')
+        } 
+        else {
+            $(this).removeClass('activeLink')
+            $(this).next().stop(true, true).slideUp('normal')
+        }
+    })
+
+})
+
+$(function(){
+
+    let modal_profil_small_screen = $('.login-profil.profil-modal')
+    let initial_width = $(window).width()
+    let now_width
+
+    let resizeTimer = false
+
+    if(initial_width < 960){
+        modal_profil_small_screen.css({
+            top: '20px'
+        })
     }
-});
+    
 
-});
+    $(window).resize(function(e){
+
+        if(!resizeTimer){
+            $(window).trigger('resizestart')
+        }
+
+        clearTimeout(resizeTimer)
+        resizeTimer = setTimeout(function(){
+            resizeTimer = false
+
+            $(window).trigger('resizeend')
+        }, 200)
+
+        if(initial_width <  $(window).width()){
+            if($(window).width() <= 960){
+                modal_profil_small_screen.animate({
+                    top: '20px'
+                })
+            }
+            else if ($(window).width() >= 960) {
+                modal_profil_small_screen.animate({
+                    top: '100px'
+                })
+            }
+            
+            console.log("augmentation de la largeur")
+        }
+        else{
+            if($(window).width() <= 960){
+                modal_profil_small_screen.animate({
+                    top: '20px'
+                })
+            }
+            else if ($(window).width() >= 960) {
+                modal_profil_small_screen.animate({
+                    top: '100px'
+                })
+            }
+            console.log("diminution de la taille")
+        }
+        
+        
+    }).on('resizeend', function(){
+        initial_width = $(window).width()
+        
+    }).on('resizestart', function(){
+        
+    })
+
+
+
+})
+

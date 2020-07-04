@@ -46,7 +46,9 @@ body{
 .profil-modal .row a:hover{
     transform: scale(1.1);
 }
-
+.profil-modal a{
+    color: black !important;
+}
 #modal-home-nav a:hover{
     transform: scale(1.01);
     opacity: 1;
@@ -71,6 +73,17 @@ body{
     transform: scale(1.1);
     box-shadow: 0 0 0 0.1rem rgba(250, 250, 250, 0.5);
 }
+
+#closeAdminTeacherRegisterModal{
+
+}
+
+#closeAdminTeacherRegisterModal:hover{
+    border: thin solid white;
+    background-color: rgba(200, 20, 0, 0.7);
+}
+
+
 
 .admins-link a:hover{
     transform: scale(1.1);
@@ -310,3 +323,24 @@ footer.footer-home{
 
 }
 
+.bg-linear-official{
+    background: linear-gradient(60deg,rgba(0, 0, 0, 0.5), rgba(10, 150, 150, 0.2), rgba(5, 255, 255, 0.2), rgba(5, 255, 255, 0.2), rgba(0, 0, 0, 0.5)) !important;
+
+}
+
+.bg-linear-official-50{
+    background: linear-gradient(60deg,rgba(0, 0, 0, 0.7), rgba(10, 150, 150, 0.6), rgba(5, 255, 255, 0.6), rgba(5, 255, 255, 0.2), rgba(0, 0, 0, 0.7)) !important;
+
+}
+
+
+.btn-linear-official-50{
+    border: black;
+    background: linear-gradient(60deg,rgba(0, 0, 0, 0.7), rgba(10, 150, 150, 0.6), rgba(5, 255, 255, 0.6), rgba(5, 255, 255, 0.2), rgba(0, 0, 0, 0.7)) !important;
+
+}
+
+button.btn-linear-official-50b:hover{
+    transform: scale(1.1) !important;
+    text-shadow: 0.5px 0.5px 0.5px white !important;
+}

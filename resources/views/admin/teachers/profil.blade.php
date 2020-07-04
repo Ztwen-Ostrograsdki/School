@@ -79,8 +79,10 @@
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownOptions">
 	                            <a class="dropdown-item" href="#">{{ __('Emploi de temps') }}</a>
 	                            @isSecondaryTeacher($teacher)
+	                            	@admin
 	                            	<a class="dropdown-item" href="{{route('secondaryTeacher.manyEdit', ['t' => (int)$teacher->id, 'ind' => 'classe'])}}">{{ __('Gestion des classes') }}</a>
 									<a class="dropdown-item" href="#">{{ __('Forum ') .$teacher->subject->getSlug() }}</a>
+									@endadmin
 	                            @endisSecondaryTeacher
 	                            @isPrimaryTeacher($teacher)
 									<a class="dropdown-item" href="#">{{ __('Accessibilité classe')}}</a>
@@ -113,12 +115,14 @@
 					</ul>
 				</div>
 				<div class="justify-content-center mt-1">
+					@selfTeacher($teacher)
 					<a href="" class="btn btn-news w-100">
 						<span class="rotate">
 							<img src="/media/icons/mail2.png" alt="" width="15">
 						</span>
 						Notifications
 					</a>
+					@endselfTeacher
 				</div>
 			</div>
 
@@ -168,7 +172,8 @@
 					<div class="onetable teacher-classes" style="width: 60%;">
 					@hasClasses($teacher)
 						<h5>
-							Les classes tenues 
+							Les classes tenues
+							@admin
 							<form method="post" action="{{route('teachers.detach.classes', $teacher->id)}}" class="d-inline m-0 p-0 float-right" onsubmit="return confirm('Voulez-vous vraiment lui retirer toutes les classes?')">
 								@csrf
 								@method('DELETE')
@@ -176,6 +181,7 @@
 									<img src="/media/icons/recycleall.png" alt="recyclage" width="25" class="float-right">
 								</button>
 							</form>
+							@endadmin
 						</h5>
 						<div class="m-0 p-0">
 							<div class="border w-100 p-1">
@@ -185,6 +191,7 @@
 											<span>
 												<a href="{{route('classes.show', $classe->id)}}" class="text-dark text-decoration-none">{{$classe->name}}</a>
 											</span>
+											@admin
 											<div class="d-inline float-right" title="Retirer cette classe de la gestion de ce prof">
 												<form method="post" action="{{route('teachers.detach.classe', ['teacher' => $teacher->id, 'classe' => $classe->id])}}" class="d-inline m-0 p-0" onsubmit="return confirm('Voulez-vous vraiment lui retirer cette classe?')">
 													@csrf
@@ -201,6 +208,7 @@
 													</button>
 												</form>
 											</span>
+											@endadmin
 										</div>
 										<div class="text-center" style="width: 55%;">
 											<h6 class="m-0 p-0">Lundi 10h - 12h</h6>
@@ -210,9 +218,11 @@
 								@endforeach	
 							</div>
 						</div>
-						<span>
-							<a href="{{route('secondaryTeacher.manyEdit', ['t' => (int)$teacher->id, 'ind' => 'classe'])}}" class="btn btn-news my-1 p-1 float-right">Mettre à jour</a>
-						</span>
+						@admin
+							<span>
+								<a href="{{route('secondaryTeacher.manyEdit', ['t' => (int)$teacher->id, 'ind' => 'classe'])}}" class="btn btn-news my-1 p-1 float-right">Mettre à jour</a>
+							</span>
+						@endadmin
 					@endhasClasses	
 					</div>
 					<div class="onetable">

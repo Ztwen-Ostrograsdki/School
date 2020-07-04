@@ -55,10 +55,9 @@ class TeacherOfPrimaryController extends Controller
         $input = $request->except('classe');
 
         Teacher::create($input);
-
-        TeacherController::insertIntoUser($request);
-
         $teacher = Teacher::all()->last();
+
+        TeacherController::insertIntoUser($request, $teacher);
 
         if ($request->filled('classe')) {
             $classe = Classe::find((int)$request->classe);
@@ -111,6 +110,7 @@ class TeacherOfPrimaryController extends Controller
         $teacher = Teacher::find((int)$id);
         $input = $request->except(['classe', 'id']);
 
+        TeacherController::updateTeacherUserInfo($teacher, $request);
         
         if ($request->filled('classe')) {
             $classe = Classe::find((int)$request->classe);

@@ -54,9 +54,10 @@ class TeacherOfSecondaryController extends Controller
         $input = $request->all();
         Teacher::create($input);
 
-        TeacherController::insertIntoUser($request);
-
         $teacher = Teacher::all()->last();
+
+        TeacherController::insertIntoUser($request, $teacher);
+
 
         return redirect()->route('teachers.show', $teacher->id)->with('info', "Insertion réussie. Les informations du prof $teacher->name ont bien été insérées dans les données de l'école")->with('type', 'info-success');
     }
@@ -143,9 +144,8 @@ class TeacherOfSecondaryController extends Controller
     {
         $teacher = Teacher::find((int)$id);
         $input = $request->all();
-        $teacher->update($input);
 
-        // TeacherController::updateTeacherUserInfo($id, $request->only(['name', 'email']));
+        TeacherController::updateTeacherUserInfo($teacher, $request);
 
         return redirect()->route('teachers.show', $teacher->id)->with('info', "Mise à jour réussie. Les informations du prof $teacher->name ont bien été mises à jour")->with('type', 'info-success');
     }

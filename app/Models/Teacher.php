@@ -16,7 +16,7 @@ class Teacher extends Model
 
 	protected $roles = [];
 
-    protected $fillable = ['name', 'email', 'contact', 'sexe', 'residence', 'birth', 'year','month', 'level', 'subject_id', 'firstName', 'surname'
+    protected $fillable = ['name', 'email', 'contact', 'sexe', 'residence', 'birth', 'year','month', 'level', 'parent', 'subject_id', 'firstName', 'surname'
 		];
 
 	public function classes()
@@ -27,6 +27,11 @@ class Teacher extends Model
 	public function users()
 	{
 		return $this->morphToMany(User::class, 'userable');
+	}
+
+	public function user()
+	{
+		return $this->users()->get()[0];
 	}
 
 	

@@ -19,8 +19,14 @@ Route::get('/', function () {
     return view('public.home');
 });
 
+Route::group(['prefix' => 'errors'], function() {
+    Route::get('403', 'AdminErrorsController@type403')->name('error403');
+    Route::get('404', 'AdminErrorsController@type404')->name('error404');
+});
+
 Route::group(['prefix' => 'admin'], function(){
 	Route::get('/', 'AdminController@index')->name('admin.index');
+	Route::post('registrationToTeacher/id={adminID}', 'AdminController@setAdminTeacher')->name('admin.teacher.registration');
 	
 	Route::get('teachers/cycle={params}', 'TeacherController@index')->name('teachers.ByLevel.index');
 	Route::get('teachers/s={params}', 'TeacherController@index')->where('params', '[0-9]+')->name('teachers.BySubject.index');
@@ -45,7 +51,7 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::get('teachers/edit/l=secondary/t={t}&ind={ind}', 'TeacherOfSecondaryController@edit')->where('t', '[0-9]+')->name('secondaryTeacher.manyEdit');
 	Route::put('teachers/edit/l=secondary&t={teacher}', 'TeacherOfSecondaryController@updateTeacherClasses')->name('secondaryTeachers.update.classes');
 	Route::put('teachers/confirmation&classe/for={teacher}', 'TeacherOfSecondaryController@confirmClasses')->name('teachers.confirm.classes');
-	Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryControlle@detachTeacherAndClasse')->name('teachers.detach.classe');
+	Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classe');
 /**********************************************************/
 	
 

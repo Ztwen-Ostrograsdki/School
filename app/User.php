@@ -52,5 +52,10 @@ class User extends Authenticatable
         return $this->morphedByMany(Teacher::class, 'userable');
     }
 
+    public function teacher()
+    {
+        return $this->teachers()->get()[0];
+    }
+
 
 }

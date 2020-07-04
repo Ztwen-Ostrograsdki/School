@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AdminErrorsController;
+use App\Models\Admin;
+use App\Models\Classe;
+use App\Models\Teacher;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 
 class AdminController extends Controller
@@ -22,9 +28,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        dd($users);
-        return view('admin.index', compact('user'));
+        // return AdminErrorsController::type403();
     }
 
     /**
@@ -32,14 +36,101 @@ class AdminController extends Controller
      * @param  [type] $data [description]
      * @return \App\User
      */
-    public static function createUser(array $data, $role = 'user')
+    public static function createUser($teacher, array $data, $role = 'user')
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => $role
         ]);
+        return $user->teachers()->attach($teacher->id);
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function setAdminToTeacherValidator(array $data, $level)
+    {
+        if ($level === "primary") {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255', 'min:2', 'bail', 'unique:teachers'],
+                'email' => ['required', 'string', 'email', 'max:255', 'bail', 'unique:teachers'],
+                'contact' => ['required', 'string', 'min:7', 'bail'],
+                'residence' => ['required', 'string', 'min:5', 'bail'],
+                'classe' => ['numeric', 'bail'],
+                'sexe' => ['required', 'string', 'bail'],
+                'level' => ['required', 'string', 'bail'],
+                'birth' => ['required', 'date', 'bail'],
+                'month' => ['required', 'string', 'bail'],
+                'year' => ['required', 'numeric', 'bail', 'max:'.date('year')]
+            ]);
+        }
+        else if ($level === "secondary") {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255', 'min:2', 'bail', 'unique:teachers'],
+                'email' => ['required', 'string', 'email', 'max:255', 'bail', 'unique:teachers'],
+                'contact' => ['required', 'string', 'min:7', 'bail'],
+                'residence' => ['required', 'string', 'min:5', 'bail'],
+                'sexe' => ['required', 'string', 'bail'],
+                'level' => ['required', 'string', 'bail'],
+                'birth' => ['required', 'date', 'bail'],
+                'subject_id' => ['required', 'numeric', 'bail'],
+                'month' => ['required', 'string', 'bail'],
+                'year' => ['required', 'numeric', 'bail', 'max:'.date('year')]
+            ]);
+        }
+        
+  
+    }
+
+
+    public function setAdminTeacher(Request $request, $admin)
+    {
+        if (Gate::allows('gateIsAdmin')) {
+            $level = $request->level;
+            $validator = $this->setAdminToTeacherValidator($request->all(), $level);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()]);
+            }
+
+            if ($level === 'primary') {
+                $request->subject_id = null;
+                $input = $request->except('classe');
+
+                $teacher = Teacher::create($input);
+                auth()->user()->update($request->only(['name', 'email']));
+                $teacher->users()->attach(auth()->user()->id);
+
+                if ($request->filled('classe')) {
+                    $classe = Classe::find((int)$request->classe);
+                    $classe->teacher_id = $teacher->id;
+                    $classe->save();
+                    $teacher->classes()->attach($classe->id);
+                    return response()->json(['success'=> 'Vous '.$teacher->name, 'classe' => $classe->name, 'level' => $level]);
+                }
+                return response()->json(['success'=> 'Vous '.$teacher->name, 'level' => $level]);
+
+            }
+
+            if ($level === secondary) {
+
+                $teacher = Teacher::create($input);
+                auth()->user()->update($request->only(['name', 'email']));
+                $teacher->users()->attach(auth()->user()->id);
+                return response()->json(['success'=> 'Vous '.$teacher->name, 'level' => $level]);
+            }
+
+        }
+        else{
+            return response()->json(['errors403'=> 'Unauthorized for this page']);
+        }
+        
+ 
     }
 
     /**
@@ -48,11 +139,10 @@ class AdminController extends Controller
      * @param  [type] $data    [description]
      * @return [type]          [description]
      */
-    public static function updateUser($user_id, $data)
+    public static function updateUser($teacher, $user, $data)
     {
-        $user = User::find((int)$user_id);
-        dd($user);
-        $user->update($data);
+        $teacher->update($data->all());
+        $user->update($data->only(['name', 'email']));
     }
 
 

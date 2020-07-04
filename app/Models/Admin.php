@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -22,4 +23,19 @@ class Admin extends Model
 
     protected $fillable = ['name', 'role', 'email', 'contact', 'sexe', 'residence', 'birth', 'year', 'month', 'level'
 		];
+
+
+	public static function admins()
+	{
+		return User::whereRole('admin')->orWhere('id', 1)->get();
+	}
+
+
+	public static function isTeacher($admin):bool
+	{
+		if ($admin->teacher->toArray() !== []) {
+			return true;
+		}
+		return false;
+	}
 }

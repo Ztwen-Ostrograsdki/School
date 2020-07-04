@@ -17,7 +17,7 @@ class TeacherController extends Controller
 
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin')->except('show');
     }
     /**
      * Display a listing of the resource.
@@ -157,7 +157,7 @@ class TeacherController extends Controller
      * @param  [type] $request [description]
      * @return [type]          [description]
      */
-    public static function insertIntoUser($request)
+    public static function insertIntoUser($request, $teacher)
     {
         $pwd = AdminController::DEFAULT_PWD;
         $t = Teacher::whereEmail($request->email)->firstOrFail();
@@ -166,7 +166,7 @@ class TeacherController extends Controller
             'email' => $t->email,
             'password' => $pwd
         ];
-        return AdminController::createUser($data, 'teacher');
+        return AdminController::createUser($teacher, $data, 'teacher');
     }
 
 
@@ -175,8 +175,9 @@ class TeacherController extends Controller
      * @param  [type] $request [description]
      * @return [type]          [description]
      */
-    public static function updateTeacherUserInfo($teacher_id, $data)
+    public static function updateTeacherUserInfo($teacher, $data)
     {
-        AdminController::updateUser($teacher_id, $data);
+        $user = $teacher->user();
+        AdminController::updateUser($teacher, $user, $data);
     }
 }

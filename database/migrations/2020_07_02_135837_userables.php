@@ -21,7 +21,7 @@ class Userables extends Migration
                   ->on('users')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
-            $table->morphs('classable');   
+            $table->morphs('userable');   
             $table->timestamps();
         });
     }

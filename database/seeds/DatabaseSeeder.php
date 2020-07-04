@@ -21,27 +21,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // factory(Teacher::class, 10)->create();
 
-        // $teachers = Teacher::all();
-
-        // foreach ($teachers as $teacher) {
-        //     $user = User::create([
-        //         'name' => $teacher->name,
-        //         'email' => $teacher->email,
-        //         'password' => Hash::make(12345),
-        //         'role' => 'teacher'
-        //     ]);
-        //     $teacher->users()->attach($user->id);
-
-        // }
-
-        $subjects = Seeders::getSubjects();
+        factory(Teacher::class, 10)->create();
+        /*$subjects = Seeders::getSubjects();
             foreach ($subjects as $subject) {
             Subject::create($subject);
         }
         $ids = range(10, 24);
-        factory(Teacher::class, 40)->create()->each(function ($teacher) use($ids) {   
+        factory(Teacher::class, 20)->create()->each(function ($teacher) use($ids) {   
             $teacher->subject_id = rand(10, 24);
             $teacher->save();
             $user = User::create([
@@ -50,7 +37,7 @@ class DatabaseSeeder extends Seeder
                 'password' => Hash::make(12345),
                 'role' => 'teacher'
             ]);
-            $teacher->users()->attach($user->id);  
+            $user->teachers()->attach($teacher->id);  
         }); 
 
         $classes = Seeders::getClasses();
@@ -65,7 +52,7 @@ class DatabaseSeeder extends Seeder
         }
         
         factory(Pupil::class, 200)->create();
-    }   
+    }   */
       
       	
 }
