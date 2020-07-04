@@ -92,60 +92,9 @@
                     <span class="text-muted d-sm-inline d-md-none">CS MON ECOLE</span>
                 </div>
                 
-                <div id="wrapper" class="position-fixed modal-home-nav" style="top: -30px; left: 0.5%; display: none; z-index: 10000;">
-                    <ul class="menu" style="width: 90%;">
-                        <li class="item1 text-left">
-                            <a href="#">
-                                <i class="fa fa-home float-left mt-1 mr-3" style="font-size: 25px"></i>Home
-                            </a>
-                        </li>
-                        <li class="item2">
-                            <a href="#">
-                                <i class="fa fa-tag float-left mt-1 mr-3" style="font-size: 25px"></i>Menu 
-                                <span id="span-counter">147</span>
-                            </a>
-                            <ul>
-                                <li class="subitem1"><a href="#">Cute Kittens</a></li>
-                                <li class="subitem2"><a href="#">Strange “Stuff” </a></li>
-                                <li class="subitem3"><a href="#">Automatic Fails </a></li>
-                            </ul>
-                        </li>
-                        <li class="item3">
-                            <a href="#">
-                                <i class="fa fa-user-friends float-left mt-1 mr-3" style="font-size: 25px"></i>Forum 
-                                <span id="span-counter">340</span>
-                            </a>
-                            <ul>
-                                <li class="subitem1"><a href="#">Cute Kittens </a></li>
-                                <li class="subitem2"><a href="#">Strange “Stuff” </a></li>
-                                <li class="subitem3"><a href="#">Automatic Fails</a></li>
-                            </ul>
-                        </li>
-                        <li class="item4">
-                            <a href="#">
-                                <i class="fa fa-user-o float-left mt-1 mr-3" style="font-size: 25px"></i>Vous etes parent 
-                                <span id="span-counter">222</span>
-                            </a>
-                            <ul>
-                                <li class="subitem1"><a href="#">Cute Kittens </a></li>
-                                <li class="subitem2"><a href="#">Strange “Stuff”</a></li>
-                                <li class="subitem3"><a href="#">Automatic Fails </a></li>
-                            </ul>
-                        </li>
-                        <li class="item5">
-                            <a href="#">
-                                <i class="fa fa-phone float-left mt-1 mr-3" style="font-size: 25px"></i>Contacts
-                                <span id="span-counter">16</span>
-                            </a>
-                            <ul>
-                                <li class="subitem1"><a href="#">Cute Kittens </a></li>
-                                <li class="subitem2"><a href="#">Strange “Stuff” </a></li>
-                                <li class="subitem3"><a href="#">Automatic Fails </a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            {{-- End Navigation MENU modal for small screen --}}
+                {{-- Navigation MENU aside modal for small screen --}}
+                    @extends('modals.homeMenuModalForSmallScreen')
+                {{-- End Navigation MENU modal for small screen --}}
             </nav>
                 @auth
                 <div class="position-absolute justify-content-center admins-link mt-2 d-none d-lg-flex" style="top: 10px; right: 20px; width: 15%;">
@@ -203,8 +152,6 @@
                                     </a>
                                 @endisNotTeacher
                             @endadmin
-                            
-
                             <a class="w-100 py-1 hover link-float" href="#">
                                  <i class="fas fa-list fa-sm fa-fw mr-2"></i>
                               Activity Log
@@ -346,227 +293,22 @@
     </div>
 
    
-    {{-- MODAL SUCCESS --}}
-
-    <div class="modal fade" id="succesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top: 100px !important;">
-        <div class="modal-dialog modal-sm text-center border border-white">
-            <div class="modal-content box-color-register-home px-3 pb-3 shadow">
-                <div class="w-100 mx-auto p-3">
-                    <div class="mb-1 w-75 mx-auto" id="succesModalImage" style="display: none;">
-                        <img src="{{asset('media/icons/mail2.png')}}" alt="" width="25">
-                    </div>
-                    <h5>You're successfully registred</h5>
-                    <h5>Thank you for your subscribing</h5>
-                    <h6 class="text-right py-2">Click anywhere to close this popup</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="succesModalAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top: 100px !important;">
-        <div class="modal-dialog modal-sm text-center border border-white">
-            <div class="modal-content box-color-register-home px-3 pb-3 shadow">
-                <div class="w-100 mx-auto p-3">
-                    <div class="mb-1 w-75 mx-auto" id="succesModalImageAdmin" style="display: none;">
-                        <img src="{{asset('media/icons/mail2.png')}}" alt="" width="25">
-                    </div>
-                    <h5>You're successfully registred</h5>
-                    <h5>You're now a teacher</h5>
-                    <h6 class="text-right py-2">Click anywhere to close this popup</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-        
-    {{-- END MODAL SUCCESS --}}
+{{-- MODAL SUCCESS --}}
+    @extends('modals.success')        
+{{-- END MODAL SUCCESS --}}
 
 
-    {{-- REGISTRED MODAL --}}
-   
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg mt-md-n3 modal-md mt-5" style="position: relative;top: 90px;">
-            <div class="modal-content box-color-register-home">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Register</h4>
-                    <div class="w-100 d-flex justify-content-between">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times</span></button>
-                        
-                    </div>
-                </div>
-                <div class="modal-body w-100">
+{{-- REGISTRED MODAL --}}
+@guest
+    @extends('modals.registrationUsers')
+@endguest
+{{-- REGISTRED MODAL --}}
 
-                    <form id="formRegister" class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {!! csrf_field() !!}
-
-                        <div class="form-group w-100">
-                            <label class="col-md-4 control-label">Name</label>
-                            <div class="col-md-10">
-                                <input type="text" class="form-control w-100" name="name">
-                                <small class="help-block"></small>
-                            </div>
-                        </div>
-
-                        <div class="form-group w-100">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-                            <div class="col-md-10">
-                                <input type="email" class="form-control w-100" name="email">
-                                <small class="help-block"></small>
-                            </div>
-                        </div>
-
-                        <div class="form-group w-100">
-                            <label class="col-md-4 control-label">Password</label>
-                            <div class="col-md-10">
-                                <input type="password" class="form-control" name="password">
-                                <small class="help-block"></small>
-                            </div>
-                        </div>
-
-                        <div class="form-group w-100">
-                            <label class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-10">
-                                <input type="password" class="form-control" name="password_confirmation">
-                            </div>
-                        </div>
-
-                        <div class="form-group w-100 mx-auto">
-                            <div class="w-75 d-flex justify-content-center mx-auto">
-                                <button type="submit" class="btn btn-primary w-50">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>                       
-                </div>
-            </div>
-        </div>
-    </div>
-
+{{-- ADMIN TO TEACHER REGISTRED MODAL --}}
 @auth
-    {{-- REGISTRED ADMIN TO TEACHER MODAL --}}
-
-    <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg mt-md-n3 modal-md mt-5" style="position: relative;top: 50px;">
-            <div class="modal-content bg-linear-official-50" style="border-style: solid; border-radius: 0; !important;">
-                <span class="d-inline-block py-2 px-3 border align-self-end" id="closeAdminTeacherRegisterModal" style="">x</span>
-                <div class="modal-header d-flex justify-content-between p-0 pl-2 m-0">
-                    <h4 class="modal-title w-75 mb-0" id="adminModalLabel">Veuillez renseignez vos informations</h4>
-                </div>
-                <div class="modal-body w-100">
-
-                    <form id="formRegisterAdmin" class="form-horizontal" role="form" method="POST" action="{{ route('admin.teacher.registration', auth()->user()->id) }}">
-                        {!! csrf_field() !!}
-
-                        
-
-                        <div class="w-100 mx-auto">
-                            <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
-                                <div class="" style="width: 74%">
-                                    <label for="name" class="m-0 p-0">Nom et Prénoms de l'enseignant</label>
-                                    <input type="text" class="form-control w-100" value="{{auth()->user()->name}}"  name="name" id="name" placeholder="Veuillez renseigner les nom et prenoms">
-                                    <small class="help-block"></small>
-                                </div>
-                                <div style="width: 24%;" class="">
-                                    <label for="level" class="m-0 p-0">Cycle</label>
-                                    <select name="level" id="level" class="custom-select pb-0 mb-0">
-                                        <option value="">Choisir le cycle</option>
-                                        <option value="primary">Primaire</option>
-                                        <option value="secondary">Secondaire</option>
-                                        <option value="superior">Supérieur</option>
-                                    </select>
-                                    <small class="help-block m-0 p-0"></small>
-                                </div>
-                            </div>
-                            <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
-                                <div style="width: 55%;" class="">
-                                    <label for="subject_id" class="m-0 p-0">Spécialité</label>
-                                    <select name="subject_id" id="subject_id" class="custom-select">
-                                        <option value="">Choisir la spécialité</option>
-                                        @foreach($subjects as $subject)
-                                            <option value="{{$subject->id}}">{{$subject->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <small class="help-block m-0 p-0"></small>
-                                </div>
-                                <div style="width: 40%;" class="">
-                                    <label for="classe" class="m-0 p-0">Classe</label>
-                                    <select name="classe" id="classe" class="custom-select">
-                                        <option value="">Choisir la classe</option>
-                                        @foreach($classes as $c)
-                                            <option value="{{$c->id}}" @if($c->teachers->toArray() !== []) disabled="" @endif >{{$c->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <small class="help-block"></small>
-                                </div>
-                            </div>
-                            <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
-                                <div class="mx-auto" style="width: 48.8%;">
-                                    <label for="email" class="m-0 p-0">E-mail de l'enseignant</label>
-                                    <input type="email" value="{{auth()->user()->email}}" class="m-0 p-0 form-control p-1 " name="email" id="email" placeholder="Veuillez renseigner l'addresse mail">
-                                    <small class="help-block"></small>
-                                </div>
-                                <div class="mx-auto" style="width: 48.8%;">
-                                    <label for="birth" class="m-0 p-0">Date de naissance de l'enseignant</label>
-                                    <input type="date" class="m-0 p-0 form-control p-1" name="birth" id="birth" placeholder="Veuillez renseigner la date de naissance">
-                                    <small class="help-block"></small>
-                                </div>
-                            </div>
-                            <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
-                                <div class="mx-auto" style="width: 48.8%;">
-                                    <label for="contact" class="m-0 p-0">Contacts de l'enseignant</label>
-                                    <input type="text" class="m-0 p-0 form-control p-1" name="contact" id="contact" placeholder="Veuillez renseigner les contacts les séparer avec un '/'">
-                                    <small class="help-block"></small>
-                                </div>
-                                <div class="mx-auto" style="width: 48.8%;">
-                                    <label for="residence" class="m-0 p-0">Résidence de l'enseignant</label>
-                                    <input type="text" class="m-0 p-0 form-control p-1" name="residence" id="residence" placeholder="Veuillez renseigner la résidence exemple 'Porto-Novo'">
-                                    <small class="help-block"></small>
-                                </div>
-                            </div>
-                            <div class=" mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
-                                <div style="width: 31%;" class="">
-                                    <label for="sexe" class="m-0 p-0">Sexe</label>
-                                    <select name="sexe" id="sexe" class="custom-select">
-                                        <option value="">Choisir le sexe</option>
-                                        <option value="male">Masculin</option>
-                                        <option value="female">Féminin</option>
-                                    </select>
-                                    <small class="help-block"></small>
-                                </div>
-                                
-                                <div style="width: 31%;">
-                                    <label for="month" class="m-0 p-0">Le mois d'inscription</label>
-                                    <select name="month" id="month" class="custom-select">
-                                        <option value="">Choisissez le mois</option>
-                                        @foreach($months as $m => $value)
-                                            <option value="{{$value}}" @if($m == date('m') -1 ) selected="" @endif>{{$value}}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="help-block"></span>
-                                </div>
-                                <div style="width: 31%;">
-                                    <label for="year" class="mb-0">L'année d'inscription</label>
-                                    <select name="year" id="year" class="custom-select">
-                                        <option value="">Choisissez l'année</option>
-                                        @for($i = 1990; $i <= date('Y'); $i++)
-                                            <option value="{{$i}}" @if($i == date('Y')) selected="" @endif>{{$i}}</option>
-                                        @endfor
-                                    </select>
-                                    <small class="help-block"></small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center w-50 mx-auto py-1 mt-2">
-                            <button class="btn bg-linear-official-50 w-50" type="submit">Inserer Maintenant</button>
-                        </div>
-                    </form>                       
-                </div>
-            </div>
-        </div>
-    </div>
-   
+    @extends('modals.registredAdminToTeacher')
 @endauth  
-
+{{-- END ADMIN TO TEACHER REGISTRED MODAL --}}
 
 </footer>
 <script src="{{ asset('js/app.js') }}" defer></script>

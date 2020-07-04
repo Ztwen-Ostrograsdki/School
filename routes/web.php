@@ -24,7 +24,7 @@ Route::group(['prefix' => 'errors'], function() {
     Route::get('404', 'AdminErrorsController@type404')->name('error404');
 });
 
-Route::group(['prefix' => 't'], function() {
+Route::group(['prefix' => 't&profil&onlyforteacher&ordenied&acces&append'], function() {
     Route::resource('teacherAuthorized', 'AdminTeacherAuthorizedController')->middleware('onlyTeacher');
 });
 
