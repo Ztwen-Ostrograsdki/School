@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        View::composer(['admin.teachers.index', 'admin.pupils.index', 'admin.classes.index'], function($view){
+        View::composer(['admin.teachers.index', 'admin.pupils.index', 'admin.classes.index', 'directors.pupils.index', 'directors.teachers.index'], function($view){
 
             $view->with('levels', Tools::levels());
         });
@@ -41,28 +41,49 @@ class AppServiceProvider extends ServiceProvider
             $view->with('secondarySubjects', Subject::whereLevel('secondary')->get());
         });
 
-        View::composer(['layouts.public'], function($view){
+        View::composer(['layouts.public', 'layouts.director', 'layouts.admin', 'directors.teachers.edits.personal', 'directors.teachers.index'], function($view){
 
             $view->with('subjects', Subject::whereLevel('secondary')->get());
             $view->with('classes', Classe::whereLevel('primary')->get());
             $view->with('months', Tools::months());
+            $view->with('roles', Tools::roles());
         });
-
-        
 
         View::composer(['admin.pupils.index'], function($view){
 
             $view->with('classes', Classe::all());
         });
+
+
+
         
+        Blade::if ('superAdmin', function () {
+            return auth()->check() && in_array('superAdmin', auth()->user()->getRoles());
+        });
+        Blade::if ('notSuperAdmin', function () {
+            return auth()->check() && !in_array('superAdmin', auth()->user()->getRoles());
+        });
         Blade::if ('admin', function () {
-            return auth()->check() && (auth()->user()->role === 'admin' || auth()->user()->id === 1); 
+            if (auth()->user()) {
+                return auth()->check() && in_array('superAdmin', auth()->user()->getRoles()) || in_array('admin', auth()->user()->getRoles());
+            }
+            return false;
+            
         });
         Blade::if ('notAdmin', function () {
-            return auth()->check() && auth()->user()->role !== 'admin'; 
+            if (auth()->user()) {
+                return auth()->check() && !in_array('superAdmin', auth()->user()->getRoles()) && !in_array('admin', auth()->user()->getRoles());
+            }
+            return true;
         });
+
         Blade::if ('isAdmin', function ($user) {
-            return $user->role === 'admin';
+            $roles = $user->getRoles();
+            return in_array('superAdmin', $roles) || in_array('admin', $roles);
+        });
+        Blade::if ('isNotAdmin', function ($user) {
+            $roles = $user->getRoles();
+            return !in_array('superAdmin', $roles) && !in_array('admin', $roles);
         });
         Blade::if ('isTeacher', function () {
             return auth()->user()->teachers->toArray() !== [];

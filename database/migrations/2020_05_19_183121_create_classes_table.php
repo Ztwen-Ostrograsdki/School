@@ -20,6 +20,9 @@ class CreateClassesTable extends Migration
             $table->string('level');
             $table->unsignedBigInteger('respo1')->nullable();
             $table->unsignedBigInteger('respo2')->nullable();
+            $table->boolean('authorized')->default(false);
+            $table->string('creator')->nullable();
+            $table->string('editor')->nullable();
             $table->unsignedBigInteger('teacher_id')->nullable(); // The principal teacher of this class
             $table->unsignedBigInteger('year');
             $table->string('month');

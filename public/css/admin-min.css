@@ -1,0 +1,54 @@
+#container-bg-admin-min{
+    background-image: url(../media/img/ruler-5146195_1920.jpg);
+	background-image: url(../media/img/pencils-4916654_1920.jpg);
+	background-size:1365px 700px;
+	min-height: 600px;
+}
+
+.container-bg .container-mask{
+	position: absolute;
+	top: 0px;
+	background-image: linear-gradient(rgba(00,0,250, 0.6), rgba(255, 255, 255, 0.5), rgba(100, 100, 100, 0.5), rgba(150, 150, 150, 0.5), rgba(255, 10, 255, 0.6));
+	width: 100%;
+	height: 600px;
+}
+
+
+.container-contents{
+    margin: 0 auto;
+    padding: 10px 20px;
+    width: 100%;
+    border: thin solid gray;
+    overflow-y: auto; /* activation du scrollage en cas de contenu trop volumineux*/
+    display:inline-block;
+    float: left;
+    max-height:500px; 
+    background-color: rgba(200,0,250,0.2);
+}
+
+
+
+
+
+#footer-maskor{
+    position: relative;
+    margin: 0;
+    bottom:0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    color:white;
+    font-weight: normal;
+    font-size: 12px;
+    background-color:rgba(10,1,250,0.7);
+
+}
+
+footer.footer-home#footer-admin-min{
+    height: 250px;
+    background-image: url(/media/img/pencils-4857736_1920.jpg);
+    background-image: url(/media/img/pens-4900980_1920.jpg);
+    background-size:1370px 390px;
+    width: 100%;
+    padding: 0px;
+}

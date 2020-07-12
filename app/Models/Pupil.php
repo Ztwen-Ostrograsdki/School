@@ -10,7 +10,7 @@ class Pupil extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'sexe', 'classe_id', 'birth', 'status', 'year','month', 'level'];
+    protected $fillable = ['name', 'sexe', 'classe_id', 'birth', 'status', 'year','month', 'level', 'creator', 'editor', 'authorized'];
 
     public function classe()
     {
@@ -25,6 +25,46 @@ class Pupil extends Model
     	else{
     		return 'Féminin';
     	}
+    }
+
+    public function isRespo()
+    {
+        $c = $this->classe;
+
+        if ($c->respo1() !== null && $c->respo2() !== null) {
+            if ($c->respo1()->id == $this->id) {
+                return "text-primary";
+            }
+            elseif ($c->respo2()->id == $this->id) {
+                return "text-success";
+            }
+            else{
+                return "";
+            }
+        }
+        else{
+            if ($c->respo1() !== null && $c->respo2() == null) {
+                if ($c->respo1()->id == $this->id) {
+                    return "text-primary";
+                }
+                else{
+                    return "";
+                }
+            }
+            elseif($c->respo2() !== null && $c->respo1() == null){
+                if ($c->respo2()->id == $this->id) {
+                    return "text-primary";
+                }
+                else{
+                    return "";
+                }
+            }
+            else{
+                return "";
+            }
+
+        }
+
     }
 
 }

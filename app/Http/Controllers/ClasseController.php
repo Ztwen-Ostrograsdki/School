@@ -155,18 +155,26 @@ class ClasseController extends Controller
      */
     public function update(ClasseRequest $request, $id)
     {
+        if (auth()->check()) {
+            $editor = auth()->user()->name;
+        }
+        else{
+            $editor = null;
+        }
         $classe = Classe::find((int)$id);
         $classe->name = $request->name;
         $classe->teacher_id = $request->pp ? (int)$request->pp : null;
         $classe->respo1 = $request->respo1 ? (int)$request->respo1 : null;
         $classe->respo2 = $request->respo2 ? (int)$request->respo2 : null;
         $classe->month = $request->month;
+        $classe->editor = $editor;
         $classe->year = (int)$request->year;
 
         if ($classe->level == "primary" && $request->pp !== null) {
             $teacher = Teacher::find((int)$request->pp);
             $teacher->classes()->attach($classe->id);
         }
+
         $classe->save();
         return redirect()->route('classes.show', $classe->id)->with('info', "Mise à jour réussie.")->with('type', 'info-success');
     }

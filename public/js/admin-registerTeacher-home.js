@@ -59,9 +59,7 @@ $(function(){
 	            dataType: "json",
 	            success: function(data){
 	            	if(data.errors403 !== undefined){
-	            		window.location.replace('/errors/403')
-
-	            		return false
+	            		console.log(data.errors403)
 	            	}
 	                else if (data.error !== undefined) {
 	                    errors = data.error

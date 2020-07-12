@@ -16,9 +16,18 @@ class Admin
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if ($user && ($user->role === 'admin' || $user->id == 1)) {
-            return $next($request);
+
+        if ($user) {
+            $roles = $user->getRoles();
+            if ($user && in_array('superAdmin', $roles) || in_array('admin', $roles)) {
+                return $next($request);
+            }
+            return abort(403, "Vous n'etes pas autorisé");
         }
-        return abort(403);
+        else{
+            return abort(500, "Vous n'etes pas autorisé");
+        }
+        
     }
+    
 }

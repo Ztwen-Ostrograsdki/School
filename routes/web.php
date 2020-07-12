@@ -20,8 +20,7 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'errors'], function() {
-    Route::get('403', 'AdminErrorsController@type403')->name('error403');
-    Route::get('404', 'AdminErrorsController@type404')->name('error404');
+    
 });
 
 Route::group(['prefix' => 't&profil&onlyforteacher&ordenied&acces&append'], function() {
@@ -30,14 +29,15 @@ Route::group(['prefix' => 't&profil&onlyforteacher&ordenied&acces&append'], func
 
 Route::group(['prefix' => 'admin'], function(){
 	Route::get('/', 'AdminController@index')->name('admin.index');
+	Route::post('createUser&withconfirmation&AdminAuthorization/setupAll', 'AdminController@createDefaultUser')->name('admin.create.Defaultuser');
 	Route::post('registrationToTeacher/id={adminID}', 'AdminController@setAdminTeacher')->name('admin.teacher.registration');
+	
 	
 	Route::get('teachers/cycle={params}', 'TeacherController@index')->name('teachers.ByLevel.index');
 	Route::get('teachers/s={params}', 'TeacherController@index')->where('params', '[0-9]+')->name('teachers.BySubject.index');
 
 //TEACHERS OF SECONDARY ROUTES
 	Route::resource('teachers', 'TeacherController');
-	Route::delete('teachers/detachs/t={teacher}', 'TeacherController@detachTeacherAndClasse')->name('teachers.detach.classes');
 /**********************************************************/
 
 
@@ -55,7 +55,10 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::get('teachers/edit/l=secondary/t={t}&ind={ind}', 'TeacherOfSecondaryController@edit')->where('t', '[0-9]+')->name('secondaryTeacher.manyEdit');
 	Route::put('teachers/edit/l=secondary&t={teacher}', 'TeacherOfSecondaryController@updateTeacherClasses')->name('secondaryTeachers.update.classes');
 	Route::put('teachers/confirmation&classe/for={teacher}', 'TeacherOfSecondaryController@confirmClasses')->name('teachers.confirm.classes');
-	Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classe');
+	//A retirer
+	Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryControlle@detachTeacherAndClasse')->name('teachers.detach.classe');
+		Route::delete('teachers/detachs/t={teacher}', 'TeacherOfSecondaryControlle@detachTeacherAndClasse')->name('teachers.detach.classes');
+
 /**********************************************************/
 	
 
@@ -66,6 +69,18 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::get('pupils/cycle={params}', 'PupilController@index')->name('pupils.ByLevel.index');
 	Route::get('pupils/classe={params}', 'PupilController@index')->where('params', '[0-9]+')->name('pupils.ByClasse.index');
 	Route::resource('pupils', 'PupilController');
+
+	Route::group(['prefix' => 'director'], function(){
+		Route::resource('master', 'Master\SuperAdminController')->middleware('onlySuperAdmin');
+		Route::resource('pupilsm', 'Master\PupilsController')->middleware('onlySuperAdmin');
+		Route::resource('teachersm', 'Master\TeachersController')->middleware('onlySuperAdmin');
+		Route::resource('users', 'Master\UsersController')->middleware('onlySuperAdmin');
+		Route::post('teachersm/registration/u={withUser}', 'Master\TeachersController@createTeacher')->name('teachersm.create.teachers');
+		Route::put('teachersm/upate&teachers&personal&data/id={teacher}/u={withUser}', 'Master\TeachersController@updatePersonalTeacherData')->name('teachersm.update.teachersPersonal');
+		Route::delete('teachersm/detach/t={teacher}&c={classe}', 'Master\TeachersController@detachTeacherAndClasse')->name('teachersm.detach.classe');
+		Route::delete('teachersm/detachs/t={teacher}', 'Master\TeachersController@detachTeacherAndClasse')->name('teachersm.detach.classes');
+
+	});
 
 });
 

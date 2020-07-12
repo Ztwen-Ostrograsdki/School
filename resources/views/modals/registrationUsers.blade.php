@@ -22,10 +22,28 @@
                     </div>
 
                     <div class="form-group w-100">
-                        <label class="col-md-4 control-label">E-Mail Address</label>
-                        <div class="col-md-10">
-                            <input type="email" class="form-control w-100" name="email">
-                            <small class="help-block"></small>
+                        <div class="col-md-10 d-flex justify-content-between m-0 p-0">
+                            <div class="" style="width: 69.7%;">
+                            <label class="col-md-4 control-label">E-Mail Address</label>
+                                <div class="col-md-12">
+                                    <input type="email" class="form-control w-100" name="email">
+                                    <small class="help-block"></small>
+                                </div>
+                            </div>
+                            <div style="width: 30%;">
+                                <label class="col-md-4 control-label">Role</label>
+                                <div class="col-md-12">
+                                <select name="role" id="role" class="custom-select pb-0 mb-0">
+                                    <option value="">Choisir le rôle</option>
+                                    <option value="user" selected>Utilisateur</option>
+                                    <option value="admin">Administrateur</option>
+                                    <option value="teacher">Enseignant</option>
+                                    <option value="parent">Parent</option>
+                                    <option value="master">Web Master</option>
+                                </select>
+                                <small class="help-block"></small>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

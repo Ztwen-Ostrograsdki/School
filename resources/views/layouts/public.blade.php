@@ -32,7 +32,7 @@
             font-style: italic;
             letter-spacing: 0.07rem;
             font-weight: 100;
-            text-shadow: 0.5px 0.5px 0.5px white;
+            text-shadow: 0px 0.5px 0.5px black;
         }
 
         .fa-fa-link-b:hover .fa-phone{
@@ -151,7 +151,17 @@
                                       Enseigner maintenant
                                     </a>
                                 @endisNotTeacher
+                                <a class="w-100 my-1 hover link-float" id="makeUserLink" href="#" style="border-radius: 30px;">
+                                    <i class="fas fa-registered fa-sm fa-fw mr-2"></i>
+                                  Créer un utilisateur
+                                </a>
                             @endadmin
+                            @superAdmin
+                                <a class="w-100 my-1 hover link-float" href="{{route('master.index')}}" style="border-radius: 30px;">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2"></i>
+                                    Direction
+                                </a>
+                            @endsuperAdmin
                             <a class="w-100 py-1 hover link-float" href="#">
                                  <i class="fas fa-list fa-sm fa-fw mr-2"></i>
                               Activity Log
@@ -307,6 +317,7 @@
 {{-- ADMIN TO TEACHER REGISTRED MODAL --}}
 @auth
     @extends('modals.registredAdminToTeacher')
+    @extends('modals.createUser')
 @endauth  
 {{-- END ADMIN TO TEACHER REGISTRED MODAL --}}
 
@@ -319,6 +330,7 @@
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}" defer></script>
 <script src="{{ asset('js/register-home.js') }}" defer></script>
 <script src="{{ asset('js/admin-registerTeacher-home.js') }}" defer></script>
+<script src="{{ asset('js/makeUser.js') }}" defer></script>
 @yield('js')
 
 </body>

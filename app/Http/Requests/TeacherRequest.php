@@ -44,7 +44,7 @@ class TeacherRequest extends FormRequest
             }
             else{
                 return [
-                    'name' => 'required|string|min:2|max:50|bail|unique:classes',
+                    'name' => 'required|string|min:2|max:50|bail|unique:teachers',
                     'year' => 'numeric|bail|max:'.date('year'),
                     'month' => 'string|bail',
                     'email' => 'required|email|min:5|max:250|bail|unique:teachers',

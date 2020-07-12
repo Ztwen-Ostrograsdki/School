@@ -14,14 +14,21 @@ class Seeders{
 		$primarySubjects = Tools::subjects('primary');
 		$secondarySubjects = Tools::subjects('secondary');
 
+		if (auth()->check()) {
+	        $creator = auth()->user()->name;
+	    }
+	    else{
+	        $creator = null;
+	    }
+
 		$subjects = [];
 
 		for($i = 0; $i < count($primarySubjects); $i++){
-			$subjects[] = ['name' => $primarySubjects[$i], 'level' => 'primary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month()];
+			$subjects[] = ['name' => $primarySubjects[$i], 'level' => 'primary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month(), 'creator' => $creator];
 		}
 
 		for($j = 0; $j < count($secondarySubjects); $j++){
-			$subjects[] = ['name' => $secondarySubjects[$j], 'level' => 'secondary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month()];
+			$subjects[] = ['name' => $secondarySubjects[$j], 'level' => 'secondary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month(), 'creator' => $creator];
 		}
 
 		return $subjects;
@@ -30,17 +37,24 @@ class Seeders{
 
 	public static function getClasses():?array
 	{
+		if (auth()->check()) {
+	        $creator = auth()->user()->name;
+	    }
+	    else{
+	        $creator = null;
+	    }
+	    
 		$primaryClasses = Tools::classes('primary');
 		$secondaryClasses = Tools::classes('secondary');
 
 		$subjects = [];
 
 		for($i = 0; $i < count($primaryClasses); $i++){
-			$classes[] = ['name' => $primaryClasses[$i], 'level' => 'primary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month()];
+			$classes[] = ['name' => $primaryClasses[$i], 'level' => 'primary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month(), 'creator' => $creator];
 		}
 
 		for($j = 0; $j < count($secondaryClasses); $j++){
-			$classes[] = ['name' => $secondaryClasses[$j], 'level' => 'secondary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month()];
+			$classes[] = ['name' => $secondaryClasses[$j], 'level' => 'secondary', 'year' => ZtwenFaker::year(), 'month' => ZtwenFaker::month(), 'creator' => $creator];
 		}
 		
 		return $classes;

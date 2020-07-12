@@ -13,7 +13,7 @@ class Subject extends Model
 
     use SoftDeletes;
 
-    protected $fillable = ['name', 'level', 'year','month', 'ae_id'];
+    protected $fillable = ['name', 'level', 'year','month', 'ae_id', 'creator', 'editor', 'authorized'];
 
     /**
      * @return mixed

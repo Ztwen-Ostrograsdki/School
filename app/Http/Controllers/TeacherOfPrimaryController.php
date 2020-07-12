@@ -52,6 +52,7 @@ class TeacherOfPrimaryController extends Controller
     public function store(TeachersRequest $request)
     {
         $request->subject_id = null;
+        $request->creator = auth()->user()->name;
         $input = $request->except('classe');
 
         Teacher::create($input);
@@ -107,6 +108,7 @@ class TeacherOfPrimaryController extends Controller
      */
     public function update(PrimaryTeachersRequest $request, int $id)
     {
+        $request->editor = auth()->user()->name;
         $teacher = Teacher::find((int)$id);
         $input = $request->except(['classe', 'id']);
 

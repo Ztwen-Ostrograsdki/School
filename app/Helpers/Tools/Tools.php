@@ -77,6 +77,26 @@ class Tools{
 		return $months;
 	}
 
+// $roles = ['user', 'admin', 'teacher', 'parent', 'master', 'superAdmin', 'admin-teacher', 'admin-teacher-parent', 'admin-parent', 'teacher-parent', 'superAdmin-parent', 'superAdmin-teacher'];
+	public static function roles()
+	{
+		$roles = [
+			'teacher' => 'Enseignant',
+			'admin' => 'Administrateur restreint',
+			'superAdmin' => 'Administrateur directeur',
+			'parent' => "Parents d'élèves",
+			'user' => "Utilisateur",
+			'master' => "Web Master",
+			'admin-teacher' => "Administrateur restreint / Enseignant",
+			'admin-parent' => "Administrateur restreint / Parent d'élèves",
+			'teacher-parent' => "Enseignant / Parent d'élève",
+			'admin-teacher-parent' => "Administrateur restreint / Enseignant / Parent d'élèves",
+			'superAdmin-parent' => "Administrateur directeur / Parent d'élèves",
+			'superAdmin-teacher' => "Administrateur directeur / Enseignant"
+		];
+		return $roles;
+	}
+
 	public static function years()
 	{
 		$years = [2014, 2015, 2016, 2017, 2018, 2019];

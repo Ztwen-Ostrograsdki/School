@@ -18,6 +18,9 @@ class CreatePupilsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('sexe');
+            $table->string('creator')->nullable();
+            $table->string('editor')->nullable();
+            $table->boolean('authorized')->default(false);
             $table->string('level');
             $table->date('birth');
             $table->unsignedBigInteger('classe_id')->nullable();

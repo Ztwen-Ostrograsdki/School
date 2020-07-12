@@ -20,6 +20,9 @@ class CreateSubjectsTable extends Migration
             $table->string('level');
             $table->unsignedBigInteger('ae_id')->nullable();
             $table->unsignedBigInteger('year');
+            $table->string('creator')->nullable();
+            $table->string('editor')->nullable();
+            $table->boolean('authorized')->default(false);
             $table->string('month');
             $table->foreign('ae_id')
                   ->references('id')

@@ -28,7 +28,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        // return AdminErrorsController::type403();
+        return view('admin.index');
     }
 
     /**
@@ -42,8 +42,13 @@ class AdminController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => $role
+            'role' => $role,
+            'creator' => auth()->user()->name
         ]);
+        if (auth()->user()->role === "superAdmin") {
+           $user->authorized = true;
+           $user->save();
+        }
         return $user->teachers()->attach($teacher->id);
     }
 
@@ -92,6 +97,7 @@ class AdminController extends Controller
     {
         if (Gate::allows('gateIsAdmin')) {
             $level = $request->level;
+            $request->creator = $request->name;
             $validator = $this->setAdminToTeacherValidator($request->all(), $level);
 
             if ($validator->fails()) {
@@ -103,7 +109,7 @@ class AdminController extends Controller
                 $input = $request->except('classe');
 
                 $teacher = Teacher::create($input);
-                auth()->user()->update($request->only(['name', 'email']));
+                auth()->user()->update(['name' => $request->name, 'email' => $request->email, 'editor' => $request->name]);
                 $teacher->users()->attach(auth()->user()->id);
 
                 if ($request->filled('classe')) {
@@ -116,11 +122,10 @@ class AdminController extends Controller
                 return response()->json(['success'=> 'Vous '.$teacher->name, 'level' => $level]);
 
             }
-
-            if ($level === secondary) {
-
+            elseif ($level === 'secondary') {
+                $input = $request->all();
                 $teacher = Teacher::create($input);
-                auth()->user()->update($request->only(['name', 'email']));
+                auth()->user()->update(['name' => $request->name, 'email' => $request->email, 'editor' => $request->name]);
                 $teacher->users()->attach(auth()->user()->id);
                 return response()->json(['success'=> 'Vous '.$teacher->name, 'level' => $level]);
             }
@@ -131,6 +136,48 @@ class AdminController extends Controller
         }
         
  
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validatorForDefaultUser(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ]);
+    }
+
+
+        /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createDefaultUser(Request $request)
+    {
+        $request->password = self::DEFAULT_PWD;
+
+        $validator = $this->validatorForDefaultUser($request->all());
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()]);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+            'creator' => auth()->user()->name,
+            'password' => Hash::make($request->password)
+        ]);
+
+        return response()->json(['success'=> $user]);
     }
 
     /**

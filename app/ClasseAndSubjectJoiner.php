@@ -48,6 +48,13 @@ class ClasseAndSubjectJoiner extends Model
     	}
     }
 
+    public function getSerie()
+    {
+        $serie = $this->serie;
+        return $serie;
+
+    }
+
 
     public function seriesSubjects($serie):?array
     {

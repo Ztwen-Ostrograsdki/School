@@ -16,7 +16,7 @@ class Teacher extends Model
 
 	protected $roles = [];
 
-    protected $fillable = ['name', 'email', 'contact', 'sexe', 'residence', 'birth', 'year','month', 'level', 'parent', 'subject_id', 'firstName', 'surname'
+    protected $fillable = ['name', 'email', 'contact', 'sexe', 'residence', 'birth', 'year','month', 'level', 'parent', 'subject_id', 'firstName', 'surname', 'creator', 'editor', 'authorized'
 		];
 
 	public function classes()

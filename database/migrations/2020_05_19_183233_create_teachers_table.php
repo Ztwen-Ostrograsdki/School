@@ -25,7 +25,10 @@ class CreateTeachersTable extends Migration
             $table->unsignedBigInteger('year');
             $table->string('month');
             $table->string('email');
+            $table->string('creator')->nullable();
+            $table->string('editor')->nullable();
             $table->boolean('parent')->default(false);
+            $table->boolean('authorized')->default(false);
             $table->unsignedBigInteger('subject_id')->nullable();
             $table->foreign('subject_id')
                   ->references('id')

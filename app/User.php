@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role'
+        'name', 'email', 'password', 'role', 'creator', 'editor', 'authorized'
     ];
 
     /**
@@ -55,6 +55,17 @@ class User extends Authenticatable
     public function teacher()
     {
         return $this->teachers()->get()[0];
+    }
+
+
+    /**
+     * get all role of a user
+     * @return array roles
+     */
+    public function getRoles()
+    {
+        $roles = explode('-', $this->role);
+        return $roles;
     }
 
 

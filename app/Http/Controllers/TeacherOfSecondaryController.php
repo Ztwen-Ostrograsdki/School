@@ -228,7 +228,6 @@ class TeacherOfSecondaryController extends Controller
             }
             
         }
-
         if ($classesShouldBeConfirmed == [] && $classesAccepted ==[]) {
             return redirect()->route('teachers.show', $teacher->id)->with('info', "Votre requête était ambigüe alors nous avons conservé les anciennes classes de ce prof!")->with('type', 'info-info');
         }

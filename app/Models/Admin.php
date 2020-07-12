@@ -21,7 +21,7 @@ class Admin extends Model
 
 	// protected $role = 'admin'|'teacher'|'parent';
 
-    protected $fillable = ['name', 'role', 'email', 'contact', 'sexe', 'residence', 'birth', 'year', 'month', 'level'
+    protected $fillable = ['name', 'role', 'email', 'contact', 'sexe', 'residence', 'birth', 'year', 'month', 'level', 'authorized'
 		];
 
 

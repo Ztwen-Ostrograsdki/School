@@ -21,6 +21,9 @@ class CreateParentsTable extends Migration
             $table->date('birth')->nullable();
             $table->string('residence')->nullable();
             $table->string('email')->unique();
+            $table->string('creator')->nullable();
+            $table->string('editor')->nullable();
+            $table->boolean('authorized')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

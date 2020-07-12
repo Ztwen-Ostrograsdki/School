@@ -21,38 +21,45 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        factory(Teacher::class, 10)->create();
-        /*$subjects = Seeders::getSubjects();
-            foreach ($subjects as $subject) {
-            Subject::create($subject);
-        }
-        $ids = range(10, 24);
-        factory(Teacher::class, 20)->create()->each(function ($teacher) use($ids) {   
-            $teacher->subject_id = rand(10, 24);
-            $teacher->save();
-            $user = User::create([
-                'name' => $teacher->name,
-                'email' => $teacher->email,
-                'password' => Hash::make(12345),
-                'role' => 'teacher'
-            ]);
-            $user->teachers()->attach($teacher->id);  
-        }); 
-
-        $classes = Seeders::getClasses();
-        foreach ($classes as $classe) {
-            Classe::create($classe);
-            $c = Classe::whereLevel('secondary')->latest('id')->get();
-            if ($c->toArray() !== []) {
-                $classe = $c[0];
-                (New ClasseAndSubjectJoiner($classe))->joinedSubjectsNow($classe);
-            }
         
-        }
+        // factory(Teacher::class, 20)->create();
+        // $subjects = Seeders::getSubjects();
+        //     foreach ($subjects as $subject) {
+        //     Subject::create($subject);
+        // }
+        // $ids = range(10, 24);
+        // factory(Teacher::class, 10)->create()->each(function ($teacher) {   
+        //     // $teacher->subject_id = rand(10, 24);
+        //     $teacher->save();
+        //     if (auth()->check()) {
+        //         $creator = auth()->user()->name;
+        //     }
+        //     else{
+        //         $creator = null;
+        //     }
+        //     $user = User::create([
+        //         'name' => $teacher->name,
+        //         'email' => $teacher->email,
+        //         'password' => Hash::make(12345),
+        //         'role' => 'teacher',
+        //         'creator' => $creator
+        //     ]);
+        //     $user->teachers()->attach($teacher->id);  
+        // }); 
+
+        // $classes = Seeders::getClasses();
+        // foreach ($classes as $classe) {
+        //     Classe::create($classe);
+        //     $c = Classe::whereLevel('secondary')->latest('id')->get();
+        //     if ($c->toArray() !== []) {
+        //         $classe = $c[0];
+        //         (New ClasseAndSubjectJoiner($classe))->joinedSubjectsNow($classe);
+        //     }
         
-        factory(Pupil::class, 200)->create();
-    }   */
+        // }
+        
+        // factory(Pupil::class, 200)->create();
+    }   
       
       	
 }

@@ -11,11 +11,32 @@ body{
 	font-family: sans-serif;
 
 }
+.h5-title{
+    font-size: 11px;
+    font-family: monospace;
+}
+
+.btn-focus:focus{
+    color: black !important;
+}
+
+.btn-focus:hover{
+    color: black !important;
+}
+
+.link-white{
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.link-white:hover{
+    color: rgba(250, 250, 250, 0.8) !important;
+}
+
 .font-cursive{
     font-family: cursive;
 }
 .container-bg{
-    background-image: url(../media/bg.jpg);
 	background-image: url(../media/img/desk-600482_1920.jpg);
 	background-size:1365px 600px;
 	min-height: 600px;
@@ -79,7 +100,12 @@ body{
 
 }
 
-#closeAdminTeacherRegisterModal:hover{
+.modalCloser:hover{
+    border: thin solid white;
+    background-color: rgba(200, 20, 0, 0.7);
+}
+
+#closeAdminTeacherRegisterModal:hover, #closeCreateUserModal:hover{
     border: thin solid white;
     background-color: rgba(200, 20, 0, 0.7);
 }
@@ -335,6 +361,29 @@ footer.footer-home{
 
 }
 
+.bg-linear-official-100{
+    background: linear-gradient(60deg,rgba(0, 0, 0, 0.7), rgba(1, 1, 1, 0.5), rgba(10, 150, 150, 0.9), rgba(5, 255, 255, 0.9), rgba(100, 200, 200, 0.9), rgba(1, 1, 1, 0.5), rgba(0, 0, 0, 0.6)) !important;
+
+}
+
+.bg-linear-official-img1{
+    /*background-image: url(/media/footer.jpg);*/
+    background-image: url(/media/silouhette.jpg);
+    width: 100%;
+    background-position: -200px -400px;
+    padding: 0px;
+}
+
+.bg-linear-official-img1 input, .bg-linear-official-img1 select, .bg-linear-official-img1 label{
+    background: transparent;
+    color: black;
+}
+
+.bg-linear-official-dark{
+    background: linear-gradient(60deg,rgba(0, 0, 0, 0.8), rgba(100, 100, 150, 0.7), rgba(5, 255, 255, 0.6), rgba(5, 25, 205, 0.6), rgba(5, 255, 255, 0.2), rgba(0, 0, 0, 0.8)) !important;
+
+}
+
 
 .btn-linear-official-50{
     border: black;
@@ -342,7 +391,13 @@ footer.footer-home{
 
 }
 
-button.btn-linear-official-50b:hover{
+.bg-linear-official-180{
+    border: black;
+    background: linear-gradient(180deg,rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)) !important;
+
+}
+
+button.bg-linear-official-50:hover{
     transform: scale(1.1) !important;
-    text-shadow: 0.5px 0.5px 0.5px white !important;
+    border:thin solid white;
 }

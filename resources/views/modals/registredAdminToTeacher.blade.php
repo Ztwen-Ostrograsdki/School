@@ -2,7 +2,7 @@
 <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg mt-md-n3 modal-md mt-5" style="position: relative;top: 50px;">
         <div class="modal-content bg-linear-official-50" style="border-style: solid; border-radius: 0; !important;">
-            <span class="d-inline-block py-2 px-3 border align-self-end" id="closeAdminTeacherRegisterModal" style="">x</span>
+            <span class="d-inline-block py-2 px-3 align-self-end" id="closeAdminTeacherRegisterModal" style="">x</span>
             <div class="modal-header d-flex justify-content-between p-0 pl-2 m-0">
                 <h4 class="modal-title w-75 mb-0" id="adminModalLabel">Veuillez renseignez vos informations</h4>
             </div>
@@ -14,6 +14,7 @@
                     
 
                     <div class="w-100 mx-auto">
+                        <input type="text" name="creator" value="{{auth()->user()->name}}" hidden="">
                         <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
                             <div class="" style="width: 74%">
                                 <label for="name" class="m-0 p-0">Nom et Prénoms de l'enseignant</label>

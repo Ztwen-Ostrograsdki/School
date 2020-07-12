@@ -37,13 +37,7 @@ class ZtwenFaker{
         ];
 
         $month = $months[rand(0, 11)];
-        if (mb_strlen($month) > 4) {
-        	return mb_substr($month, 0, 3);
-        }
-        else{
-        	return $month;
-        }
-        
+        return ($month, 0, 3);
 	}
 
 	public static function level()

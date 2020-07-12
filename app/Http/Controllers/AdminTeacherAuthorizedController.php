@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\ThisTeacherAuthorized;
 use App\ModelHelper;
 use App\Models\Teacher;
 use App\Policies\TeacherPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AdminTeacherAuthorizedController extends Controller
 {
@@ -57,13 +57,18 @@ class AdminTeacherAuthorizedController extends Controller
         $id = (int)$id;
         $teacher = Teacher::whereId($id)->firstOrFail();
 
-        ThisTeacherAuthorized::authorized($teacher);
-            
-        $t = (new ModelHelper($teacher))->setNameAndSurname();
-        if ($teacher->level == 'secondary') {
-            $teacher->subject->setSlug();
+        if (Gate::check('onlyThisTeacher', [$teacher])) {
+            $t = (new ModelHelper($teacher))->setNameAndSurname();
+            if ($teacher->level == 'secondary') {
+                $teacher->subject->setSlug();
+            }
+            return view('admin.teachers.profil', compact('teacher', 'id', 't'));
         }
-        return view('admin.teachers.profil', compact('teacher', 'id', 't'));
+        abort(403, "Vous étes pas autorisé");
+
+
+            
+        
     }
 
     /**
