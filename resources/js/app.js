@@ -1,35 +1,33 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
+require('./helpers/Formattor.js');
 
 window.Vue = require('vue');
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+let success = Vue.component('success-component-pupils', require('./components/SuccessComponent.vue').default);
+let listing_pupils = Vue.component('listing-component-pupils', require('./components/pupils/ListingComponent.vue').default);
+let profil_pupils = Vue.component('profil-component-pupils', require('./components/pupils/ProfilComponent.vue').default);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+let listing_pupils_dashboard = Vue.component('component-pupils-dashboard', require('./components/pupils/DashboardComponent.vue').default);
 
-const app = new Vue({
-    el: '#app',
-});
+const routes = [
+	{
+		path: '/pupilsm/profil',
+		component: profil_pupils
+	}
+]
+
+const router = new VueRouter({routes})
+
+new Vue({
+	router: router,
+	el: "#pupilsCMP",
+	components: {listing_pupils},
+})
+
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;

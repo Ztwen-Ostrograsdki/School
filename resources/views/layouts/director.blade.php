@@ -162,8 +162,8 @@
             </header>
 
         </div>
-        <div class="w-100 p-1" style="position: relative; top: 70px; max-height: 700px; overflow-y: auto;" id="container-contents-home">
-            <div class="m-0 pt-2 mx-auto w-100 ">
+        <div class="w-100 p-0 px-1" style="position: relative; top: 90px; max-height: 700px; overflow-y: auto;" id="container-contents-home">
+            <div class="m-0 pt-2 mx-auto w-auto">
                 @yield('content')
             </div>
         </div>
@@ -183,7 +183,6 @@
 
 
 {{-- ADMIN TO TEACHER REGISTRED MODAL --}}
-    @extends('modals.registredNewTeacher')
     @extends('modals.createUser')
  
 {{-- END ADMIN TO TEACHER REGISTRED MODAL --}}

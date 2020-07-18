@@ -1,5 +1,5 @@
 
-<div id="wrapper-admin" class="position-absolute modal-home-nav-admin border-right border-bottom" style="top: -26px; left: 0.0; display:none ; z-index: 10000;">
+<div id="wrapper-admin" class="position-absolute modal-home-nav-admin border-right border-bottom" style="top: -13px; left: 0.0; display:none ; z-index: 10000; background-image: url(/media/img/art-2578353_1920.jpg) !important; background-position: -200px 200px; padding: 0px;" >
     <ul class="menu" style="width: 99%;">
         <li class="item1 text-left">
             <a @if(Route::getCurrentRoute()->uri() !== "admin/director/master") href="{{route('master.index')}}" @else href="#"  @endif>

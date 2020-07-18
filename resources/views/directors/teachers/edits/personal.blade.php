@@ -1,14 +1,14 @@
 @auth
 <div class="modal fade" id="editPersonalTeacherModal" tabindex="-1" role="dialog" aria-labelledby="editPersonalTeacherModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg mt-md-n3 modal-md mt-5 bg-linear-official-img1" style="position: relative;top: 50px;">
-        <div class="modal-content bg-linear-official-50" style="border-style: solid; border-radius: 0; !important;">
+    <div class="modal-dialog modal-lg mt-md-n3 modal-md mt-5" style="background-image: url(/media/silouhette.jpg) !important; position: relative;top: 50px; width: 100%; background-position: -200px -400px; padding: 0px;">
+        <div class="bg-linear-official-50 modal-content" style="border-style: solid; border-radius: 0;">
             <span class="d-inline-block py-2 px-3 align-self-end modalCloser" id="closeEditPersonalTeacherModal" style="">x</span>
             <div class="modal-header d-flex justify-content-between p-0 pl-2 m-0">
                 <h4 class="modal-title w-75 mb-0 mx-auto" id="adminModalLabel">Edition des informations de l'enseignant</h4>
             </div>
             <div class="modal-body w-100">
 
-                <form id="formEditPersonalTeacher" class="form-horizontal" role="form" method="put" action="">
+                <form id="formEditPersonalTeacher" class="form-horizontal opac-form" role="form" method="put" action="">
                     {!! csrf_field() !!}
                     @method('PUT')
 

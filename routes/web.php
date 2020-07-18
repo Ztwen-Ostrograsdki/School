@@ -56,8 +56,8 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::put('teachers/edit/l=secondary&t={teacher}', 'TeacherOfSecondaryController@updateTeacherClasses')->name('secondaryTeachers.update.classes');
 	Route::put('teachers/confirmation&classe/for={teacher}', 'TeacherOfSecondaryController@confirmClasses')->name('teachers.confirm.classes');
 	//A retirer
-	Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryControlle@detachTeacherAndClasse')->name('teachers.detach.classe');
-		Route::delete('teachers/detachs/t={teacher}', 'TeacherOfSecondaryControlle@detachTeacherAndClasse')->name('teachers.detach.classes');
+	Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classe');
+		Route::delete('teachers/detachs/t={teacher}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classes');
 
 /**********************************************************/
 	
@@ -72,7 +72,9 @@ Route::group(['prefix' => 'admin'], function(){
 
 	Route::group(['prefix' => 'director'], function(){
 		Route::resource('master', 'Master\SuperAdminController')->middleware('onlySuperAdmin');
+		Route::get('pupilsm/DATA&for&pupils', 'Master\PupilsController@pupilsDataSender')->name('sender');
 		Route::resource('pupilsm', 'Master\PupilsController')->middleware('onlySuperAdmin');
+		
 		Route::resource('teachersm', 'Master\TeachersController')->middleware('onlySuperAdmin');
 		Route::resource('users', 'Master\UsersController')->middleware('onlySuperAdmin');
 		Route::post('teachersm/registration/u={withUser}', 'Master\TeachersController@createTeacher')->name('teachersm.create.teachers');

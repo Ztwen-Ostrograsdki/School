@@ -34,6 +34,15 @@ class Teacher extends Model
 		return $this->users()->get()[0];
 	}
 
+	/**
+	 * To know if the teacher has user in the database
+	 * @return boolean [description]
+	 */
+	public function hasUser()
+	{
+		return $this->users->toArray() !== [];
+	}
+
 	
 	public function subject()
 	{

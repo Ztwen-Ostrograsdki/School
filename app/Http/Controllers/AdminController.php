@@ -42,13 +42,11 @@ class AdminController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => $role,
+            'role' => $data['role'],
+            'authorized' => $data['authorized'],
             'creator' => auth()->user()->name
         ]);
-        if (auth()->user()->role === "superAdmin") {
-           $user->authorized = true;
-           $user->save();
-        }
+        
         return $user->teachers()->attach($teacher->id);
     }
 

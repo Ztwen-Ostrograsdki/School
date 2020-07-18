@@ -61,7 +61,9 @@ class TeachersController extends Controller
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => 12345
+            'password' => 12345,
+            'role' => $request->role,
+            'authorized' => $request->authorized
             ];
 
         if ($level === 'primary') {
@@ -69,12 +71,9 @@ class TeachersController extends Controller
             $input = $request->except(['classe', 'role']);
 
             $teacher = Teacher::create($input);
-            if (auth()->user()->role === "superAdmin") {
-               $teacher->authorized = true;
-               $teacher->save();
-            }
+            
             if ($withUser) {
-                AdminController::createUser($teacher, $data, $request->role);
+                AdminController::createUser($teacher, $data);
             }
 
             if ($request->filled('classe')) {
@@ -89,12 +88,9 @@ class TeachersController extends Controller
         elseif ($level === 'secondary') {
             $input = $request->except('role');
             $teacher = Teacher::create($input);
-            if (auth()->user()->role === "superAdmin") {
-               $teacher->authorized = true;
-               $teacher->save();
-            }
+            
             if ($withUser) {
-                AdminController::createUser($teacher, $data, $request->role);
+                AdminController::createUser($teacher, $data);
             }
             return response()->json(['success'=> 'Vous '.$teacher->name, 'level' => $level]);
         }
@@ -160,7 +156,7 @@ class TeachersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePersonalTeacherData(Request $request, int $id, $withuser = false)
+    public function updatePersonalTeacherData(Request $request, int $id, $withuser = true)
     {
         $id = $request->teacher_id;
         $teacher = Teacher::find((int)$id);
@@ -184,7 +180,7 @@ class TeachersController extends Controller
             }
 
             $teacher->update($input);
-            ($teacher->user())->update($request->only(['name', 'email', 'authorized', 'editor']));
+            ($teacher->user())->update($request->only(['name', 'email', 'authorized', 'editor', 'role']));
             $teacher = Teacher::find($id);
             return response()->json(['success'=> $teacher]);
         }
@@ -192,7 +188,7 @@ class TeachersController extends Controller
         elseif ($level === "secondary") {
             $input = $request->except(['id', 'classe']);
             $teacher->update($input);
-            ($teacher->user())->update($request->only(['name', 'email', 'authorized', 'editor']));
+            ($teacher->user())->update($request->only(['name', 'email', 'authorized', 'editor', 'role']));
 
             $teacher = Teacher::find($id);
             $subject = $teacher->subject->name;

@@ -69,4 +69,20 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * Use to return a icon of key to specify if the user is admin
+     * @return [type] [description]
+     */
+    public function identifyAdminIcon()
+    {
+
+        $roles = $this->getRoles();
+
+        if (in_array('admin', $roles) || in_array('superAdmin', $roles)) {
+            return "fa fa-key mx-2";
+        }
+        return "";
+    }
+
+
 }

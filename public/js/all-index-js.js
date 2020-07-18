@@ -92,13 +92,13 @@ $(function(){
         if(admin_wrapper.css('display') !== 'none'){
             admin_wrapper.toggle('slide', {direction: 'left'})
             admin_container.animate({
-                width: '100%'
+                opacity: '1'
             })
         }
         else{
             admin_wrapper.toggle('slide', {direction: 'left'})
             admin_container.animate({
-                width: '75%'
+                opacity: '0.5'
             })
         }
         
@@ -220,3 +220,5 @@ $(function(){
         
     })
 })
+
+$("#successDeletePupilModal").modal()

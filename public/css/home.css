@@ -367,14 +367,15 @@ footer.footer-home{
 }
 
 .bg-linear-official-img1{
-    /*background-image: url(/media/footer.jpg);*/
-    background-image: url(/media/silouhette.jpg);
+    background-image: url(/media/silouhette.jpg) !important;
     width: 100%;
     background-position: -200px -400px;
     padding: 0px;
 }
 
-.bg-linear-official-img1 input, .bg-linear-official-img1 select, .bg-linear-official-img1 label{
+.opac-form input,
+.opac-form label,
+.opac-form select{
     background: transparent;
     color: black;
 }

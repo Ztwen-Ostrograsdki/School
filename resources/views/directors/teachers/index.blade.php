@@ -153,7 +153,10 @@
 												{{$teacher->id}}
 											</td>
 											<td class="text-left td-name">
-												<a class="card-link" href="{{route('teachersm.show', $teacher->id)}}">{{$teacher->name}}</a>  
+												<a class="card-link" href="{{route('teachersm.show', $teacher->id)}}">{{$teacher->name}}
+												<span title="{{$teacher->name}} est administrateur" class="{{ $teacher->hasUser() ? $teacher->user()->identifyAdminIcon() : ''}} text-white-50' style='font-size: 9px"></span>
+												</a>
+
 												<form class="d-inline float-right m-0 p-0 formEditGetData" method="get" action="{{route('teachersm.edit', $teacher->id)}}" title="card-link Editer les informations de {{ $teacher->name }}" >
 													<input hidden="" type="text" name="teacherData" value="{{$teacher->id}}">
 													<button class="bg-transparent m-0 p-0 fa fa-edit text-white-50 openEditPersonalTeacherModal" style="font-size: 10px!important; font-weight: 200!important; border: none;"></button>
@@ -267,7 +270,9 @@
 												{{$teacher->id}}
 											</td>
 											<td class="text-left td-name">
-												<a class="card-link" href="{{route('teachersm.show', $teacher->id)}}">{{$teacher->name}}</a>
+												<a class="card-link" href="{{route('teachersm.show', $teacher->id)}}">{{$teacher->name}}
+												<span title="{{$teacher->name}} est administrateur" class="{{ $teacher->hasUser() ? $teacher->user()->identifyAdminIcon() : ''}} text-white-50' style='font-size: 9px"></span>
+												</a>
 												<form class="d-inline float-right m-0 p-0 formEditGetData" method="get" action="{{route('teachersm.edit', $teacher->id)}}" title="card-link Editer les informations de {{ $teacher->name }}" >
 													<input hidden="" type="text" name="teacherData" value="{{$teacher->id}}">
 													<button class="bg-transparent m-0 p-0 fa fa-edit text-white-50 openEditPersonalTeacherModal" style="font-size: 10px!important; font-weight: 200!important; border: none;"></button>
@@ -294,9 +299,9 @@
 												{{$teacher->month.' '.$teacher->year}}
 											</td>
 											<td>
-												<ul class="navbar-nav ml-auto bg-linear-official rounded">
+												<ul class="navbar-nav ml-auto bg-secondary rounded">
 													<li class="nav-item dropdown mr-1">
-						                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+						                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 						                                    {{ __('0'.$teacher->classes->count().' classe(s)') }} <span class="caret"></span>
 						                                </a>
 						                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -382,7 +387,9 @@
 												{{$teacher->id}}
 											</td>
 											<td class="text-left td-name">
-												<a class="card-link" href="{{route('teachersm.show', $teacher->id)}}">{{$teacher->name}}</a>
+												<a class="card-link" href="{{route('teachersm.show', $teacher->id)}}">{{$teacher->name}}
+												<span title="{{$teacher->name}} est administrateur" class="{{ $teacher->hasUser() ? $teacher->user()->identifyAdminIcon() : ''}} text-white-50' style='font-size: 9px"></span>
+												</a>
 												<form class="d-inline float-right m-0 p-0 formEditGetData" method="get" action="{{route('teachersm.edit', $teacher->id)}}" title="card-link Editer les informations de {{ $teacher->name }}" >
 													<input hidden="" type="text" name="teacherData" value="{{$teacher->id}}">
 													<button class="bg-transparent m-0 p-0 fa fa-edit text-white-50 openEditPersonalTeacherModal" style="font-size: 10px!important; font-weight: 200!important; border: none;"></button>
@@ -409,9 +416,9 @@
 												{{$teacher->month.' '.$teacher->year}}
 											</td>
 											<td>
-												<ul class="navbar-nav ml-auto bg-linear-official rounded">
+												<ul class="navbar-nav ml-auto bg-secondary rounded">
 													<li class="nav-item dropdown mr-1">
-						                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+						                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 						                                    {{ __('0'.$teacher->classes->count().' classe(s)') }} <span class="caret"></span>
 						                                </a>
 						                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -482,6 +489,7 @@
 	</div>
 
 	@extends('directors.teachers.edits.personal')
+	@extends('directors.teachers.edits.newTeacher')
 @endsection
 @section('js')
     <script src="{{ asset('js/jquery.min.js') }}" defer></script>

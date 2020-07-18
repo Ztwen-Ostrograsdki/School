@@ -20,13 +20,41 @@ class PupilsController extends Controller
      */
     public function index()
     {
-
-        $pupils = Pupil::all();
-        $secondaryPupils = Pupil::whereLevel('secondary')->get();
-        $primaryPupils = Pupil::whereLevel('primary')->get();
-        return view('directors.pupils.index', compact('pupils', 'secondaryPupils', 'primaryPupils'));
-
+        return view('directors.pupils.index');
     }
+
+
+    /**
+     * Use to send a data to a view in ajax
+     * @return a json response 
+     */
+    public function pupilsDataSender()
+    {
+        $allDATA = [];
+        $pupils = Pupil::all();
+
+        foreach ($pupils as $pupil) {
+            $allDATA[$pupil->id] = $pupil->classe->getFormattedClasseName();
+        }
+        $pupilsSecondary = Pupil::whereLevel('secondary')->get();
+        $pupilsPrimary = Pupil::whereLevel('primary')->get();
+        return response()->json(['p' => $pupils, 'pSec' => $pupilsSecondary, 'pPrim' => $pupilsPrimary, 'all' => $allDATA]);
+    }
+
+    /**
+     * Use to get a classe formatted of a pupil
+     * @param  int    $id [description]
+     * @return a json response to a view 
+     */
+    public function pupilClasse(int $id)
+    {
+        $p = Pupil::find((int)$id);
+        $classe = $p->classe->getFormattedClasseName();
+        return response()->json($classe);
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -89,8 +117,12 @@ class PupilsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $pupil = Pupil::find((int)$id);
+        if ($pupil->delete()) {
+            return $this->pupilsDataSender();
+        }
+
     }
 }
