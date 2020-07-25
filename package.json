@@ -28,6 +28,7 @@
         "bootstrap-icons": "^1.0.0-alpha4",
         "laravel-echo": "^1.8.0",
         "socket.io-client": "^2.3.0",
-        "vue-router": "^3.3.4"
+        "vue-router": "^3.3.4",
+        "vuex": "^3.5.1"
     }
 }

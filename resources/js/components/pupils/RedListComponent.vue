@@ -5,7 +5,7 @@
                 <div class="border py-2 col-lg-5 col-md-12">
                     <div class="w-100 d-flex justify-content-between">
                         <div class="">
-                            <h5 class="h5-title">Le Primaire</h5> 
+                            <h5 class="h5-title">Le Primaire</h5>
                         </div>
                         <div class="">
                             <span class="fa fa-close float-right p-1"></span>
@@ -15,7 +15,7 @@
                     <div class="mt-1 w-100">
                         <div class="w-100 d-flex justify-content-between">
                             <span class="fa fa-user fa-2x" ></span>
-                            <span class="fa fa-2x">{{ ppl }}</span>
+                            <span class="fa fa-2x">{{ PBPLength }}</span>
                         </div>
                         <div class="w-100 d-block">
                             <span class="w-100 d-flex justify-content-around">
@@ -79,7 +79,7 @@
                                 <div class="mt-1 w-100">
                                     <div class="w-100 d-flex justify-content-between"> 
                                         <span class="fa fa-user fa-2x text-white" ></span>
-                                        <span class="fa fa-2x">{{ psl }}</span>
+                                        <span class="fa fa-2x">{{ PBSLength }}</span>
                                     </div>
                                     <div class="w-100 d-block">
                                         <span class="w-100 d-flex justify-content-around">
@@ -106,12 +106,12 @@
         </div>
         <div class="w-100">
             <div class="w-100 my-1 p-1">
-                <div class="w-100 d-flex justify-content-between pr-lg-4">
+                <div class="w-100 d-flex justify-content-between">
                     <div class="float-right d-flex justify-content-between pr-2 mt-4 mb-0">
                         <p class="h5-title m-0 mr-3">Les premiers respo sont en <span class="text-primary">Bleu</span></p>
                         <p class="h5-title m-0">Les seconds respo sont en <span class="text-success">Vert</span></p>
                     </div>
-                    <div class="float-right d-flex justify-content-around pr-2 mt-4 mb-0 border py-2" v-if="alert">
+                    <div class="float-right d-flex justify-content-around pr-2 mt-4 mb-0 border py-2" :class="type" v-if="alert">
                         <p class="h5-title m-0 px-2">
                             <span class="mx-2 fa fa-envelope-open"></span>{{ message }}
                         </p>
@@ -122,66 +122,69 @@
             </div>
             <div class="pupils">
                 <div class="container bg-transparent w-100 py-1">
-                    <div class="d-flex w-100 my-1 justify-content-start">
-                        <div class="mx-1 my-0">
-                            <span class="fa fa-refresh text-white-50" @click="filtrer('all')" v-if="alertPupilsSearch !== 'Tous les apprenants'"></span>
-                            <button class="btn btn-primary mx-1" @click="filtrer('primary')"> Le Primaire ({{ ' '+ ppl +' ' }}) </button>
-                            <button class="btn btn-primary" @click="filtrer('secondary')">Le Secondaire ({{ ' '+ psl +' ' }})</button>
-                        </div>
-                        <h5 class="card-link mt-3 text-white-50 ml-3"> {{ alertPupilsSearch }}</h5>
+                <div class="d-flex w-100 my-1 justify-content-start">
+                    <div class="mx-1">
+                        <span class="fa fa-refresh text-white-50" @click="filtrer('all')" v-if="alertPupilsSearch !== 'Tous les apprenants'"></span>
+                        <button class="btn btn-primary mx-1" @click="filtrer('primary')"> Le Primaire ({{ ' '+ PBPLength +' ' }}) </button>
+                        <button class="btn btn-primary" @click="filtrer('secondary')">Le Secondaire ({{ ' '+ PBSLength +' ' }})</button>
                     </div>
-                    <div class="w-100" style="min-height: 500px;">
-                        <table class="table-table table-striped w-100">
-                            <thead>
-                                <th>No</th>
-                                <th>Name</th>
-                                <th>Sexe</th>
-                                <th>Naissance</th>
-                                <th>Inscrit depuis</th>
-                                <th>Classe</th>
-                                <th colspan="1">Actions</th>
-                            </thead>
-                            <tbody>
-                                    
-                                <tr v-for="(pupil, k) in pupils" :key="pupil.id" class="border-bottom border-dark">
-                                    <td>
-                                        {{k+1}}
-                                    </td>
-                                    <td class="text-left">
-                                        <router-link :to="{name: 'pupilsProfil', params: {id: pupil.id}}"   class="card-link d-inline-block">
-                                            {{pupil.name}}
-                                        </router-link>
-                                        <a href="#" title="card-link Editer les informations de" class="fa fa-edit text-white-50 float-right" style="font-size: 10px!important; font-weight: 200!important" data-toggle="modal" data-target="#exampleModal" @click="getEdited(pupil)"></a>
-                                    </td>
-                                    <td>
-                                        {{gender(pupil.sexe)}}
-                                    </td>
-                                    <td>
-                                        {{birthday(pupil)}}
-                                    </td>
-                                    <td>
-                                        {{pupil.month + ' ' + pupil.year}}
-                                    </td>
-                                    <td>
-                                        <a class="card-link w-100 d-inline-block" href="">
-                                            {{pupilsArray[pupil.id].name}} <sup>{{pupilsArray[pupil.id].sup}}</sup>{{pupilsArray[pupil.id].idc}}
-                                        </a>
-                                    </td>
-                                    
-                                    <td>
-                                        <span class="d-inline-block w-100">
-                                            <button title="Voulez vous supprimer" class="px-1 btn bg-transparent w-100" @click="destroy(pupil)">
-                                                <i class="fa fa-trash text-danger"></i>
-                                            </button>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <h5 class="card-link mt-3 text-white-50 ml-3"> {{ alertPupilsSearch }}</h5>
+                </div>
+                <div class="w-100" style="min-height: 500px;">
+                    <table class="table-table table-striped w-100">
+                        <thead>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Sexe</th>
+                            <th class="d-lg-block d-none">Naissance</th>
+                            <th>Inscrit depuis</th>
+                            <th>Classe</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                                
+                            <tr v-for="(pupil, k) in pupilsBlockeds" :key="pupil.id" class="border-bottom border-dark">
+                                <td>
+                                    {{k+1}}
+                                </td>
+                                <td class="text-left">
+                                    <router-link :to="{name: 'pupilsProfil', params: {id: pupil.id}}"   class="card-link d-inline-block">
+                                        {{pupil.name}}
+                                    </router-link>
+                                    <a href="#" title="Editer les informations de" class="fa fa-edit text-white-50 float-right" style="font-size: 10px!important; font-weight: 200!important" data-toggle="modal" data-target="#exampleModal" @click="getEdited(pupil)"></a> 
+                                </td>
+                                <td>
+                                    {{gender(pupil.sexe)}}
+                                </td>
+                                <td class="d-lg-block d-none">
+                                    {{birthday(pupil)}}
+                                </td>
+                                <td>
+                                    {{pupil.month + ' ' + pupil.year}}
+                                </td>
+                                <td>
+                                    <a class="card-link w-100 d-inline-block" href="">
+                                        {{pupilsArray[pupil.id].name}} <sup>{{pupilsArray[pupil.id].sup}}</sup>{{pupilsArray[pupil.id].idc}}
+                                    </a>
+                                </td>
+                                
+                                <td>
+                                    <span class="d-flex justify-content-between w-100">
+                                        <button title="Restaurer cet élève" class="btn bg-secondary" style="width: 48%;" @click="restore(pupil)">
+                                            <i class="fa fa-recycle text-success"></i>
+                                        </button>
+                                        <button title="Supprimer définitement cet élève" class="btn bg-info"  style="width: 48%;">
+                                            <i class="fa fa-user-times text-danger"></i>
+                                        </button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     
 </template>
@@ -190,11 +193,11 @@
     import { mapState } from 'vuex'
     export default { 
         props : [],
-        editedPupil: {},
 
         data() {
             return {
-                selfMonths : [
+               
+                months : [
                     "Janvier",
                     "Février",
                     "Mars",
@@ -220,8 +223,9 @@
             gender(sexe){
                 return sexe == "male" ? 'M' : 'F'
             },
+
             filtrer(level){
-                this.$store.commit('SHOW_PUPILS_BY_LEVEL', level)
+                this.$store.commit('SHOW_PUPILS_BY_LEVEL', level, false)
             },
 
             birthday(user)
@@ -229,15 +233,15 @@
                 let date = user.birth
                 let parts = (date.split("-")).reverse()
                 let day = parts[0]
-                let m = (this.selfMonths[parts[1] - 1]).length > 5 ? (this.selfMonths[parts[1] - 1]).substring(0, 3) : this.selfMonths[parts[1] - 1]
+                let m = (this.months[parts[1] - 1]).length > 5 ? (this.months[parts[1] - 1]).substring(0, 3) : this.months[parts[1] - 1]
                 let year = parts[2]
 
                 return day + " " + m + " " + year
             },
-            destroy(pupil){
-                this.$store.dispatch('lazyDeletePupils', pupil)                
+            restore(pupil){
+                this.$store.dispatch('restorePupils', pupil)
+                
             },
-
             getEdited(pupil){
                 this.$store.commit('RESET_INVALID_INPUTS')
                 this.$store.dispatch('getAPupilData', pupil)
@@ -264,10 +268,11 @@
             resetAlert(){
                 this.$store.commit('ALERT_RESET')
             }
+
         },
 
         computed: mapState([
-           'pupilsArray', 'pupils', 'secondaryPupils', 'primaryPupils', 'pupilsAll', 'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'alertPupilsSearch', 'alert', 'message', 'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs'
+             'pupilsBlockeds', 'pupilsBlockedsAll', 'PSBlockeds', 'PPBlockeds', 'pupilsArray', 'pupilsBlockedsLength', 'PBPLength', 'PBSLength', 'alertPupilsSearch', 'alert', 'type', 'message', 'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs'
         ])
     }
 
@@ -312,5 +317,4 @@
 })
 
 </script>
-
 

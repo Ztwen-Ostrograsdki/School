@@ -86,7 +86,7 @@ $(function(){
 $(function(){
     let open_admin_aside = $('#open-admin-aside')
     let admin_wrapper = $('#wrapper-admin')
-    let admin_container = $('#admin-principal-container')
+    let admin_container = $('#admin-principal-container .first-div')
 
     open_admin_aside.click(function(){
         if(admin_wrapper.css('display') !== 'none'){
@@ -191,34 +191,34 @@ $(function(){
 })
 
 
-$(function(){
-    let input = $('#select-p-level')
-    let all = $('#all-tags')
-    let primary = $('#primary, #teachers')
-    let secondary = $('#secondary')
+// $(function(){
+//     let input = $('#select-p-level')
+//     let all = $('#all-tags')
+//     let primary = $('#primary, #teachers')
+//     let secondary = $('#secondary')
 
-    input.on('input', ()=>{
-        if(input.val() !== ""){
-            let val = input.val()
-            if(val == "primary" || val == "teachers"){
-                all.hide('fade')
-                secondary.hide('fade')
-                primary.show('fade')
-            }
-            else if (val == "secondary") {
-                all.hide('fade')
-                primary.hide('fade')
-                secondary.show('fade')
-            }
+//     input.on('input', ()=>{
+//         if(input.val() !== ""){
+//             let val = input.val()
+//             if(val == "primary" || val == "teachers"){
+//                 all.hide('fade')
+//                 secondary.hide('fade')
+//                 primary.show('fade')
+//             }
+//             else if (val == "secondary") {
+//                 all.hide('fade')
+//                 primary.hide('fade')
+//                 secondary.show('fade')
+//             }
             
-        }
-        else{
-            all.show('fade')
-            primary.hide('fade')
-            secondary.hide('fade')
-        }
+//         }
+//         else{
+//             all.show('fade')
+//             primary.hide('fade')
+//             secondary.hide('fade')
+//         }
         
-    })
-})
+//     })
+// })
 
-$("#successDeletePupilModal").modal()
+// $("#successDeletePupilModal").modal()

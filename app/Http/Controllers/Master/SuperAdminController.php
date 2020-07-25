@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Helpers\Tools\Tools;
 use App\Http\Controllers\Controller;
+use App\Models\Classe;
+use App\Models\Pupil;
+use App\Models\Subject;
+use App\Models\Teacher;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -35,6 +40,63 @@ class SuperAdminController extends Controller
     public function index()
     {
         return view('directors.index');
+    }
+
+    public function dataSender()
+    {
+
+        $u = User::all()->count();
+
+        $t = Teacher::all()->count();
+        $ts = Teacher::whereLevel('secondary')->count();
+        $tp = Teacher::whereLevel('primary')->count();
+
+        $p = Pupil::all()->count();
+        $ps = Pupil::whereLevel('secondary')->count();
+        $pp = Pupil::whereLevel('primary')->count();
+        $pupilsBlockedsLength = count(Pupil::getBlockeds());
+        $PBSLength = count(Pupil::getBlockeds('secondary'));
+        $PBPLength = count(Pupil::getBlockeds('primary'));
+
+        $data = [
+            'tl' => $t, 
+            'tsl' => $ts, 
+            'tpl' => $tp, 
+            'pl' => $p, 
+            'psl' => $ps, 
+            'ppl' => $pp, 
+            'ul' => $u, 
+            'pupilsblockedLength' => $pupilsBlockedsLength, 
+            'PBSLength' => $PBSLength, 
+            'PBPLength' => $PBPLength
+        ];
+
+        return response()->json($data);
+    }
+
+    /**
+     * Use to get data and sebd then to a vue
+     * @return a json response
+     */
+    public function getTOOLS()
+    {   
+        $secondarySubjects = Subject::whereLevel('secondary')->get();
+        $primarySubjects = Subject::whereLevel('primary')->get();
+        $primaryClasses = Classe::whereLevel('primary')->get();
+        $secondaryClasses = Classe::whereLevel('secondary')->get();
+        $months = Tools::months();
+        $roles = Tools::roles();
+        $data = [
+            'secondaryClasses' => $secondaryClasses, 
+            'primaryClasses' => $primaryClasses, 
+            'primarySubjects' => $primarySubjects, 
+            'secondarySubjects' => $secondarySubjects,
+            'months' => $months,
+            'roles' => $roles
+        ];
+
+        return response()->json($data);
+        
     }
 
 

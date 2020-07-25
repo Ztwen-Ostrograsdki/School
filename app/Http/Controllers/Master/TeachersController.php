@@ -25,11 +25,22 @@ class TeachersController extends Controller
     public function index()
     {
 
-        $teachers = Teacher::all();
-        $secondaryTeachers = Teacher::whereLevel('secondary')->get();
-        $primaryTeachers = Teacher::whereLevel('primary')->get();
-        return view('directors.teachers.index', compact('teachers', 'primaryTeachers', 'secondaryTeachers'));
+        return view('directors.teachers.index');
+    }
 
+    /**
+     * Use to send a data to a view in ajax
+     * @return a json response 
+     */
+    public function pupilsDataSender()
+    {
+        $allDATA = [];
+        $teachers = Teacher::all();
+
+        
+        $teachersSecondary = Teacher::whereLevel('secondary')->get();
+        $teachersPrimary = Teacher::whereLevel('primary')->get();
+        return response()->json(['t' => $teachers, 'tSec' => $teachersSecondary, 'tPrim' => $teachersPrimary, 'all' => $allDATA]);
     }
 
     /**

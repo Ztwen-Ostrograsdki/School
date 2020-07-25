@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Helpers\TrashedGet;
 use App\Models\Classe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +11,13 @@ class Pupil extends Model
     use SoftDeletes;
 
     protected $fillable = ['name', 'sexe', 'classe_id', 'birth', 'status', 'year','month', 'level', 'creator', 'editor', 'authorized'];
+
+    public static function getBlockeds(string $level = null)
+    {
+        $blocked = (new TrashedGet(Pupil::class))->getDeleted($level);
+        return $blocked;
+    }
+
 
     public function classe()
     {

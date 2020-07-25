@@ -13,15 +13,36 @@ class TrashedGet{
 		$this->classMapping;
 	}
 
-	public function getDeleted(string $column = 'deleted_at')
+	public function getDeleted(string $level = null , string $column = 'deleted_at')
 	{
 		$all = $this->classMapping::withTrashed($column)->get();
 		$blocked = [];
-		for ($i=0; $i < count($all) ; $i++) {
-            if($all[$i]->deleted_at !== null) {
-                $blocked[] = $all[$i];
-            }
-        }
+		if ($level === null) {
+			for ($i=0; $i < count($all) ; $i++) {
+	            if($all[$i]->deleted_at !== null) {
+	                $blocked[] = $all[$i];
+	            }
+	        }
+		}
+		else{
+			if ($level == 'primary') {
+				for ($i=0; $i < count($all) ; $i++) {
+		            if($all[$i]->deleted_at !== null && $all[$i]->level === 'primary') {
+		                $blocked[] = $all[$i];
+		            }
+		        }
+				
+			}
+			elseif ($level == "secondary") {
+				for ($i=0; $i < count($all) ; $i++) {
+		            if($all[$i]->deleted_at !== null && $all[$i]->level === 'secondary') {
+		                $blocked[] = $all[$i];
+		            }
+		        }
+				
+			}
+		}
+		
 
         return $blocked;
 	}

@@ -1,0 +1,36 @@
+import pupils_states from './pupilsStates.js'
+import teachers_states from './teachersStates.js'
+import notifications_states from './notificationsStates.js'
+
+const default_states = {
+	pl: 0,
+	ppl: 0,
+	psl: 0,
+	tl: 0,
+	tpl: 0,
+	tsl: 0,
+	ul: 0,
+	alert: false,
+	message: "",
+	primaryClasses: {},
+	secondaryClasses: {},
+	allClasses: {},
+	primarySubjects: {},
+	secondarySubjects: {},
+	allSubjects: {},
+	allRoles: [],
+	months: [],
+	type: "border-success",
+	PBPLength: 0,
+	PBSLength: 0,
+    pupilsBlockedsLength: 0,
+    invalidInputs: undefined,
+    successed: {status: false, message: ''}
+
+}
+
+const states = {
+	...teachers_states, ...pupils_states, ...notifications_states, ...default_states
+}
+
+export default states

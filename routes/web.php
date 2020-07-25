@@ -23,7 +23,7 @@ Route::group(['prefix' => 'errors'], function() {
     
 });
 
-Route::group(['prefix' => 't&profil&onlyforteacher&ordenied&acces&append'], function() {
+Route::group(['prefix' => 't&onlyforteacher&ordenied&acces&append'], function() {
     Route::resource('teacherAuthorized', 'AdminTeacherAuthorizedController')->middleware('onlyTeacher');
 });
 
@@ -71,11 +71,20 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::resource('pupils', 'PupilController');
 
 	Route::group(['prefix' => 'director'], function(){
+		Route::get('master/get&counter&for&all&data&with&authorization', 'Master\SuperAdminController@dataSender');
+		Route::get('master/get&all&data&tools&with&authorization', 'Master\SuperAdminController@getTOOLS');
 		Route::resource('master', 'Master\SuperAdminController')->middleware('onlySuperAdmin');
+
 		Route::get('pupilsm/DATA&for&pupils', 'Master\PupilsController@pupilsDataSender')->name('sender');
+		Route::get('pupilsm/get&classe&of&pupil&with&data&credentials/id={id}', 'Master\PupilsController@getAPupilData');
+		Route::put('pupilsm/update/update&perso/id={id}', 'Master\PupilsController@persoUpdate');
+		Route::put('pupilsm/restore/id={id}', 'Master\PupilsController@restore');
 		Route::resource('pupilsm', 'Master\PupilsController')->middleware('onlySuperAdmin');
 		
+		Route::get('teachersm/DATA&for&teachers', 'Master\TeachersController@teachersDataSender');
 		Route::resource('teachersm', 'Master\TeachersController')->middleware('onlySuperAdmin');
+
+
 		Route::resource('users', 'Master\UsersController')->middleware('onlySuperAdmin');
 		Route::post('teachersm/registration/u={withUser}', 'Master\TeachersController@createTeacher')->name('teachersm.create.teachers');
 		Route::put('teachersm/upate&teachers&personal&data/id={teacher}/u={withUser}', 'Master\TeachersController@updatePersonalTeacherData')->name('teachersm.update.teachersPersonal');

@@ -64,7 +64,7 @@ class Controller extends BaseController
                         'sexe' => ['required', 'string', 'bail'],
                         'birth' => ['required', 'date', 'bail'],
                         'month' => ['required', 'string', 'bail'],
-                        'year' => ['required', 'numeric', 'bail', 'max:'.date('year')]
+                        'year' => ['required', 'numeric', 'bail', 'max:'.date('Y')]
                     ]);
                 }
                 else{
@@ -77,7 +77,7 @@ class Controller extends BaseController
                         'sexe' => ['required', 'string', 'bail'],
                         'birth' => ['required', 'date', 'bail'],
                         'month' => ['required', 'string', 'bail'],
-                        'year' => ['required', 'numeric', 'bail', 'max:'.date('year')]
+                        'year' => ['required', 'numeric', 'bail', 'max:'.date('Y')]
                     ]);
                 }
             }
@@ -92,7 +92,7 @@ class Controller extends BaseController
                     'level' => ['required', 'string', 'bail'],
                     'birth' => ['required', 'date', 'bail'],
                     'month' => ['required', 'string', 'bail'],
-                    'year' => ['required', 'numeric', 'bail', 'max:'.date('year')]
+                    'year' => ['required', 'numeric', 'bail', 'max:'.date('Y')]
                 ]);
             }
         }
@@ -149,7 +149,7 @@ class Controller extends BaseController
                         'birth' => ['required', 'date', 'bail'],
                         'subject_id' => ['required', 'numeric', 'bail'],
                         'month' => ['required', 'string', 'bail'],
-                        'year' => ['required', 'numeric', 'bail', 'max:'.date('year')]
+                        'year' => ['required', 'numeric', 'bail', 'max:'.date('Y')]
                     ]);
                 }
             }
@@ -165,7 +165,7 @@ class Controller extends BaseController
                     'birth' => ['required', 'date', 'bail'],
                     'subject_id' => ['required', 'numeric', 'bail'],
                     'month' => ['required', 'string', 'bail'],
-                    'year' => ['required', 'numeric', 'bail', 'max:'.date('year')]
+                    'year' => ['required', 'numeric', 'bail', 'max:'.date('Y')]
                 ]);
             }
         }
