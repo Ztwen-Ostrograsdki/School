@@ -45,6 +45,14 @@ class SuperAdminController extends Controller
     public function dataSender()
     {
 
+        $user = auth()->user();
+        $admin = false;
+        $roles = $user->getRoles();
+
+        if (in_array('admin', $roles) || in_array('superAdmin', $roles)) {
+            $admin = true;
+        }
+
         $u = User::all()->count();
 
         $t = Teacher::all()->count();
@@ -59,6 +67,8 @@ class SuperAdminController extends Controller
         $PBPLength = count(Pupil::getBlockeds('primary'));
 
         $data = [
+            'user' => $user,
+            'admin' => $admin,
             'tl' => $t, 
             'tsl' => $ts, 
             'tpl' => $tp, 

@@ -7,6 +7,10 @@ Vue.use(VueRouter)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+//ERRORS COMPONENTS
+let error404 = Vue.component('error404', require('./components/errors/Errors404Component.vue').default)
+let error419 = Vue.component('error419', require('./components/errors/Errors419Component.vue').default)
+
 
 //ADMINS COMPONENTS
 let admin_sidebar = Vue.component('admin-sidebar', require('./components/admin/SidebarComponent.vue').default)
@@ -16,9 +20,14 @@ let admin_defaultDashboard = Vue.component('admin-dashboard-default', require('.
 //PUPILS COMPONENTS
 let pupils_home = Vue.component('pupils-home', require('./components/pupils/HomeComponent.vue').default)
 let listing_pupils = Vue.component('listing-component-pupils', require('./components/pupils/ListingComponent.vue').default)
-let pupils_profil = Vue.component('profil-component-pupils', require('./components/pupils/ProfilComponent.vue').default)
-let pupils_profil_box = Vue.component('profil-pupil-box', require('./components/pupils/layouts/ProfilBoxComponent.vue').default)
 let pupils_redList = Vue.component('pupils-redList', require('./components/pupils/RedListComponent.vue').default)
+
+let pupils_profil = Vue.component('profil-component-pupils', require('./components/pupils/ProfilComponent.vue').default)
+let pupils_profil_main = Vue.component('pupil-profil-main', require('./components/pupils/layouts/MainProfilComponent.vue').default)
+let pupils_perso_data = Vue.component('pupil-perso-data', require('./components/pupils/layouts/PersonalBoxComponent.vue').default)
+let pupils_parents_data = Vue.component('pupil-parents-data', require('./components/pupils/layouts/ParentalBoxComponent.vue').default)
+let pupils_marks_data = Vue.component('pupil-marks-data', require('./components/pupils/layouts/MarksBoxComponent.vue').default)
+let pupils_profil_box = Vue.component('profil-pupil-box', require('./components/pupils/layouts/ProfilBoxComponent.vue').default)
 
 //FORMULARS COMPONENTS
 
@@ -76,7 +85,9 @@ new Vue({
 	el: ".app",
 	components: {
 		admin_sidebar,
-		pupils_perso_edit
+		pupils_perso_edit,
+		error404,
+		error419
 	}
 })
 

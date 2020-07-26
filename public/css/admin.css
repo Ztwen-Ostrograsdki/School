@@ -1,7 +1,7 @@
 #container-bg-admin{
 	background-image: url(../media/img/school-2051712_1920.jpg);
-	background-size:1365px 800px;
-	min-height: 800px;
+	background-size:1365px 663px;
+	min-height: 663px;
 }
 
 .container-bg .container-mask{
@@ -9,7 +9,7 @@
 	top: 0px;
 	background-image: linear-gradient(rgba(00,0,250, 0.6), rgba(255, 255, 255, 0.5), rgba(100, 100, 100, 0.5), rgba(150, 150, 150, 0.5), rgba(255, 10, 255, 0.6));
 	width: 100%;
-	height: 800px;
+	height: 663px;
 }
 
 .fa, .fas{

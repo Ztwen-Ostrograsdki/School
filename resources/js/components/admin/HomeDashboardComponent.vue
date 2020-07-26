@@ -1,5 +1,5 @@
 <template>
-	<div class="first-div d-flex justify-content-around py-1 w-100 border float-right mx-0 bg-linear-official-50" style="z-index: 100">
+	<div class="first-div d-flex justify-content-around py-1 w-100 border float-right mx-0 bg-linear-official-50" style="z-index: 100" v-if="!errors.status">
 			<div class="d-flex row justify-content-around" style="width: 98.5%">
 				<div class="border py-2 col-4">
 					<div class="w-100 d-flex justify-content-between">
@@ -119,6 +119,7 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	export default {
 		data() {
             return {
@@ -144,6 +145,10 @@
                     this.tpl = response.data.tpl
                 }
             )
-        }
+        },
+
+        computed: mapState([
+            'errors'
+        ])
 	}
 </script>

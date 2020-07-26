@@ -1,34 +1,35 @@
 const pupils_actions = {
-	getPupilsData: (state) => {
+	getPupilsData: (store) => {
 		axios.get('/admin/director/pupilsm/DATA&for&pupils')
              .then(response => {
-             	state.commit('GET_PUPILS_DATA', response.data)
 
+             	store.commit('GET_PUPILS_DATA', response.data)
         })
 	},
-    getAPupilData: (state, pupil) => {
+    getAPupilData: (store, pupil) => {
         axios.get('/admin/director/pupilsm/get&classe&of&pupil&with&data&credentials/id=' + pupil.id)
             .then(response => {
-                state.commit('GET_A_PUPIL_DATA', response.data)
+                store.commit('GET_A_PUPIL_DATA', response.data)
             })
             .catch(e => {
-               state.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
+               store.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
             })
     },
-    updateAPupilData: (state, pupil) => {
-        axios.put('/admin/director/pupilsm/update/update&perso/id=' + pupil.id, {
-            name: pupil.name,
-            birth: pupil.birth,
-            classe_id: pupil.classe_id,
-            month: pupil.month,
-            year: pupil.year,
-            sexe: pupil.sexe
+    updateAPupilData: (store, inputs) => {
+        axios.put('/admin/director/pupilsm/update/update&perso/id=' + inputs.pupil.id, {
+            token: inputs.token,
+            name: inputs.pupil.name,
+            birth: inputs.pupil.birth,
+            classe_id: inputs.pupil.classe_id,
+            month: inputs.pupil.month,
+            year: inputs.pupil.year,
+            sexe: inputs.pupil.sexe
         })
         .then(response => {
-            if(response.data.errors == undefined){
-                state.commit('RESET_INVALID_INPUTS')
-                state.commit('GET_PUPILS_DATA', response.data)
-                state.commit('SUCCESSED', 'Mis à jour des données réussie')
+            if(response.data.invalidInputs == undefined){
+                store.commit('RESET_INVALID_INPUTS')
+                store.commit('GET_PUPILS_DATA', response.data)
+                store.commit('SUCCESSED', 'Mis à jour des données réussie')
                 
                 $('#exampleModal .buttons-div').hide('size', function(){
                     $('#exampleModal form').hide('fade', function(){
@@ -45,33 +46,33 @@ const pupils_actions = {
                 
             }
             else{
-                console.log(response.data.errors)
-                state.commit('INVALID_INPUTS', response.data.errors)
+                console.log(response.data.invalidInputs)
+                store.commit('INVALID_INPUTS', response.data.invalidInputs)
             }
             
         })
         .catch(e => {
-           state.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
+           store.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
         })
     },
 
-	lazyDeletePupils: (state, pupil) => {
+	lazyDeletePupils: (store, pupil) => {
 		axios.delete('/admin/director/pupilsm/' + pupil.id)
              .then(response => {
-            	state.commit('GET_PUPILS_DATA', response.data)
-                state.commit('ALERT_MAKER', "L'élève " + pupil.name + " a été envoyé dans la corbeille avec succès!")
+            	store.commit('GET_PUPILS_DATA', response.data)
+                store.commit('ALERT_MAKER', "L'élève " + pupil.name + " a été envoyé dans la corbeille avec succès!")
             	
         })
 	},
 
-    restorePupils: (state, pupil) => {
+    restorePupils: (store, pupil) => {
         axios.put('/admin/director/pupilsm/restore/id=' + pupil.id)
             .then(response => {
-                state.commit('GET_PUPILS_DATA', response.data)
-                state.commit('ALERT_MAKER', "L'élève " + pupil.name + " a été restauré avec succès!")
+                store.commit('GET_PUPILS_DATA', response.data)
+                store.commit('ALERT_MAKER', "L'élève " + pupil.name + " a été restauré avec succès!")
             })
             .catch(e => {
-               state.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
+               store.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
             })
     }
 

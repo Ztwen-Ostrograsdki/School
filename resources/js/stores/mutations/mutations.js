@@ -4,6 +4,9 @@ import teachers_mutations from './teachersMutations.js'
 const default_mutations = {
 
 	GET_DATA_LENGTH: (state, data) => {
+
+		state.user = data.user
+		state.admin = data.admin
 		state.ul = data.ul
 		state.pl = data.pl
 		state.ppl = data.ppl
@@ -44,8 +47,11 @@ const default_mutations = {
 	},
 
 	RESET_INVALID_INPUTS: (state) => {
-
 		state.invalidInputs = undefined
+	},
+	ERRORS_SETTER: (state, advancedErrors) => {
+		state.errors.status = advancedErrors.status
+		state.errors.type = advancedErrors.type
 	},
 
 	SUCCESSED: (state, message) => {

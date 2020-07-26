@@ -7,7 +7,7 @@ div, ul, li,a,p {
 .eror-container{
 	width: 100%;
 	background-image: url(/media/light.jpg);
-	background-size: 1580px 700px;
+	background-size: 1580px 600px;
 }
 
 .eror-container span.logo{

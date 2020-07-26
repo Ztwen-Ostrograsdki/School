@@ -1,5 +1,5 @@
 <template>
-	<div id="wrapper-admin" class="position-absolute modal-home-nav-admin border-right border-bottom" style="top: -20px; left: 0.0; display:none ; z-index: 1000000; background-image: url(/media/img/art-2578353_1920.jpg) !important; background-position: -200px 200px; padding: 0px; height: 600px;" >
+	<div id="wrapper-admin" class="position-absolute modal-home-nav-admin border-right border-bottom" style="top: -20px; left: 0.0; display:none ; z-index: 1000000; background-image: url(/media/img/art-2578353_1920.jpg) !important; background-position: -200px 200px; padding: 0px; height: 460px;" >
 	    <ul class="menu" style="width: 99%;">
 	        <li class="item1 text-left">
 	            <router-link to="/admin/director/master">
@@ -95,7 +95,7 @@
 	},
 
 	computed: mapState([
-		'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'pupilsBlockedsLength'
+		'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'pupilsBlockedsLength', 'user', 'admin'
 	])
        
 

@@ -13,11 +13,13 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custumise.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/errors.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     <link href="{{ asset('css/profil.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home-menu.css') }}" rel="stylesheet">
     <link href="{{ asset('css/nav-menu-lg.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     @yield('css')
     <style>
         form div, form label, form small{
@@ -57,23 +59,15 @@
     <div class="container-bg app" id="container-bg-admin">
         <div class="container-mask maskor" id="admin-principal-container">
             <admin-sidebar></admin-sidebar> 
-            <div class="w-100 my-1" style="max-height: 720px; overflow-y: auto;">
+            <div class="w-100 my-1" style="max-height: 580px; overflow-y: auto;">
                 <router-view></router-view>
             </div>           
         </div>
-        <div class="w-100 p-0 px-1" style="position: relative; top: 90px; max-height: 700px; overflow-y: auto;" id="container-contents-home">
-            <div class="m-0 pt-2 mx-auto w-auto">
-                @yield('content')
-            </div>
-        </div>
-    </div>
-
-    </div>
-    <footer class="footer mt-auto p-0 footer-home" id="footer-admin">
-    <div id="footer-maskor" class="px-3 py-2 m-0">
         
+    </div>
 
     </div>
+    
 
    
 {{-- MODAL SUCCESS --}}

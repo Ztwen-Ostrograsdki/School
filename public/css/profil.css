@@ -3,12 +3,6 @@
 }
 
 
-/*.container-profil h5{
-	text-align: left;
- 	clear: both;
- 	text-shadow: 0 0 1px rgba(20,255,250,0.8);
-}*/
-
 .text-decorator{
 	text-shadow: 0 0 1px rgba(20,255,250,0.8);
 }
@@ -50,25 +44,14 @@
 	opacity: 0.2;
 }
 
-
+.text-shadow{
+	text-shadow: 2px 2px 2px orange;
+}
 .profil-school h3{
  	text-shadow: 0 0 2px #3dd374;
 }
 
-.profil-img span{
 
-}
-
-.profil-class{
-	position: relative;
-	top: 10px;
-	font-size: 4rem;
-}
-
-.profil-class small{
-	position: relative;
-	bottom: 20px;
-}
 .profil-img .photo img{
 	position: relative;
 	left: 8%;

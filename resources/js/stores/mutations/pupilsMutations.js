@@ -1,6 +1,9 @@
 const pupils_mutations = {
 
 	GET_PUPILS_DATA: (state, data) => {
+        state.errors = data.errors
+        state.user = data.user
+        state.admin = data.admin
 		state.pupils = data.p
 		state.pupilsAll = data.p
 		state.pupilsArray = data.all
@@ -21,6 +24,8 @@ const pupils_mutations = {
 
     GET_A_PUPIL_DATA: (state, data) => {
         state.editedPupil = data.p
+        state.token = data.token
+        
     },
 
     RESET_EDITED_PUPIL: (state) => {

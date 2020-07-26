@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column justify-content-around py-1 w-100 border float-right mx-0 bg-linear-official-180" >
+    <div class="d-flex flex-column justify-content-around py-1 w-100 border float-right mx-0 bg-linear-official-180 px-3" >
         <div class="d-flex justify-content-around py-1 w-100">
             <div class="d-flex row justify-content-around" style="width: 100%">
                 <div class="border py-2 col-lg-5 col-md-12">
@@ -129,6 +129,11 @@
                             <button class="btn btn-primary" @click="filtrer('secondary')">Le Secondaire ({{ ' '+ psl +' ' }})</button>
                         </div>
                         <h5 class="card-link mt-3 text-white-50 ml-3"> {{ alertPupilsSearch }}</h5>
+                        <div class="position-absolute profiler" style="top: 150px; left: 10px; display: none">
+                            <div class="profil-img">
+                                <span class="photo"><img src="/media/hideface.jpg" width="250"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="w-100" style="min-height: 500px;">
                         <table class="table-table table-striped w-100">
@@ -148,10 +153,12 @@
                                         {{k+1}}
                                     </td>
                                     <td class="text-left">
-                                        <router-link :to="{name: 'pupilsProfil', params: {id: pupil.id}}"   class="card-link d-inline-block">
-                                            {{pupil.name}}
+                                        <router-link :to="{name: 'pupilsProfil', params: {id: pupil.id}}"   class="card-link d-inline-block" >
+                                            <span  class="w-100 d-inline-block link-profiler">
+                                                {{pupil.name}}
+                                            </span>
                                         </router-link>
-                                        <a href="#" title="card-link Editer les informations de" class="fa fa-edit text-white-50 float-right" style="font-size: 10px!important; font-weight: 200!important" data-toggle="modal" data-target="#exampleModal" @click="getEdited(pupil)"></a>
+                                        <a href="#" title="card-link Editer les informations de" class="fa fa-edit text-white-50 float-right" style="font-size: 10px!important; font-weight: 200!important" data-toggle="modal" data-target="#exampleModal" @click="getEdited(pupil)" @mouseout="closeProfiler()" @mouseover="openProfiler()"></a>
                                     </td>
                                     <td>
                                         {{gender(pupil.sexe)}}
@@ -190,7 +197,7 @@
     import { mapState } from 'vuex'
     export default { 
         props : [],
-        editedPupil: {},
+        editedPupil: {}, 
 
         data() {
             return {
@@ -208,7 +215,8 @@
                     "Novembre",
                     "Décembre"
 
-                ]
+                ],
+                profiler: false
             }   
         },
         created(){
@@ -236,6 +244,20 @@
             },
             destroy(pupil){
                 this.$store.dispatch('lazyDeletePupils', pupil)                
+            },
+
+            closeProfiler(){
+                this.profiler = false
+                $(()=>{
+                    $('.profiler').hide('fade', 500)
+                })
+            },
+            openProfiler(){
+                this.profiler = true
+
+                $(()=>{
+                    $('.profiler').show('fade', 500)
+                })
             },
 
             getEdited(pupil){
@@ -267,11 +289,12 @@
         },
 
         computed: mapState([
-           'pupilsArray', 'pupils', 'secondaryPupils', 'primaryPupils', 'pupilsAll', 'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'alertPupilsSearch', 'alert', 'message', 'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs'
+           'pupilsArray', 'pupils', 'secondaryPupils', 'primaryPupils', 'pupilsAll', 'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'alertPupilsSearch', 'alert', 'message', 'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs', 'errors'
         ])
     }
 
     $(function(){
+
     let sup_tag = $('#sup-tag')
     let sup_ch = $('#chevron-sup')
     let sec_tag = $('#sec-tag')

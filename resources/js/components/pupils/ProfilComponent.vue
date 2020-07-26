@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-linear-official-180 p-2 px-3 border border-white" style="height: 700px;">
+	<div class="bg-linear-official-180 p-2 px-3 border border-white" style="height: 560px;">
 		<profil-pupil-box :pupilData="pupil"></profil-pupil-box>
 	</div>
 </template>

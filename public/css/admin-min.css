@@ -1,4 +1,4 @@
-#container-bg-admin-min{
+/*#container-bg-admin-min{
     background-image: url(../media/img/ruler-5146195_1920.jpg);
 	background-image: url(../media/img/pencils-4916654_1920.jpg);
 	background-size:1365px 700px;
@@ -19,7 +19,7 @@
     padding: 10px 20px;
     width: 100%;
     border: thin solid gray;
-    overflow-y: auto; /* activation du scrollage en cas de contenu trop volumineux*/
+    overflow-y: auto;  activation du scrollage en cas de contenu trop volumineux
     display:inline-block;
     float: left;
     max-height:500px; 
@@ -51,4 +51,4 @@ footer.footer-home#footer-admin-min{
     background-size:1370px 390px;
     width: 100%;
     padding: 0px;
-}
+}*/

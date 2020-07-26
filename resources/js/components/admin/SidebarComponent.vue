@@ -1,6 +1,6 @@
 <template>
 	<div class="w-100 m-0 p-0">
-		<header class="maskor-sup">
+		<header class="maskor-sup" v-if="!errors.status">
             <div class="w-100 m-0 p-0 border d-flex justify-content-between bg-linear-official-dark" style="background-color:;">
                 <div class="d-lg-inline text-left" style="width: 20%;">
                     <a class="link-float w-100 h-100" href="#" id="open-admin-aside">
@@ -24,8 +24,8 @@
                     <div class="col-4 d-flex justify-content-end py-3">
                         <div class="w-50 mr-2">
                             <form action="">
-                                <select name="" id="" class="custom-select border-dark bg-transparent text-dark" style="">
-                                    
+                                <select name="currentYear" id="" class="custom-select border-dark bg-transparent text-dark" style="">
+                                    <option :value="year" v-for="year in getYears()" :selected="wasSelected(year, (new Date).getFullYear())">{{ year }}</option>
                                 </select>
                             </form>
                         </div>
@@ -42,16 +42,15 @@
                 <div class="justify-content-center admins-link mt-2 d-none d-lg-flex" style="width: 15%;">
                     <div class="text-center" style="min-width:45%;">
                         <span class="nav-link w-100 admin-profil marker link-float" style="cursor: pointer;">
-                            <span class="mr-2 d-none d-lg-inline text-white-600 small">Pirerre  </span>
-                                <span class="fa fa-user-secret m-0 p-0" style="font-size: 20px"></span>
-                            
-                                <img class="img-profile rounded-circle" src="/media/profil.png" alt="administration" width="25">
+                            <span class="mr-2 d-none d-lg-inline text-white-600 small"> {{ user.name }} </span>
+                                <span class="fa fa-user-secret m-0 p-0" style="font-size: 20px" v-if="admin"></span>
+                                <img class="img-profile rounded-circle" src="/media/profil.png" alt="administration" width="25" v-if="!admin">
                         </span>
                     </div>
                 </div>
             </div>
             <admin-menu></admin-menu>
-            <div class="login-profil profil-modal position-relative border bg-linear-official-50 border-white" style="width: 200px; display: none; top: 3px; z-index: 100;">
+            <div class="login-profil profil-modal position-absolute border border-white" style="width: 200px; display: none; top: 75px; z-index: 100; background-image: url(/media/img/art-2578353_1920.jpg) !important; background-position: -200px 200px;">
                 <div class="w-100 border" style="">
                     <a class="w-100 link-float d-inline-block border m-0 py-1" href="#">
                         <img class="img-profile rounded-circle" src="/media/profil.png" alt="administration" width="25">
@@ -89,6 +88,13 @@
                 </div> 
             </div>
         </header>
+        <div v-if="errors.status">
+            <div>
+                
+            </div>
+            <error404 v-if="errors.type == '404'"></error404>    
+            <error419 v-if="errors.type == '419'"></error419>    
+        </div>
         <pupil-perso :pupilData="editedPupil.name" :months="months" :secondaryClasses="secondaryClasses" :primaryClasses="primaryClasses" :secondarySubjects="secondarySubjects" ></pupil-perso>
 	</div>
 </template>
@@ -98,8 +104,27 @@
     import { mapState } from 'vuex'
 	export default {
 
+        state: {
+            currentYear: (new Date).getFullYear()
+        },
+
+
+        methods: {
+            getYears(){
+                let $tab = []
+
+                for (var i = 1995; i <= (new Date).getFullYear(); i++) {
+                    $tab.push(i)
+                }
+                return $tab
+            },
+            wasSelected(tag, target){
+                return tag == target ? 'selected' : ''
+            },
+        },
+
         computed: mapState([
-            'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months'
+            'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'user', 'admin', 'errors'
         ])
         
 	}

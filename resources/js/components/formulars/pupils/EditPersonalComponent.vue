@@ -1,5 +1,5 @@
 <template>
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" v-show="!errors.status">
   		<div class="modal-dialog modal-lg" role="document" style="background-image: url(/media/silouhette.jpg) !important; width: 100%; background-position: -200px -400px; padding: 0px;">
 	    	<div class="bg-linear-official-50 modal-content" style="border-style: solid; border-radius: 0;">
 		    	<span class="d-inline-block text-white close py-2 px-3 align-self-end modalCloser" data-dismiss="modal" aria-label="Close" style="" @click="resetEditedPupil()">x</span>
@@ -12,57 +12,56 @@
 	      		<h5 class="w-100 mx-auto p-1 h5-title text-danger text-center" v-if="invalidInputs !== undefined">
 	      			Le formulaire est invalid
 	      		</h5>
-		        <form class="opac-form" style="display: none;" method="post">
+		        <form class="opac-form" id="pupil-perso-edit" style="display: none;" method="post">
+		        	<input type="text" name="token" v-model="token" hidden="hidden">
 			        <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
                         <div class="mx-auto" style="width: 100%">
                             <label for="ed_p_name" class="m-0 p-0">Nom et Prénoms de l'apprenant</label>
-                            <input type="text" class="m-0 p-0 form-control p-1" name="name" id="ed_p_name" placeholder="Veuillez renseigner le nom et les prénoms de l'apprenant" v-model="editedPupil.name">
-                            <small class="help-block"></small>
+                            <input type="text" class="m-0 p-0 form-control p-1" :class="getInvalids('name', invalidInputs)" name="name" id="ed_p_name" placeholder="Veuillez renseigner le nom et les prénoms de l'apprenant" v-model="editedPupil.name">
+                            <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.name !== undefined"> {{ invalidInputs.name[0] }} </i>
                         </div>
                     </div>
 			        <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
 			        	<div style="width: 50%;">
                             <label for="ed_p_classe" class="mb-0">La classe</label>
-                            <select name="classe_id" id="ed_p_classe" class="custom-select" v-model="editedPupil.classe_id">
+                            <select name="classe_id" id="ed_p_classe" class="custom-select" :class="getInvalids('classe_id', invalidInputs)" v-model="editedPupil.classe_id">
                                 <option value="">Choisissez la classe</option>
                                 <option :value="classe.id" v-for="classe in secondaryClasses" v-if="editedPupil.level == 'secondary'">{{classe.name}}</option>
                                 <option :value="classe.id" v-for="classe in primaryClasses" v-if="editedPupil.level == 'primary'">{{classe.name}}</option>
-
                             </select>
-                            <small class="help-block"></small>
+                            <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.classe_id !== undefined"> La classe choisie est invalide </i>
                         </div>
                         <div style="width: 49%;">
                             <label for="ed_p_birth" class="mb-0">La date de naissance</label>
-                            <input v-model="editedPupil.birth" type="date" name="birth" class="m-0 p-0 form-control p-1" id="ed_p_birth">
-                            <small class="help-block"></small>
+                            <input v-model="editedPupil.birth" type="date" name="birth" class="m-0 p-0 form-control p-1" :class="getInvalids('birth', invalidInputs)" id="ed_p_birth">
+                             <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.birth !== undefined"> {{ invalidInputs.birth[0] }} </i>
                         </div>
-                        
                     </div>
                     <div class=" mx-auto mt-2 d-flex justify-content-around" style="width: 85%">
                         <div style="width: 31.3%;">
                             <label for="ed_p_month" class="m-0 p-0">Le mois d'inscription</label>
-                            <select name="month" id="ed_p_month" class="custom-select" v-model="editedPupil.month">
+                            <select name="month" id="ed_p_month" class="custom-select" :class="getInvalids('month', invalidInputs)" v-model="editedPupil.month">
                                 <option value="">Choisissez le mois</option>
                                 <option :value="month" v-for="month in months" > {{ month }} </option>
                             </select>
-                            <span class="help-block"></span>
+                            <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.month !== undefined"> {{ invalidInputs.month[0] }} </i>
                         </div>
                         <div style="width: 31.3%;">
                             <label for="ed_p_year" class="mb-0">L'année d'inscription</label>
-                            <select name="year" id="ed_p_year" class="custom-select" v-model="editedPupil.year">
+                            <select name="year" id="ed_p_year" class="custom-select" :class="getInvalids('year', invalidInputs)" v-model="editedPupil.year">
                                 <option value="">Choisissez l'année</option>
                                 <option :value="year" v-for="year in getYears()">{{ year }}</option>
                             </select>
-                            <small class="help-block"></small>
+                            <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.year !== undefined"> {{ invalidInputs.year[0] }} </i>
                         </div>
                         <div class="" style="width: 31.3%;">
                             <label for="ed_p_sexe" class="m-0 p-0">Sexe</label>
-                            <select name="sexe" id="ed_p_sexe" class="custom-select" v-model="editedPupil.sexe">
+                            <select name="sexe" id="ed_p_sexe" class="custom-select" :class="getInvalids('sexe', invalidInputs)" v-model="editedPupil.sexe">
                                 <option value="">Choisir le sexe</option>
                                 <option value="male" >Masculin</option>
                                 <option value="female">Féminin</option>
                             </select>
-                            <small class="help-block"></small>
+                            <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.sexe !== undefined"> {{ invalidInputs.sexe[0] }} </i>
                         </div>
                         
                     </div>
@@ -70,7 +69,7 @@
 	      		</div>
 			    <div class="mx-auto mt-2 p-1 pb-2 buttons-div" style="width: 85%">
 			        <button type="button" class="btn btn-secondary mx-1 float-right" data-dismiss="modal" @click="resetEditedPupil()">Annuler</button>
-			        <button type="button" class="btn btn-primary float-right" @click="updateEdited(editedPupil)">Mettre à jour</button>
+			        <button type="button" class="btn btn-primary float-right" @click="updateEdited(editedPupil, token)">Mettre à jour</button>
 			    </div>
 			    <div class="mx-auto mt-2 p-1 pb-2 div-success" style="width: 85%; display: none">
 			    	<div class="d-flex justify-content-center w-100 p-2 my-1">
@@ -94,8 +93,6 @@
 			return {
 				pupil: this.editedPupil,
 				show: true,
-				
-				
 			}
 		},
 
@@ -109,13 +106,8 @@
 				return tag == target ? 'selected' : ''
 			},
 
-			updateEdited(pupil){
-				this.$store.dispatch('updateAPupilData', pupil)
-				if(this.successed.status == true){
-					
-				}
-				
-                
+			updateEdited(pupil, token){
+				this.$store.dispatch('updateAPupilData', {pupil, token}) 
 			},
 			getYears(){
 				let $tab = []
@@ -124,12 +116,22 @@
 					$tab.push(i)
 				}
 				return $tab
+			},
+			getInvalids(input, invalids = this.invalidInputs){
+
+				if(invalids !== undefined && invalids[input] !== undefined){
+					return 'is-invalid'
+				}
+				else{
+					return ''
+				}
+				
 			}
 			
 		},
 
 		computed: mapState([
-            'editedPupil', 'invalidInputs', 'successed'
+            'editedPupil', 'invalidInputs', 'successed', 'token', 'errors'
         ]),
 
 
@@ -139,4 +141,12 @@
 
 
 </script>
+
+<style>
+	input + i, select + i{
+		color: rgb(160, 0, 0);
+		font-style: normal;
+		text-shadow: 0 1px 1px gray;
+	}
+</style>
 
