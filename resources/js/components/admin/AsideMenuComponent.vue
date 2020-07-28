@@ -92,11 +92,11 @@
         created(){
         	this.$store.dispatch('getCounter')
 
-	},
+		},
 
-	computed: mapState([
-		'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'pupilsBlockedsLength', 'user', 'admin'
-	])
+		computed: mapState([
+			'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'pupilsBlockedsLength', 'user', 'admin'
+		])
        
 
 }

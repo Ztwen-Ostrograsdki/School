@@ -66,7 +66,8 @@ const routes = [
 			{
 				path: '/admin/director/pupilsm/:id',
 				component: pupils_profil,
-				name: 'pupilsProfil'
+				name: 'pupilsProfil',
+				store
 
 			}
 			
@@ -85,9 +86,8 @@ new Vue({
 	el: ".app",
 	components: {
 		admin_sidebar,
-		pupils_perso_edit,
 		error404,
-		error419
+		error419,
 	}
 })
 

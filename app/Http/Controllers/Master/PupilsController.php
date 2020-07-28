@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Helpers\Tools\Tools;
 use App\Http\Controllers\Controller;
 use App\Http\ValidatorsSpaces\PupilsValidators;
+use App\ModelHelper;
 use App\Models\Pupil;
 use App\Models\Teacher;
 use App\User;
@@ -34,7 +35,7 @@ class PupilsController extends Controller
      * Use to send a data to a view in ajax
      * @return a json response 
      */
-    public function pupilsDataSender(array $errors = [])
+    public function pupilsDataSender($pupilEdited = null, array $errors = [])
     {
         $user = auth()->user();
         $admin = false;
@@ -95,6 +96,22 @@ class PupilsController extends Controller
         else{
             $data['errors'] = ['status' => false, 'type' => ''];
         }
+        if ($pupilEdited !== null) {
+            $classeFMT = $pupilEdited->classe->getFormattedClasseName();
+            $birthday = ModelHelper::birthFormattor($pupilEdited, 0);
+
+            $helper = new ModelHelper($pupilEdited);
+            $surname = $helper->setLastNameAndFirstName();
+
+            $lastName = $helper->getLastName();
+            $firstName = $helper->getFirstName();
+            
+            $data['pupilEdited'] = $pupilEdited; 
+            $data['classeFMT'] = $classeFMT; 
+            $data['birthFMT'] = $birthday; 
+            $data['firstName'] = $firstName; 
+            $data['lastName'] = $lastName; 
+        }
         return response()->json($data);
     }
 
@@ -107,9 +124,19 @@ class PupilsController extends Controller
     {
         $token = csrf_token();
         $p = Pupil::withTrashed('deleted_at')->whereId($id)->firstOrFail();
+
         $classeFMT = $p->classe->getFormattedClasseName();
+        $birthday = ModelHelper::birthFormattor($p, 0);
+
+        $helper = new ModelHelper($p);
+        $surname = $helper->setLastNameAndFirstName();
+
+        $lastName = $helper->getLastName();
+        $firstName = $helper->getFirstName();
+
         $classeName = $p->classe->name;
-        return response()->json(['p' => $p, 'classeFMT' => $classeFMT, 'classeName' => $classeName, 'token' => $token]);
+
+        return response()->json(['p' => $p, 'token' => $token, 'classeFMT' => $classeFMT, 'birthFMT' => $birthday, 'classeName' => $classeName, 'firstName' => $firstName, 'lastName' => $lastName]);
     }
 
 
@@ -194,7 +221,7 @@ class PupilsController extends Controller
     {
 
         if ((!$request->filled('token') || $request->token == "") || ($request->filled('token') && $request->token !== csrf_token())) {
-            return $this->pupilsDataSender(['status' => true, 'type' => '419']);
+            return $this->pupilsDataSender(null, ['status' => true, 'type' => '419']);
         }
 
         $pupil = Pupil::withTrashed('deleted_at')->whereId((int)$id)->firstOrFail();
@@ -216,7 +243,7 @@ class PupilsController extends Controller
             $pupil->save();
         }
 
-        return $this->pupilsDataSender();
+        return $this->pupilsDataSender($pupil, []);
 
     }
 

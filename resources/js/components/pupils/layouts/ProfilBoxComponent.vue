@@ -2,20 +2,28 @@
 	<div class="container-profil m-0 p-0">
 		<div id="text-profil-container-opac">
 			<h3 class="text-profil-opac mx-auto text-center">
-				Profil Apprenant {{ pupilData.id }}
+
 			</h3>
 		</div>
 		<div class="justify-content-center w-100 m-0 p-0">
-			<pupil-profil-main></pupil-profil-main>
+			<transition name="fade" appear>
+				<pupil-profil-main></pupil-profil-main>
+			</transition>
 		</div>
 		<div class="mt-5" id="pupil-profil">
 			<div class="d-flex justify-content-between">
 				<div class="d-flex justify-content-between"  style="width:63% ;">
-					<pupil-perso-data></pupil-perso-data>
-					<pupil-parents-data></pupil-parents-data>
+					<transition name="fade" appear>
+						<pupil-perso-data></pupil-perso-data>
+					</transition>
+					<transition name="scale" appear>
+						<pupil-parents-data></pupil-parents-data>
+					</transition>
 				</div>
 				<div class="d-flex justify-content-between" style="width: 35%;">
-					<pupil-marks-data></pupil-marks-data>
+					<transition name="fade" appear>
+						<pupil-marks-data></pupil-marks-data>
+					</transition>
 				</div>
 			</div>
 		</div>
@@ -24,22 +32,13 @@
 
 <script>
 	export default {
-		props: ['pupilData'],
+		props: [],
 
 		data(){
 			return {
 				classe : '',
-				classeFMT : '',
+				visible : true,
 			}
-		},
-		created() {
-			axios.get('/admin/director/pupilsm/get&classe&of&pupil&with&data&credentials/id=' + this.pupilData.id)
-                .then(response => {
-                    this.classeFMT = response.data.classeFMT
-                    this.classe = response.data.classeName
-                }
-            )
-
 		},
 
 		methods: {
@@ -48,3 +47,44 @@
 	}
 
 </script>
+<style>
+	.fade-enter-active, .fade-leave-active{
+		transition: opacity 2s, transform 1s;
+	}
+
+	.fade-enter, .fade-leave-active{
+		opacity: 0;
+		transform: translateY(-30px); 
+	}
+
+	.scale-enter-active, .scale-leave-active{
+		transition: opacity 2s, transform 2s;
+	}
+
+	.scale-enter, .scale-leave-active{
+		opacity: 0;
+		transform: scale(0.7);
+	}
+	.fadelow-enter-active, .fadelow-leave-active{
+        transition: opacity 7s, transform 2s;
+    }
+
+    .fadelow-enter, .fadelow-leave-active{
+        opacity: 0;
+        -webkit-transform: scale(0.1);
+        -ms-transform: scale(0.1);
+        -o-transform: scale(0.1);
+        transform: scale(0.1);
+    }
+    .bodyfade-enter-active, .bodyfade-leave-active{
+        transition: opacity 7s, transform 2s;
+    }
+
+    .bodyfade-enter, .bodyfade-leave-active{
+        opacity: 0;
+        -webkit-transform: translateY(20px);
+        -ms-transform: translateY(20px);
+        -o-transform: translateY(20px);
+        transform: translateY(20px);
+    }
+</style>

@@ -1,6 +1,14 @@
 const pupils_states = {
 	pupilsArray : [], //With her classes formatted
     secondaryPupils : {},
+    targetPupil : {},
+    targetPupilName: '',
+    targetPupilLastName: '',
+    targetPupilFirstName: '',
+    targetPupilClasseFMT: {},
+    targetPupilBirthFMT: '',
+    age: '',
+
     editedPupil : {},
     primaryPupils : {},
     pupils: {},

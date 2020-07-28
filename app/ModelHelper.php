@@ -37,7 +37,7 @@ class ModelHelper extends Model
     /**
      * @return mixed
      */
-    public function getSurname()
+    public function getLastName()
     {
         return $this->surname;
     }
@@ -47,27 +47,33 @@ class ModelHelper extends Model
      *
      * @return self
      */
-    public function setSurname($surname)
+    public function setLastName($surname)
     {
         $this->surname = $surname;
 
         return $this;
     }
-    public static function birthFormattor(Model $model)
+    public static function birthFormattor(Model $model, $limit = 3)
     {
     	$date = $model->birth;
     	$parts = array_reverse(explode('-', $date));
     	$day = $parts[0];
     	$m = (int)$parts[1];
     	$year = $parts[2];
-    	$month = strlen(Formattors::monthOfADate($m - 1)) > 4 ? mb_substr(Formattors::monthOfADate($m - 1), 0, 3) : Formattors::monthOfADate($m - 1);
+
+        if ($limit == 0) {
+            $month = Formattors::monthOfADate($m - 1);
+        }
+        else{
+            $month = strlen(Formattors::monthOfADate($m - 1)) > 4 ? mb_substr(Formattors::monthOfADate($m - 1), 0, 3) : Formattors::monthOfADate($m - 1);
+        }
 
     	return $day . ' '. $month . ' ' . $year;
     }
 
 
 
-    public function setNameAndSurname()
+    public function setLastNameAndFirstName()
     {
         $defaultName = $this->model->name;
         if ($defaultName == ""  || $defaultName == null || empty($defaultName)){
@@ -88,7 +94,7 @@ class ModelHelper extends Model
                 $surname = "";
             }
 
-            return $this->setFirstName($firstName)->setSurname($surname);
+            return $this->setLastName($firstName)->setFirstName($surname);
         }
     }
 

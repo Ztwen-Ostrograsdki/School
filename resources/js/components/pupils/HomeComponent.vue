@@ -8,10 +8,9 @@
 
 	import { mapState } from 'vuex'
 	export default {
-		
 
 		computed: mapState([
-           'errors'
+           'errors', 'pupilsArray'
         ])
 	}
 </script>

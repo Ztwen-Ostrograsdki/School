@@ -58,7 +58,10 @@ const default_mutations = {
 		state.invalidInputs = undefined
 		state.successed.status = true
 		state.successed.message = message
-	}
+	},
+	SET_TOKEN: (state, token) => {
+        state.token = token
+    },
 
 
 

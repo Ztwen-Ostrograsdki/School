@@ -27,6 +27,19 @@ const pupils_mutations = {
         state.token = data.token
         
     },
+    UPDATE_EDITED_PUPIL: (state, pupil) => {
+        state.editedPupil = pupil
+    },
+    UPDATE_TARGET_PUPIL: (state, object) => {
+        state.targetPupil = object.pupil
+        state.targetPupilClasseFMT = object.dataFMT.classe
+        state.targetPupilBirthFMT = object.dataFMT.birth
+        state.targetPupilFirstName = object.dataFMT.fist
+        state.targetPupilLastName = object.dataFMT.last
+    },
+    SET_EDITED_PUPIL: (state, pupil) => {
+        state.editedPupil = pupil
+    },
 
     RESET_EDITED_PUPIL: (state) => {
         state.editedPupil = {}

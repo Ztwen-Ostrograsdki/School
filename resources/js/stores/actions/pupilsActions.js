@@ -29,6 +29,7 @@ const pupils_actions = {
             if(response.data.invalidInputs == undefined){
                 store.commit('RESET_INVALID_INPUTS')
                 store.commit('GET_PUPILS_DATA', response.data)
+                store.commit('UPDATE_TARGET_PUPIL', {pupil: response.data.pupilEdited, dataFMT: {classe: response.data.classeFMT, birth: response.data.birthFMT, fist: response.data.firstName, last: response.data.lastName}})
                 store.commit('SUCCESSED', 'Mis à jour des données réussie')
                 
                 $('#exampleModal .buttons-div').hide('size', function(){

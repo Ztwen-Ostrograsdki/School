@@ -17,7 +17,7 @@
 			        <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
                         <div class="mx-auto" style="width: 100%">
                             <label for="ed_p_name" class="m-0 p-0">Nom et Prénoms de l'apprenant</label>
-                            <input type="text" class="m-0 p-0 form-control p-1" :class="getInvalids('name', invalidInputs)" name="name" id="ed_p_name" placeholder="Veuillez renseigner le nom et les prénoms de l'apprenant" v-model="editedPupil.name">
+                            <input type="text" class="m-0 p-0 form-control p-1" :class="getInvalids('name', invalidInputs)" name="name" id="ed_p_name" placeholder="Veuillez renseigner le nom et les prénoms de l'apprenant" v-model.lazy="editedPupil.name">
                             <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.name !== undefined"> {{ invalidInputs.name[0] }} </i>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
 			    		<h4></h4>
 			    	</div>
 			        <div class="w-75 mx-auto d-flex justify-content-center">
-			        	<button type="button" class="btn w-50 bg-transparent border shadow mx-1 px-1" data-dismiss="modal" @click="resetEditedPupil()">Terminer</button>
+			        	<button type="button" class="btn w-50 bg-transparent border shadow mx-1 px-1" data-dismiss="modal">Terminer</button>
 			        </div>
 			    </div>
 	    	</div>
@@ -91,10 +91,12 @@
 		props: ['pupilData', 'months', 'secondarySubjects', 'secondaryClasses', 'primaryClasses'],
 		data(){
 			return {
-				pupil: this.editedPupil,
 				show: true,
 			}
 		},
+		created(){
+            this.$store.dispatch('getTOOLS')
+        },
 
 		
 		methods: {
@@ -107,7 +109,7 @@
 			},
 
 			updateEdited(pupil, token){
-				this.$store.dispatch('updateAPupilData', {pupil, token}) 
+				this.$store.dispatch('updateAPupilData', {pupil, token})
 			},
 			getYears(){
 				let $tab = []

@@ -1,5 +1,6 @@
 <template>
     <div class="d-flex flex-column justify-content-around py-1 w-100 border float-right mx-0 bg-linear-official-180" >
+        <transition name="scale" appear>
         <div class="d-flex justify-content-around py-1 w-100">
             <div class="d-flex row justify-content-around" style="width: 100%">
                 <div class="border py-2 col-lg-5 col-md-12">
@@ -104,6 +105,7 @@
                 <span class="fa fa-chevron-up"></span>
             </div>
         </div>
+        </transition>
         <div class="w-100">
             <div class="w-100 my-1 p-1">
                 <div class="w-100 d-flex justify-content-between">
@@ -132,17 +134,19 @@
                 </div>
                 <div class="w-100" style="min-height: 500px;">
                     <table class="table-table table-striped w-100">
-                        <thead>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Sexe</th>
-                            <th class="d-lg-block d-none">Naissance</th>
-                            <th>Inscrit depuis</th>
-                            <th>Classe</th>
-                            <th>Actions</th>
-                        </thead>
+                        <transition name="fadelow" appear>
+                            <thead>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Sexe</th>
+                                <th class="d-lg-block d-none">Naissance</th>
+                                <th>Inscrit depuis</th>
+                                <th>Classe</th>
+                                <th>Actions</th>
+                            </thead>
+                        </transition>
+                        <transition name="bodyfade" appear>
                         <tbody>
-                                
                             <tr v-for="(pupil, k) in pupilsBlockeds" :key="pupil.id" class="border-bottom border-dark">
                                 <td>
                                     {{k+1}}
@@ -180,6 +184,7 @@
                                 </td>
                             </tr>
                         </tbody>
+                        </transition>
                     </table>
                 </div>
             </div>
