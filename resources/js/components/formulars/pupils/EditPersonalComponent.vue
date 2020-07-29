@@ -1,5 +1,5 @@
 <template>
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" v-show="!errors.status">
+	<div class="modal fade" id="editPupilPersoModal" tabindex="-1" role="dialog" aria-labelledby="editPupilPersoModalLabel" aria-hidden="true" v-show="!errors.status">
   		<div class="modal-dialog modal-lg" role="document" style="background-image: url(/media/silouhette.jpg) !important; width: 100%; background-position: -200px -400px; padding: 0px;">
 	    	<div class="bg-linear-official-50 modal-content" style="border-style: solid; border-radius: 0;">
 		    	<span class="d-inline-block text-white close py-2 px-3 align-self-end modalCloser" data-dismiss="modal" aria-label="Close" style="" @click="resetEditedPupil()">x</span>
@@ -88,14 +88,14 @@
 	import { mapState } from 'vuex'
 	
 	export default{
-		props: ['pupilData', 'months', 'secondarySubjects', 'secondaryClasses', 'primaryClasses'],
+		props: [],
 		data(){
 			return {
 				show: true,
 			}
 		},
 		created(){
-            this.$store.dispatch('getTOOLS')
+            
         },
 
 		
@@ -133,7 +133,7 @@
 		},
 
 		computed: mapState([
-            'editedPupil', 'invalidInputs', 'successed', 'token', 'errors'
+            'editedPupil', 'invalidInputs', 'successed', 'token', 'errors', 'months', 'primaryClasses', 'secondaryClasses'
         ]),
 
 

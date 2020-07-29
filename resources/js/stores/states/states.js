@@ -17,6 +17,7 @@ const default_states = {
 	secondaryClasses: {},
 	allClasses: {},
 	primarySubjects: {},
+	subjects: {},
 	secondarySubjects: {},
 	allSubjects: {},
 	allRoles: [],
@@ -26,6 +27,7 @@ const default_states = {
 	PBSLength: 0,
     pupilsBlockedsLength: 0,
     invalidInputs: undefined,
+    errors: {status: false, message: ''},
     successed: {status: false, message: ''}
 
 }

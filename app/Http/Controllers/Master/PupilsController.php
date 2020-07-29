@@ -47,7 +47,7 @@ class PupilsController extends Controller
         $AllpupilsWithClasses = [];
         $PSBlockeds = [];
         $PPBlockeds = [];
-        $pupils = Pupil::all();
+        $pupils = Pupil::withTrashed('deleted_at')->orderBy('name', 'asc')->get();
         $u = User::all()->count();
         $t = Teacher::all()->count();
         $ts = Teacher::whereLevel('secondary')->count();
@@ -70,8 +70,8 @@ class PupilsController extends Controller
             $AllpupilsWithClasses[$pupil->id] = $pupil->classe->getFormattedClasseName();
         }
 
-        $pupilsSecondary = Pupil::whereLevel('secondary')->get();
-        $pupilsPrimary = Pupil::whereLevel('primary')->get();
+        $pupilsSecondary = Pupil::whereLevel('secondary')->orderBy('name', 'asc')->get();
+        $pupilsPrimary = Pupil::whereLevel('primary')->orderBy('name', 'asc')->get();
 
         $data = [
             'user' => $user,
@@ -173,7 +173,30 @@ class PupilsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ((!$request->filled('token') || $request->token == "") || ($request->filled('token') && $request->token !== csrf_token())) {
+            return $this->pupilsDataSender(null, ['status' => true, 'type' => '419']);
+        }
+
+        $validator = $this->pupilsPersoValidator($request->all());
+
+        if ($validator->fails()) {
+            return response()->json(['invalidInputs' => $validator->errors()]);
+        }
+
+        $pupil = Pupil::create($request->all());
+        if ($pupil) {
+            $creator = auth()->user();
+            $pupil->creator = $creator->name;
+
+            if (in_array('admin', $creator->getRoles()) || in_array('superAdmin', $creator->getRoles())) {
+                $pupil->authorized = true;
+            }
+            $pupil->save();
+        }
+
+
+        
+        return $this->pupilsDataSender();
     }
 
     /**

@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('secondarySubjects', Subject::whereLevel('secondary')->get());
         });
 
-        View::composer(['layouts.public', 'layouts.director', 'layouts.admin', 'directors.teachers.edits.personal', 'directors.teachers.index'], function($view){
+        View::composer(['layouts.public', 'layouts.director', 'layouts.admin', 'directors.teachers.edits.personal'], function($view){
 
             $view->with('subjects', Subject::whereLevel('secondary')->get());
             $view->with('classes', Classe::whereLevel('primary')->get());

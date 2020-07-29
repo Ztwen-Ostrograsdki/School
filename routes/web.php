@@ -37,13 +37,13 @@ Route::group(['prefix' => 'admin'], function(){
 	Route::get('teachers/s={params}', 'TeacherController@index')->where('params', '[0-9]+')->name('teachers.BySubject.index');
 
 //TEACHERS OF SECONDARY ROUTES
-	Route::resource('teachers', 'TeacherController');
+	// Route::resource('teachers', 'TeacherController');
 /**********************************************************/
 
 
 /**********************************************************/
 //TEACHERS OF PRIMARY ROUTES
-	Route::resource('primaryTeacher', 'TeacherOfPrimaryController');
+	// Route::resource('primaryTeacher', 'TeacherOfPrimaryController');
 
 
 /**********************************************************/
@@ -51,37 +51,39 @@ Route::group(['prefix' => 'admin'], function(){
 
 
 //TEACHERS OF SECONDARY ROUTES
-	Route::resource('secondaryTeacher', 'TeacherOfSecondaryController');
-	Route::get('teachers/edit/l=secondary/t={t}&ind={ind}', 'TeacherOfSecondaryController@edit')->where('t', '[0-9]+')->name('secondaryTeacher.manyEdit');
-	Route::put('teachers/edit/l=secondary&t={teacher}', 'TeacherOfSecondaryController@updateTeacherClasses')->name('secondaryTeachers.update.classes');
-	Route::put('teachers/confirmation&classe/for={teacher}', 'TeacherOfSecondaryController@confirmClasses')->name('teachers.confirm.classes');
-	//A retirer
-	Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classe');
-		Route::delete('teachers/detachs/t={teacher}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classes');
+	// Route::resource('secondaryTeacher', 'TeacherOfSecondaryController');
+	// Route::get('teachers/edit/l=secondary/t={t}&ind={ind}', 'TeacherOfSecondaryController@edit')->where('t', '[0-9]+')->name('secondaryTeacher.manyEdit');
+	// Route::put('teachers/edit/l=secondary&t={teacher}', 'TeacherOfSecondaryController@updateTeacherClasses')->name('secondaryTeachers.update.classes');
+	// Route::put('teachers/confirmation&classe/for={teacher}', 'TeacherOfSecondaryController@confirmClasses')->name('teachers.confirm.classes');
+	// //A retirer
+	// Route::delete('teachers/detach/t={teacher}&c={classe}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classe');
+	// 	Route::delete('teachers/detachs/t={teacher}', 'TeacherOfSecondaryController@detachTeacherAndClasse')->name('teachers.detach.classes');
 
 /**********************************************************/
 	
 
-	Route::get('classes/cycle={slug}', 'ClasseController@index')->name('classes.ByLevel.index');
-	Route::resource('classes', 'ClasseController');
-	Route::get('c={classe}/eleves', 'ClasseController@lister')->where('classe', '[0-9]+')->name('classes.lister');
-
-	Route::get('pupils/cycle={params}', 'PupilController@index')->name('pupils.ByLevel.index');
-	Route::get('pupils/classe={params}', 'PupilController@index')->where('params', '[0-9]+')->name('pupils.ByClasse.index');
-	Route::resource('pupils', 'PupilController');
+	// Route::get('classes/cycle={slug}', 'ClasseController@index')->name('classes.ByLevel.index');
+	// Route::resource('classes', 'ClasseController');
+	// Route::get('c={classe}/eleves', 'ClasseController@lister')->where('classe', '[0-9]+')->name('classes.lister');
 
 	Route::group(['prefix' => 'director'], function(){
 		Route::get('master/get&counter&for&all&data&with&authorization', 'Master\SuperAdminController@dataSender');
 		Route::get('master/get&all&data&tools&with&authorization', 'Master\SuperAdminController@getTOOLS');
 		Route::resource('master', 'Master\SuperAdminController')->middleware('onlySuperAdmin');
 
+		//PUPILS
 		Route::get('pupilsm/DATA&for&pupils', 'Master\PupilsController@pupilsDataSender')->name('sender');
 		Route::get('pupilsm/get&classe&of&pupil&with&data&credentials/id={id}', 'Master\PupilsController@getAPupilData');
 		Route::put('pupilsm/update/update&perso/id={id}', 'Master\PupilsController@persoUpdate');
 		Route::put('pupilsm/restore/id={id}', 'Master\PupilsController@restore');
 		Route::resource('pupilsm', 'Master\PupilsController')->middleware('onlySuperAdmin');
 		
+
+		//TEACHERS
 		Route::get('teachersm/DATA&for&teachers', 'Master\TeachersController@teachersDataSender');
+		Route::get('teachersm/get&classes&of&teacher&with&data&credentials/id={id}', 'Master\TeachersController@getATeacherData');
+		// Route::put('teachersm/update/update&perso/id={id}', 'Master\TeachersController@persoUpdate');
+		// Route::put('teachersm/restore/id={id}', 'Master\TeachersController@restore');
 		Route::resource('teachersm', 'Master\TeachersController')->middleware('onlySuperAdmin');
 
 

@@ -2,7 +2,6 @@ const pupils_actions = {
 	getPupilsData: (store) => {
 		axios.get('/admin/director/pupilsm/DATA&for&pupils')
              .then(response => {
-
              	store.commit('GET_PUPILS_DATA', response.data)
         })
 	},
@@ -47,7 +46,48 @@ const pupils_actions = {
                 
             }
             else{
-                console.log(response.data.invalidInputs)
+                store.commit('INVALID_INPUTS', response.data.invalidInputs)
+            }
+            
+        })
+        .catch(e => {
+           store.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
+        })
+    },
+    addANewPupil: (store, inputs) => {
+        axios.post('/admin/director/pupilsm', {
+            token: inputs.token,
+            name: inputs.newPupil.name,
+            birth: inputs.newPupil.birth,
+            level: inputs.newPupil.level,
+            classe_id: inputs.newPupil.classe_id,
+            month: inputs.newPupil.month,
+            year: inputs.newPupil.year,
+            sexe: inputs.newPupil.sexe,
+            status: 0
+        })
+        .then(response => {
+            if(response.data.invalidInputs == undefined){
+                store.commit('RESET_INVALID_INPUTS')
+                store.commit('GET_PUPILS_DATA', response.data)
+                store.commit('RESET_NEW_PUPIL')
+                store.commit('SUCCESSED', 'Insertion des données réussie')
+                
+                $('#newPupilPersoModal .buttons-div').hide('size', function(){
+                    $('#newPupilPersoModal form').hide('fade', function(){
+                        $('#newPupilPersoModal').animate({
+                            top: '150'
+                        }, function(){
+                            $('#newPupilPersoModal .div-success').show('fade', 200)
+                            $('#newPupilPersoModal .div-success h4').text('Mise à jour reussi')
+                        })
+                        
+                    })
+                    
+                })
+                
+            }
+            else{
                 store.commit('INVALID_INPUTS', response.data.invalidInputs)
             }
             

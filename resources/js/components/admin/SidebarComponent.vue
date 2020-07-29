@@ -95,7 +95,11 @@
             <error404 v-if="errors.type == '404'"></error404>    
             <error419 v-if="errors.type == '419'"></error419>    
         </div>
-        <pupil-perso :pupilData="editedPupil.name" :months="months" :secondaryClasses="secondaryClasses" :primaryClasses="primaryClasses" :secondarySubjects="secondarySubjects" ></pupil-perso>
+        <pupil-perso></pupil-perso>
+        <pupil-add></pupil-add>
+
+        <teacher-perso></teacher-perso>
+
 	</div>
 </template>
 
@@ -129,3 +133,52 @@
         
 	}
 </script>
+
+<style>
+    .fade-enter-active, .fade-leave-active{
+        transition: opacity 2s, transform 1s;
+    }
+
+    .fade-enter, .fade-leave-active{
+        opacity: 0;
+        transform: translateY(-30px); 
+    }
+    .fadelist-enter-active, .fadelist-leave-active{
+        transition: opacity 0.5s;
+    }
+
+    .fadelist-enter, .fadelist-leave-to{
+        opacity: 0;
+    }
+
+    .scale-enter-active, .scale-leave-active{
+        transition: opacity 2s, transform 2s;
+    }
+
+    .scale-enter, .scale-leave-active{
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    .fadelow-enter-active, .fadelow-leave-active{
+        transition: opacity 7s, transform 2s;
+    }
+
+    .fadelow-enter, .fadelow-leave-active{
+        opacity: 0;
+        -webkit-transform: scale(0.1);
+        -ms-transform: scale(0.1);
+        -o-transform: scale(0.1);
+        transform: scale(0.1);
+    }
+    .bodyfade-enter-active, .bodyfade-leave-active{
+        transition: opacity 7s, transform 2s;
+    }
+
+    .bodyfade-enter, .bodyfade-leave-active{
+        opacity: 0;
+        -webkit-transform: translateY(20px);
+        -ms-transform: translateY(20px);
+        -o-transform: translateY(20px);
+        transform: translateY(20px);
+    }
+</style>

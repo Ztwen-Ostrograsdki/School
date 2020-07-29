@@ -48,6 +48,7 @@ class SuperAdminController extends Controller
         $user = auth()->user();
         $admin = false;
         $roles = $user->getRoles();
+        $subjects = Subject::whereLevel('secondary')->get();
 
         if (in_array('admin', $roles) || in_array('superAdmin', $roles)) {
             $admin = true;
@@ -78,18 +79,19 @@ class SuperAdminController extends Controller
             'ul' => $u, 
             'pupilsblockedLength' => $pupilsBlockedsLength, 
             'PBSLength' => $PBSLength, 
-            'PBPLength' => $PBPLength
+            'PBPLength' => $PBPLength,
+            'subjects' => $subjects
         ];
-
         return response()->json($data);
     }
 
     /**
      * Use to get data and sebd then to a vue
      * @return a json response
-     */
+    */
     public function getTOOLS()
     {   
+        $token = csrf_token();
         $secondarySubjects = Subject::whereLevel('secondary')->get();
         $primarySubjects = Subject::whereLevel('primary')->get();
         $primaryClasses = Classe::whereLevel('primary')->get();
@@ -102,7 +104,8 @@ class SuperAdminController extends Controller
             'primarySubjects' => $primarySubjects, 
             'secondarySubjects' => $secondarySubjects,
             'months' => $months,
-            'roles' => $roles
+            'roles' => $roles,
+            'token' => $token
         ];
 
         return response()->json($data);

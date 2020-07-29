@@ -59,6 +59,7 @@ trait PupilsValidators {
             'classe_id' => ['numeric', 'bail'],
             'sexe' => ['required', 'string', 'bail'],
             'birth' => ['required', 'date', 'bail'],
+            'level' => ['required', 'string', 'bail'],
             'month' => ['required', 'string', 'bail'],
             'year' => ['required', 'numeric', 'bail', 'max:'.date('Y')]
         ]);

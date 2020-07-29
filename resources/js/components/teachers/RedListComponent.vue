@@ -1,12 +1,12 @@
 <template>
-    <div class="d-flex flex-column justify-content-around py-1 w-100 border float-right mx-0 bg-linear-official-180 px-3" >
+    <div class="d-flex flex-column justify-content-around py-1 w-100 border float-right mx-0 bg-linear-official-180" >
         <transition name="scale" appear>
         <div class="d-flex justify-content-around py-1 w-100">
             <div class="d-flex row justify-content-around" style="width: 100%">
                 <div class="border py-2 col-lg-5 col-md-12">
                     <div class="w-100 d-flex justify-content-between">
                         <div class="">
-                            <h5 class="h5-title">Le Primaire</h5> 
+                            <h5 class="h5-title">Le Primaire</h5>
                         </div>
                         <div class="">
                             <span class="fa fa-close float-right p-1"></span>
@@ -16,7 +16,7 @@
                     <div class="mt-1 w-100">
                         <div class="w-100 d-flex justify-content-between">
                             <span class="fa fa-user fa-2x" ></span>
-                            <span class="fa fa-2x">{{ ppl }}</span>
+                            <span class="fa fa-2x">{{ TBPLength }}</span>
                         </div>
                         <div class="w-100 d-block">
                             <span class="w-100 d-flex justify-content-around">
@@ -80,7 +80,7 @@
                                 <div class="mt-1 w-100">
                                     <div class="w-100 d-flex justify-content-between"> 
                                         <span class="fa fa-user fa-2x text-white" ></span>
-                                        <span class="fa fa-2x">{{ psl }}</span>
+                                        <span class="fa fa-2x">{{ PBSLength }}</span>
                                     </div>
                                     <div class="w-100 d-block">
                                         <span class="w-100 d-flex justify-content-around">
@@ -107,99 +107,89 @@
         </div>
         </transition>
         <div class="w-100">
-            <div class="w-100 my-1 m-0 p-1">
-                <div class="w-100 row m-0 p-0 pl-lg-4">
-                    <div class="col-3 row pr-2 p-0 mt-1 mb-0">
-                        <p class="h5-title m-0 mr-3 p-0">Les premiers respo sont en <span class="text-primary">Bleu</span></p>
-                        <p class="h5-title m-0 p-0">Les seconds respo sont en <span class="text-success">Vert</span></p>
+            <div class="w-100 my-1 p-1">
+                <div class="w-100 d-flex justify-content-between">
+                    <div class="float-right d-flex justify-content-between pr-2 mt-4 mb-0">
+                        <p class="h5-title m-0 mr-3">Les premiers respo sont en <span class="text-primary">Bleu</span></p>
+                        <p class="h5-title m-0">Les seconds respo sont en <span class="text-success">Vert</span></p>
                     </div>
-                    <div class="float-right d-flex justify-content-around pr-2 mt-4 mb-0 border py-2" v-if="alert">
+                    <div class="float-right d-flex justify-content-around pr-2 mt-4 mb-0 border py-2" :class="type" v-if="alert">
                         <p class="h5-title m-0 px-2">
                             <span class="mx-2 fa fa-envelope-open"></span>{{ message }}
                         </p>
                         <span class="mx-1 fa fa-close text-danger" @click="resetAlert()"></span>
-                    </div>
-                    <div class="offset-7 col-2 mb-0" v-if="!alert">
-                        <span class="btn btn-primary m-0 px-3 float-right mt-1" title="Ajouter un nouvel apprenant..." data-toggle="modal" data-target="#newPupilPersoModal" @click="addNew()">
-                            <i class="fa fa-user-plus"></i>
-                        </span>
                     </div>
                 </div>
                 <hr class="m-0 mt-1" style="background-color: white">
             </div>
             <div class="pupils">
                 <div class="container bg-transparent w-100 py-1">
-                    <div class="d-flex w-100 my-1 justify-content-start">
-                        <div class="mx-1 my-0">
-                            <span class="fa fa-refresh text-white-50" @click="filtrer('all')" v-if="alertPupilsSearch !== 'Tous les apprenants'"></span>
-                            <button class="btn btn-primary mx-1" @click="filtrer('primary')"> Le Primaire ({{ ' '+ ppl +' ' }}) </button>
-                            <button class="btn btn-primary" @click="filtrer('secondary')">Le Secondaire ({{ ' '+ psl +' ' }})</button>
-                        </div>
-                        <h5 class="card-link mt-3 text-white-50 ml-3"> {{ alertPupilsSearch }}</h5>
-                        <div class="position-absolute profiler" style="top: 150px; left: 10px; display: none">
-                            <div class="profil-img">
-                                <span class="photo"><img src="/media/hideface.jpg" width="250"></span>
-                            </div>
-                        </div>
+                <div class="d-flex w-100 my-1 justify-content-start">
+                    <div class="mx-1">
+                        <span class="fa fa-refresh text-white-50" @click="filtrer('all')" v-if="alertTeachersSearch !== 'Tous les enseignants'"></span>
+                        <button class="btn btn-primary mx-1" @click="filtrer('primary')"> Le Primaire ({{ ' '+ TBPLength +' ' }}) </button>
+                        <button class="btn btn-primary" @click="filtrer('secondary')">Le Secondaire ({{ ' '+ TBSLength +' ' }})</button>
                     </div>
-                    
-                    <div class="w-100" style="min-height: 500px;">
-                        <table class="table-table table-striped w-100">
-                            <transition name="fadelow" appear>
-                                <thead>
-                                    <th>No</th>
-                                    <th>Name</th>
-                                    <th>Sexe</th>
-                                    <th>Naissance</th>
-                                    <th>Inscrit depuis</th>
-                                    <th>Classe</th>
-                                    <th colspan="1">Actions</th>
-                                </thead>
-                            </transition>
-                            <transition name="bodyfade" appear>
-                                <tbody>
-                                    <tr v-for="(pupil, k) in pupils" :key="pupil.id" class="border-bottom border-dark">
-                                        <td>
-                                            {{k+1}}
-                                        </td>
-                                        <td class="text-left">
-                                            <router-link :to="{name: 'pupilsProfil', params: {id: pupil.id}}"   class="card-link d-inline-block" >
-                                                <span  class="w-100 d-inline-block link-profiler"  @click="setEdited(pupil)">
-                                                    {{pupil.name}}
-                                                </span>
-                                            </router-link>
-                                            <a href="#" title="card-link Editer les informations de" class="fa fa-edit text-white-50 float-right" style="font-size: 10px!important; font-weight: 200!important" data-toggle="modal" data-target="#editPupilPersoModal" @click="getEdited(pupil)" @mouseout="closeProfiler()" @mouseover="openProfiler()"></a>
-                                        </td>
-                                        <td>
-                                            {{gender(pupil.sexe)}}
-                                        </td>
-                                        <td>
-                                            {{birthday(pupil)}}
-                                        </td>
-                                        <td>
-                                            {{pupil.month + ' ' + pupil.year}}
-                                        </td>
-                                        <td>
-                                            <a class="card-link w-100 d-inline-block" href="">
-                                                {{pupilsArray[pupil.id].name}} <sup>{{pupilsArray[pupil.id].sup}}</sup>{{pupilsArray[pupil.id].idc}}
-                                            </a>
-                                        </td>
-                                        
-                                        <td>
-                                            <span class="d-inline-block w-100">
-                                                <button title="Voulez vous supprimer" class="px-1 btn bg-transparent w-100" @click="destroy(pupil)">
-                                                    <i class="fa fa-trash text-danger"></i>
-                                                </button>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </transition>
-                        </table>
-                    </div>
+                    <h5 class="card-link mt-3 text-white-50 ml-3"> {{ alertTeachersSearch }}</h5>
+                </div>
+                <div class="w-100" style="min-height: 500px;">
+                    <table class="table-table table-striped w-100">
+                        <transition name="fadelow" appear>
+                            <thead>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Sexe</th>
+                                <th class="d-lg-block d-none">Naissance</th>
+                                <th>Inscrit depuis</th>
+                                <th>Classe</th>
+                                <th>Actions</th>
+                            </thead>
+                        </transition>
+                        <transition name="bodyfade" appear>
+                        <tbody>
+                            <tr v-for="(teacher, k) in teachersBlockeds" :key="teacher.id" class="border-bottom border-dark">
+                                <td>
+                                    {{k+1}}
+                                </td>
+                                <td class="text-left">
+                                    <router-link :to="{name: 'pupilsProfil', params: {id: teacher.id}}"   class="card-link d-inline-block">
+                                        {{teacher.name}}
+                                    </router-link>
+                                    <a href="#" title="Editer les informations de" class="fa fa-edit text-white-50 float-right" style="font-size: 10px!important; font-weight: 200!important" data-toggle="modal" data-target="#exampleModal" @click="getEdited(teacher)"></a> 
+                                </td>
+                                <td>
+                                    {{gender(teacher.sexe)}}
+                                </td>
+                                <td class="d-lg-block d-none">
+                                    {{birthday(teacher)}}
+                                </td>
+                                <td>
+                                    {{tracher.month + ' ' + tracher.year}}
+                                </td>
+                                <td>
+                                    <a class="card-link w-100 d-inline-block" href="">
+                                        {{trachersArray[tracher.id].name}} <sup>{{trachersArray[tracher.id].sup}}</sup>{{trachersArray[tracher.id].idc}}
+                                    </a>
+                                </td>
+                                
+                                <td>
+                                    <span class="d-flex justify-content-between w-100">
+                                        <button title="Restaurer cet élève" class="btn bg-secondary" style="width: 48%;" @click="restore(teacher)">
+                                            <i class="fa fa-recycle text-success"></i>
+                                        </button>
+                                        <button title="Supprimer définitement cet élève" class="btn bg-info"  style="width: 48%;">
+                                            <i class="fa fa-user-times text-danger"></i>
+                                        </button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </transition>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     
 </template>
@@ -208,11 +198,11 @@
     import { mapState } from 'vuex'
     export default { 
         props : [],
-        editedPupil: {}, 
 
         data() {
             return {
-                selfMonths : [
+               
+                months : [
                     "Janvier",
                     "Février",
                     "Mars",
@@ -226,20 +216,21 @@
                     "Novembre",
                     "Décembre"
 
-                ],
-                profiler: false
+                ]
             }   
         },
         created(){
-            this.$store.dispatch('getPupilsData')
+            this.$store.dispatch('getTeachersData')
+            this.$store.dispatch('getTOOLS')
         },
 
         methods :{
             gender(sexe){
                 return sexe == "male" ? 'M' : 'F'
             },
+
             filtrer(level){
-                this.$store.commit('SHOW_PUPILS_BY_LEVEL', level)
+                this.$store.commit('SHOW_TEACHER_BY_LEVEL', level, false)
             },
 
             birthday(user)
@@ -247,81 +238,50 @@
                 let date = user.birth
                 let parts = (date.split("-")).reverse()
                 let day = parts[0]
-                let m = (this.selfMonths[parts[1] - 1]).length > 5 ? (this.selfMonths[parts[1] - 1]).substring(0, 3) : this.selfMonths[parts[1] - 1]
+                let m = (this.months[parts[1] - 1]).length > 5 ? (this.months[parts[1] - 1]).substring(0, 3) : this.months[parts[1] - 1]
                 let year = parts[2]
 
                 return day + " " + m + " " + year
             },
-            destroy(pupil){
-                this.$store.dispatch('lazyDeletePupils', pupil)                
+            restore(teacher){
+                this.$store.dispatch('restoreTeacher', teacher)
+                
             },
-
-            closeProfiler(){
-                this.profiler = false
-                $(()=>{
-                    $('.profiler').hide('fade', 500)
-                })
-            },
-            openProfiler(){
-                this.profiler = true
-
-                $(()=>{
-                    $('.profiler').show('fade', 500)
-                })
-            },
-
-            getEdited(pupil){
-                this.$store.dispatch('getTOOLS')
+            getEdited(teacher){
                 this.$store.commit('RESET_INVALID_INPUTS')
-                this.$store.dispatch('getAPupilData', pupil)
+                this.$store.dispatch('getATeacherData', teacher)
 
                 
-                $('#editPupilPersoModal .div-success').hide('slide', 'up')
-                $('#editPupilPersoModal .div-success h4').text('')
-                $('#editPupilPersoModal').animate({
+                $('#exampleModal .div-success').hide('slide', 'up')
+                $('#exampleModal .div-success h4').text('')
+                $('#exampleModal').animate({
                     top: '100'
                 })
                 
-                $('#editPupilPersoModal form').show('slide', {direction: 'up'}, 1, function(){
-                    $('#editPupilPersoModal form').animate({
+                $('#exampleModal form').show('slide', {direction: 'up'}, 1, function(){
+                    $('#exampleModal form').animate({
                         opacity: '0'
                     }, function(){
-                        $('#editPupilPersoModal form').animate({
+                        $('#exampleModal form').animate({
                             opacity: '1'
                         }, 800)
-                        $('#editPupilPersoModal .buttons-div').show('fade')
+                        $('#exampleModal .buttons-div').show('fade')
                     })
                 })
-            },
-
-            addNew(){
-                this.$store.commit('RESET_NEW_PUPIL')
-                this.$store.dispatch('getTOOLS')
-                this.$store.commit('RESET_INVALID_INPUTS')
-                
-                $('#newPupilPersoModal .div-success').hide('slide', 'up')
-                $('#newPupilPersoModal .div-success h4').text('')
-                $('#newPupilPersoModal form').show('fade', function(){
-                    $('#newPupilPersoModal .buttons-div').show('fade')
-                })
-            },
-
-            setEdited(pupil){
-                this.$store.commit('SET_EDITED_PUPIL', pupil)
             },
 
             resetAlert(){
                 this.$store.commit('ALERT_RESET')
             }
+
         },
 
         computed: mapState([
-           'pupilsArray', 'pupils', 'secondaryPupils', 'primaryPupils', 'pupilsAll', 'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'alertPupilsSearch', 'alert', 'message', 'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs', 'errors'
+            'teachersBlockeds', 'teachersBlockedsAll', 'TSBlockeds', 'TPBlockeds', 'teachersArray', 'teachersBlockedsLength', 'TBPLength', 'TBSLength', 'alertTeachersSearch', 'alert', 'type', 'message', 'editedTeacher', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs'
         ])
     }
 
     $(function(){
-
     let sup_tag = $('#sup-tag')
     let sup_ch = $('#chevron-sup')
     let sec_tag = $('#sec-tag')
@@ -362,7 +322,4 @@
 })
 
 </script>
-<style>
-    
-</style>
 

@@ -143,6 +143,7 @@
                     this.tl = response.data.tl
                     this.tsl = response.data.tsl
                     this.tpl = response.data.tpl
+                    this.subjects = response.data.subjects
                 }
             )
         },

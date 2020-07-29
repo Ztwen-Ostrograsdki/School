@@ -5,11 +5,11 @@
 			<table class="table-profil ">
 				<tr>
 					<td>Nom:</td>
-					<td> {{ targetPupilLastName }} </td>
+					<td> {{ targetTeacherLastName }} </td>
 				</tr>
 				<tr>
 					<td>Prénoms:</td>
-					<td>{{ targetPupilFirstName }}</td>
+					<td>{{ targetTeacherFirstName }}</td>
 				</tr>
 				<tr>
 					<td>Age:</td>
@@ -17,21 +17,21 @@
 				</tr>
 				<tr>
 					<td>Date de Naissance:</td>
-					<td>{{ targetPupilBirthFMT }}</td>
+					<td>{{ targetTeacherBirthFMT }}</td>
 				</tr>
 				<tr>
 					<td>Sexe:</td>
 					<td>M</td>
 				</tr>
 				<tr>
-					<td>Classe:</td>
+					<td>Spécialité:</td>
 					<td>
-						{{targetPupilClasseFMT.name}}<sup>{{ targetPupilClasseFMT.sup }}</sup> {{ targetPupilClasseFMT.idc }}
+						PCT
 					</td>
 				</tr>
 			</table>
 			<span>
-				<i class="btn btn-news my-1 p-1 pr-2 float-right" data-toggle="modal" data-target="#editPupilPersoModal" @click="openEdited()"> <i class="fa fa-edit mr-2"></i>Mettre à jour</i>
+				<i class="btn btn-news my-1 p-1 pr-2 float-right" data-toggle="modal" data-target="#editTeacherPersoModal" @click="openEdited()"> <i class="fa fa-edit mr-2"></i>Mettre à jour</i>
 			</span>
 		</div>
 	</div>
@@ -59,30 +59,30 @@
 	                .then(response => {
 	                    this.preEdited = response.data.p
 	                    this.$store.commit('SET_TOKEN', response.data.token)
-	                    this.$store.commit('SET_EDITED_PUPIL', this.preEdited)
+	                    this.$store.commit('SET_EDITED_TEACHER', this.preEdited)
 	                })
 	            
                 
-                $('#exampleModal .div-success').hide('slide', 'up')
-                $('#exampleModal .div-success h4').text('')
-                $('#exampleModal').animate({
+                $('#editTeacherPersoModal .div-success').hide('slide', 'up')
+                $('#editTeacherPersoModal .div-success h4').text('')
+                $('#editTeacherPersoModal').animate({
                     top: '100'
                 })
                 
-                $('#exampleModal form').show('slide', {direction: 'up'}, 1, function(){
-                    $('#exampleModal form').animate({
+                $('#editTeacherPersoModal form').show('slide', {direction: 'up'}, 1, function(){
+                    $('#editTeacherPersoModal form').animate({
                         opacity: '0'
                     }, function(){
-                        $('#exampleModal form').animate({
+                        $('#editTeacherPersoModal form').animate({
                             opacity: '1'
                         }, 800)
-                        $('#exampleModal .buttons-div').show('fade')
+                        $('#editTeacherPersoModal .buttons-div').show('fade')
                     })
                 })
             },
 		},
 		computed: mapState([
-           'editedPupil', 'errors', 'targetPupilLastName', 'targetPupilFirstName', 'targetPupilClasseFMT', 'targetPupilBirthFMT'
+           'editedTeacher', 'errors', 'targetTeacherLastName', 'targetTeacherFirstName', 'targetTeacherBirthFMT'
         ])
 
 	}

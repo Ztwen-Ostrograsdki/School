@@ -29,17 +29,31 @@ let pupils_parents_data = Vue.component('pupil-parents-data', require('./compone
 let pupils_marks_data = Vue.component('pupil-marks-data', require('./components/pupils/layouts/MarksBoxComponent.vue').default)
 let pupils_profil_box = Vue.component('profil-pupil-box', require('./components/pupils/layouts/ProfilBoxComponent.vue').default)
 
+
+
 //FORMULARS COMPONENTS
 
+let pupils_add = Vue.component('pupil-add', require('./components/formulars/pupils/AddNewComponent.vue').default)
 let pupils_perso_edit = Vue.component('pupil-perso', require('./components/formulars/pupils/EditPersonalComponent.vue').default)
+
+let teachers_add = Vue.component('teacher-add', require('./components/formulars/teachers/AddNewComponent.vue').default)
+let teachers_perso_edit = Vue.component('teacher-perso', require('./components/formulars/teachers/EditPersonalComponent.vue').default)
 
 
 let default_success = Vue.component('default-success', require('./components/success/SuccessComponent.vue').default)
 
 
 //TEACHERS COMPONENTS
+let teachers_home = Vue.component('teachers-home', require('./components/teachers/HomeComponent.vue').default)
 let listing_teachers = Vue.component('listing-component-teachers', require('./components/teachers/ListingComponent.vue').default)
+let teachers_redList = Vue.component('teachers-redList', require('./components/teachers/RedListComponent.vue').default)
 
+let teachers_profil = Vue.component('profil-component-teachers', require('./components/teachers/ProfilComponent.vue').default)
+let teachers_profil_main = Vue.component('teacher-profil-main', require('./components/teachers/layouts/MainProfilComponent.vue').default)
+let teachers_perso_data = Vue.component('teacher-perso-data', require('./components/teachers/layouts/PersonalBoxComponent.vue').default)
+let teachers_parents_data = Vue.component('teacher-parents-data', require('./components/teachers/layouts/ParentalBoxComponent.vue').default)
+let teachers_marks_data = Vue.component('teacher-marks-data', require('./components/teachers/layouts/MarksBoxComponent.vue').default)
+let teachers_profil_box = Vue.component('profil-teacher-box', require('./components/teachers/layouts/ProfilBoxComponent.vue').default)
 
 
 const routes = [
@@ -75,8 +89,29 @@ const routes = [
 	},
 	{
 		path: '/admin/director/teachersm',
-		component: listing_teachers
-	}
+		component: teachers_home,
+		name: 'teachersIndex',
+		children: [
+			{
+				path: '/admin/director/teachersm',
+				component: listing_teachers,
+			},
+			{
+				path: '/admin/director/teachersm/redList',
+				component: teachers_redList,
+				name: 'teachersRedList'
+
+			},
+			{
+				path: '/admin/director/teachersm/:id',
+				component: teachers_profil,
+				name: 'teachersProfil',
+				store
+
+			}
+			
+		]
+	},
 ]
 
 const router = new VueRouter({mode: 'history', routes})

@@ -41,6 +41,18 @@ const pupils_mutations = {
         state.editedPupil = pupil
     },
 
+    RESET_NEW_PUPIL: (state) => {
+        state.newPupil = {
+            name: '',
+            classe_id: '',
+            birth: '',
+            sexe: '',
+            level: 'secondary',
+            month: '',
+            year: (new Date).getFullYear(),
+        }
+    },
+    
     RESET_EDITED_PUPIL: (state) => {
         state.editedPupil = {}
     },

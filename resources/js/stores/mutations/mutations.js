@@ -18,8 +18,10 @@ const default_mutations = {
 		state.pupilsBlockedsLength = data.pupilsblockedLength
 		state.PBPLength = data.PBPLength
 		state.PBSLength = data.PBSLength
+		state.subjects = data.subjects
 	},
 	GET_TOOLS: (state, data) => {
+		state.token = data.token
 		state.allRoles = data.roles
 		state.months = data.months
 		state.primaryClasses = data.primaryClasses

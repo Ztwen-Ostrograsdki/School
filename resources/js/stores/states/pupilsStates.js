@@ -9,6 +9,16 @@ const pupils_states = {
     targetPupilBirthFMT: '',
     age: '',
 
+    newPupil: {
+        name: '',
+        classe_id: '',
+        birth: '',
+        sexe: '',
+        level: 'secondary',
+        month: '',
+        year: (new Date).getFullYear(),
+    },
+
     editedPupil : {},
     primaryPupils : {},
     pupils: {},

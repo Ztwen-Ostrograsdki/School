@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Master\SuperAdminController;
 use App\ModelHelper;
 use App\Models\Classe;
+use App\Models\Pupil;
 use App\Models\Teacher;
+use App\User;
 use Illuminate\Http\Request;
 
 class TeachersController extends Controller
@@ -29,19 +31,136 @@ class TeachersController extends Controller
     }
 
     /**
+     * Use to get a data of a pupil
+     * @param  int    $id [description]
+     * @return a json response to a view
+     */
+    public function getATeacherData(int $id)
+    {
+        $token = csrf_token();
+        $teacher = Teacher::withTrashed('deleted_at')->whereId($id)->firstOrFail();
+        $birthday = ModelHelper::birthFormattor($teacher, 0);
+        $classes = [];
+        if ($teacher->classes->count() > 0) {
+            foreach ($teacher->classes as $classe) {
+                $classes[] = $classe->id;
+            }
+        }
+
+        $helper = new ModelHelper($teacher);
+        $surname = $helper->setLastNameAndFirstName();
+        $lastName = $helper->getLastName();
+        $firstName = $helper->getFirstName();
+
+        $data = [
+            'teacher' => $teacher,
+            'token' => $token,
+            'classes' => $classes
+        ];
+
+        return response()->json($data);
+    }
+
+
+
+     /**
      * Use to send a data to a view in ajax
      * @return a json response 
      */
-    public function pupilsDataSender()
+    public function teachersDataSender($teacherEdited = null, array $errors = [])
     {
-        $allDATA = [];
-        $teachers = Teacher::all();
+        $user = auth()->user();
+        $admin = false;
+        $roles = $user->getRoles();
 
-        
-        $teachersSecondary = Teacher::whereLevel('secondary')->get();
-        $teachersPrimary = Teacher::whereLevel('primary')->get();
-        return response()->json(['t' => $teachers, 'tSec' => $teachersSecondary, 'tPrim' => $teachersPrimary, 'all' => $allDATA]);
+        if (in_array('admin', $roles) || in_array('superAdmin', $roles)) {
+            $admin = true;
+        }
+
+        $AllTeachersWithClasses = [];
+        $AllTeachersWithSubject = [];
+        $TSBlockeds = [];
+        $TPBlockeds = [];
+        $teachers = Teacher::withTrashed('deleted_at')->orderBy('name', 'asc')->get();
+        $userLength = User::all()->count();
+        $p = Pupil::all()->count();
+        $ts = Teacher::whereLevel('secondary')->count();
+        $tp = Teacher::whereLevel('primary')->count();
+        $TBSLength = count(Teacher::getBlockeds('secondary'));
+        $TBPLength = count(Teacher::getBlockeds('primary'));
+        $blockeds = Teacher::getBlockeds();
+
+        if (count($blockeds) > 0) {
+            foreach ($blockeds as $tb) {
+               if ($tb->level == "secondary") {
+                   $TSBlockeds[] = $tb;
+               }
+               elseif ($tb->level == "primary") {
+                   $TPBlockeds[] = $tb;
+               }
+            }
+        }
+
+
+        foreach ($teachers as $teacher) {
+            if ($teacher->level == 'secondary') {
+                $AllTeachersWithSubject[$teacher->id] = $teacher->subject->name;
+                if ($teacher->classes->count() > 0) {
+                    $classes = [];
+                    foreach ($teacher->classes as $classe) {
+                        $classes[] = $classe->getFormattedClasseName();
+                        $AllTeachersWithClasses[$teacher->id] = $classes;
+                    }
+                }
+                else{
+                    $AllTeachersWithClasses[$teacher->id] = 'Aucune';
+                }
+                
+            }
+            else{
+                $AllTeachersWithSubject[$teacher->id] = "Maitre";
+                if ($teacher->classes->count() > 0) {
+                    $classes = [];
+                    foreach ($teacher->classes as $classe) {
+                        $classes[] = $classe->getFormattedClasseName();
+                         $AllTeachersWithClasses[$teacher->id] = $classes;
+                    }
+                }
+                $AllTeachersWithClasses[$teacher->id] = 'Aucune';
+            }
+        }
+
+        $teachersSecondary = Teacher::whereLevel('secondary')->orderBy('name', 'asc')->get();
+        $teachersPrimary = Teacher::whereLevel('primary')->orderBy('name', 'asc')->get();
+
+        $data = [
+            'user' => $user,
+            'admin' => $admin,
+            't' => $teachers,
+            'tSec' => $teachersSecondary, 
+            'tPrim' => $teachersPrimary, 
+            'allTWC' => $AllTeachersWithClasses, 
+            'allTWS' => $AllTeachersWithSubject, 
+            'userLength' => $userLength, 
+            'p' => $p, 
+            'ts' => $ts, 
+            'tp' => $tp, 
+            'tblockeds' => $blockeds, 
+            'TSBlockeds' => $TSBlockeds, 
+            'TPBlockeds' => $TPBlockeds, 
+            'TBSLength' => $TBSLength, 
+            'TBPLength' => $TBPLength
+        ];
+        if ($errors !== []) {
+            $data['errors'] = $errors;
+        }
+        else{
+            $data['errors'] = ['status' => false, 'type' => ''];
+        }
+       
+        return response()->json($data);
     }
+
 
     /**
      * Show the form for creating a new resource.

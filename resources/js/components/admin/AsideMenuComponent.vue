@@ -36,8 +36,13 @@
 	                </li>
 	                <li class="subitem2"><a href="#">Secondaires <i class="float-right mr-3">({{ psl }})</i></a></li>
 	                <li class="subitem3">
-	                	<router-link to="/admin/director/pupilsm/redList">Listes rouges ({{ pupilsBlockedsLength }})
+	                	<router-link to="/admin/director/pupilsm/redList">Listes rouges <i class="float-right mr-3">({{ pupilsBlockedsLength }})</i>
 	                    </router-link>
+	                </li>
+	                <li class="subitem3">
+	                	<a class="subitem4" href="#"data-toggle="modal" data-target="#newPupilPersoModal" @click="addNew()">
+                            Ajouter un nouvel apprenant <i class="fa fa-user-plus"></i>
+                        </a>
 	                </li>
 	            </ul>
 	        </li>
@@ -48,8 +53,8 @@
 	            </a>
 	            <ul>
 	                <li class="subitem1">
-	                    <a  href="#">Tous les enseignants
-	                    </a>
+	                    <router-link to="/admin/director/teachersm">Tous les Ensignants
+	                    </router-link>
 	                </li>
 	                <li class="subitem1"><a href="#">Primaires <i class="float-right mr-3">({{ tpl }})</i></a></li>
 	                <li class="subitem2"><a href="#">Secondaires <i class="float-right mr-3">({{ tsl }})</i></a></li>

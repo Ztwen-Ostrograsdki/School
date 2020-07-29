@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\TrashedGet;
 use App\Models\Classe;
 use App\Models\Subject;
 use App\User;
@@ -18,6 +19,12 @@ class Teacher extends Model
 
     protected $fillable = ['name', 'email', 'contact', 'sexe', 'residence', 'birth', 'year','month', 'level', 'parent', 'subject_id', 'firstName', 'surname', 'creator', 'editor', 'authorized'
 		];
+
+	public static function getBlockeds(string $level = null)
+    {
+        $blocked = (new TrashedGet(Teacher::class))->getDeleted($level);
+        return $blocked;
+    }
 
 	public function classes()
 	{
