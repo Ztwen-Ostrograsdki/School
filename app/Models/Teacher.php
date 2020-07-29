@@ -50,6 +50,16 @@ class Teacher extends Model
 		return $this->users->toArray() !== [];
 	}
 
+	/**
+	 * defined is the model is the ae of his subject
+	 * @return boolean [description]
+	 */
+	public function isAE():bool
+	{
+		return $this->classe !== null;
+	}
+
+
 	
 	public function subject()
 	{

@@ -99,6 +99,7 @@
         <pupil-add></pupil-add>
 
         <teacher-perso></teacher-perso>
+        <teacher-classes></teacher-classes>
 
 	</div>
 </template>
@@ -108,11 +109,20 @@
     import { mapState } from 'vuex'
 	export default {
 
-        state: {
-            currentYear: (new Date).getFullYear()
+        data() {
+            return {
+                currentYear: (new Date).getFullYear(),
+                
+                
+            }   
+        },
+        created(){
+            this.$store.dispatch('getCounter')
+            this.$store.dispatch('getTOOLS')
+            
         },
 
-
+ 
         methods: {
             getYears(){
                 let $tab = []
@@ -128,7 +138,7 @@
         },
 
         computed: mapState([
-            'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'user', 'admin', 'errors'
+            'editedPupil', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'user', 'admin', 'errors', 'subjects'
         ])
         
 	}

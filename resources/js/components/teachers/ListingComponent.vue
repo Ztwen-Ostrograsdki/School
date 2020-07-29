@@ -120,7 +120,7 @@
                         <span class="mx-1 fa fa-close text-danger" @click="resetAlert()"></span>
                     </div>
                     <div class="offset-7 col-2 mb-0" v-if="!alert">
-                        <span class="btn btn-primary m-0 px-3 float-right mt-1" title="Ajouter un nouvel apprenant..." data-toggle="modal" data-target="#newPupilPersoModal" @click="addNew()">
+                        <span class="btn btn-primary m-0 px-3 float-right mt-1" title="Ajouter un nouvel enseignant..." data-toggle="modal" data-target="#newTeacherPersoModal" @click="addNew()">
                             <i class="fa fa-user-plus"></i>
                         </span>
                     </div>
@@ -179,24 +179,24 @@
                                         <td>
                                             {{teacher.month + ' ' + teacher.year}}
                                         </td>
-                                        <td v-if="hasClasses(teacher.id)">
-                                            <span class="float-left fa fa-chevron-left mt-1" @click="prevClasses(AllTeachersWithClasses[teacher.id])" title="Voir les classes precedentes" v-if="AllTeachersWithClasses[teacher.id].length > 2 && index !== 0"></span>
-                                                <span>
+                                        <td class="" v-if="hasClasses(teacher.id)">
+                                            <i class="float-left fa fa-chevron-left mt-1 " @click="prevClasses(AllTeachersWithClasses[teacher.id])" title="Voir les classes precedentes" v-if="AllTeachersWithClasses[teacher.id].length > 2 && index !== 0"></i>
+                                                <span data-toggle="modal" data-target="#editTeacherClassesModal" class="fa" :title="'Cliquer pour editer les classes de ' + teacher.name" @click="editClasses(teacher)">
                                                     <span class="h5-title" v-for="(classe, k) in AllTeachersWithClasses[teacher.id]">
                                                         <span v-if="k >= index && k <= index + 1">
                                                             {{classe.name}}<sup>{{classe.sup}}</sup>{{classe.idc}}
                                                         </span>
                                                     </span>
                                                 </span>
-                                            <span class="float-right fa fa-chevron-right mt-1" @click="nextClasses(AllTeachersWithClasses[teacher.id])" title="Voir les classes suivantes" v-if="AllTeachersWithClasses[teacher.id].length > 2 && index + 1 < AllTeachersWithClasses[teacher.id].length"></span>
+                                            <i class="float-right fa fa-chevron-right mt-1" @click="nextClasses(AllTeachersWithClasses[teacher.id])" title="Voir les classes suivantes" v-if="AllTeachersWithClasses[teacher.id].length > 2 && index + 1 < AllTeachersWithClasses[teacher.id].length"></i>
                                         </td>
                                         <td v-if="!hasClasses(teacher.id)">
-                                            -
+                                            <span data-toggle="modal" data-target="#editTeacherClassesModal" class="fa fa-plus text-white-50" :title="'Attribuer des classes maintenant à ' + teacher.name" @click="editClasses(teacher)"></span>
                                         </td>
                                         
                                         <td>
                                             <span class="d-inline-block w-100">
-                                                <button title="Voulez vous supprimer" class="px-1 btn bg-transparent w-100" @click="destroy(teacher)">
+                                                <button :title="'Voulez-vous envoyez ' + teacher.name + ' dans la corbeille? '" class="px-1 btn bg-transparent w-100" @click="destroy(teacher)">
                                                     <i class="fa fa-trash text-danger"></i>
                                                 </button>
                                             </span>
@@ -267,17 +267,17 @@
             },
 
             closeProfiler(){
-                this.profiler = false
-                $(()=>{
-                    $('.profiler').hide('fade', 500)
-                })
+                // this.profiler = false
+                // $(()=>{
+                //     $('.profiler').hide('fade', 500)
+                // })
             },
             openProfiler(){
-                this.profiler = true
+                // this.profiler = true
 
-                $(()=>{
-                    $('.profiler').show('fade', 500)
-                })
+                // $(()=>{
+                //     $('.profiler').show('fade', 500)
+                // })
             },
 
             getSubject(id){
@@ -325,6 +325,28 @@
                             opacity: '1'
                         }, 800)
                         $('#editTeacherPersoModal .buttons-div').show('fade')
+                    })
+                })
+            },
+
+            editClasses(teacher){
+                this.$store.commit('RESET_INVALID_INPUTS')
+                this.$store.dispatch('getATeacherData', teacher)
+
+                $('#editTeacherClassesModal .div-success').hide('slide', 'up')
+                $('#editTeacherClassesModal .div-success h4').text('')
+                $('#editTeacherClassesModal').animate({
+                    top: '20px'
+                })
+                
+                $('#editTeacherClassesModal form').show('slide', {direction: 'up'}, 1, function(){
+                    $('#editTeacherClassesModal form').animate({
+                        opacity: '0'
+                    }, function(){
+                        $('#editTeacherClassesModal form').animate({
+                            opacity: '1'
+                        }, 800)
+                        $('#editTeacherClassesModal .buttons-div').show('fade')
                     })
                 })
             },

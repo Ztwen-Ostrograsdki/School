@@ -47,6 +47,8 @@ class TeachersController extends Controller
             }
         }
 
+        $isAE = $teacher->isAE();
+
         $helper = new ModelHelper($teacher);
         $surname = $helper->setLastNameAndFirstName();
         $lastName = $helper->getLastName();
@@ -55,7 +57,8 @@ class TeachersController extends Controller
         $data = [
             'teacher' => $teacher,
             'token' => $token,
-            'classes' => $classes
+            'classes' => $classes,
+            'isAE' => $isAE
         ];
 
         return response()->json($data);

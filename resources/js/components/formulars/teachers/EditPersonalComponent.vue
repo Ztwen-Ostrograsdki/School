@@ -17,19 +17,19 @@
 			        <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
                         <div class="mx-auto" style="width: 100%">
                             <label for="ed_t_name" class="m-0 p-0">Nom et Prénoms de l'enseignant</label>
-                            <input type="text" class="m-0 p-0 form-control p-1" :class="getInvalids('name', invalidInputs)" name="name" id="ed_t_name" placeholder="Veuillez renseigner le nom et les prénoms de l'enseignant">
+                            <input v-model.lazy="editedTeacher.name" type="text" class="m-0 p-0 form-control p-1" :class="getInvalids('name', invalidInputs)" name="name" id="ed_t_name" placeholder="Veuillez renseigner le nom et les prénoms de l'enseignant">
                             <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.name !== undefined"> {{ invalidInputs.name[0] }} </i>
                         </div>
                     </div>
                     <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
-                        <div class="mx-auto" style="width: 68%">
-                            <label for="ed_t_email" class="m-0 p-0">Nom et Prénoms de l'enseignant</label>
-                            <input type="email" class="m-0 p-0 form-control p-1" :class="getInvalids('email', invalidInputs)" name="email" id="ed_t_email" placeholder="Veuillez renseigner l'email l'enseignant">
+                        <div class="" style="width: 67.2%">
+                            <label for="ed_t_email" class="m-0 p-0">Adresse mail de l'enseignant</label>
+                            <input v-model.lazy="editedTeacher.email" type="email" class="m-0 p-0 form-control p-1" :class="getInvalids('email', invalidInputs)" name="email" id="ed_t_email" placeholder="Veuillez renseigner l'email l'enseignant">
                             <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.email !== undefined"> {{ invalidInputs.email[0] }} </i>
                         </div>
                         <div style="width: 31.7%;">
                             <label for="ed_t_subject" class="m-0 p-0">La spécialité</label>
-                            <select name="subject_id" id="ed_t_subject" class="custom-select" :class="getInvalids('subject_id', invalidInputs)">
+                            <select v-model="editedTeacher.subject_id" name="subject_id" id="ed_t_subject" class="custom-select" :class="getInvalids('subject_id', invalidInputs)">
                                 <option value="">Choisissez la spécialité</option>
                                 <option :value="subject.id" v-for="subject in subjects" > {{ subject.name }} </option>
                             </select>
@@ -38,20 +38,20 @@
                     </div>
 			        <div class="mx-auto mt-2 d-flex justify-content-between" style="width: 85%">
 			        	<div class="mx-auto" style="width: 68%">
-                            <label for="ed_t_email" class="m-0 p-0">Contacts de l'enseignant</label>
-                            <input type="text" class="m-0 p-0 form-control p-1" :class="getInvalids('contact', invalidInputs)" name="contact" id="ed_t_contact" placeholder="Veuillez renseigner les contacts l'enseignant">
+                            <label for="ed_t_contact" class="m-0 p-0">Contacts de l'enseignant</label>
+                            <input v-model.lazy="editedTeacher.contact" type="text" class="m-0 p-0 form-control p-1" :class="getInvalids('contact', invalidInputs)" name="contact" id="ed_t_contact" placeholder="Veuillez renseigner les contacts l'enseignant">
                             <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.contact !== undefined"> {{ invalidInputs.contact[0] }} </i>
                         </div>
                         <div style="width: 32.5%;">
                             <label for="ed_t_birth" class="mb-0">La date de naissance</label>
-                            <input type="date" name="birth" class="m-0 p-0 form-control p-1" :class="getInvalids('birth', invalidInputs)" id="ed_t_birth">
+                            <input v-model.lazy="editedTeacher.birth" type="date" name="birth" class="m-0 p-0 form-control p-1" :class="getInvalids('birth', invalidInputs)" id="ed_t_birth">
                              <i class="h5-title" v-if="invalidInputs !== undefined && invalidInputs.birth !== undefined"> {{ invalidInputs.birth[0] }} </i>
                         </div>
                     </div>
                     <div class=" mx-auto mt-2 d-flex justify-content-around" style="width: 85%">
                         <div style="width: 49.5%;">
                             <label for="ed_t_month" class="m-0 p-0">Le mois d'inscription</label>
-                            <select name="month" id="ed_t_month" class="custom-select" :class="getInvalids('month', invalidInputs)">
+                            <select v-model="editedTeacher.month" name="month" id="ed_t_month" class="custom-select" :class="getInvalids('month', invalidInputs)">
                                 <option value="">Choisissez le mois</option>
                                 <option :value="month" v-for="month in months" > {{ month }} </option>
                             </select>
@@ -59,7 +59,7 @@
                         </div>
                         <div style="width: 49.2%;">
                             <label for="ed_t_year" class="mb-0">L'année d'inscription</label>
-                            <select name="year" id="ed_t_year" class="custom-select" :class="getInvalids('year', invalidInputs)">
+                            <select v-model.lazy="editedTeacher.year" name="year" id="ed_t_year" class="custom-select" :class="getInvalids('year', invalidInputs)">
                                 <option value="">Choisissez l'année</option>
                                 <option :value="year" v-for="year in getYears()">{{ year }}</option>
                             </select>
@@ -72,17 +72,17 @@
                             <div class="w-75 d-flex justify-content-start border rounded p-1">
                             	<div class="mr-3">
                             		<label for="ed_ae_oui">Authorisé</label>
-                            		<input type="radio" name="ae" id="ed_ae_oui" value="non" class="custom-radio">
+                            		<input v-model="editedTeacherIsAE" type="radio" name="setToAE" id="ed_ae_oui" value="true" class="custom-radio">
                             	</div>
                             	<div>
                             		<label for="ed_ae_non">Réfusé</label>
-                            		<input type="radio" name="ae" id="ed_ae_non" value="oui" class="custom-radio">
+                            		<input v-model="editedTeacherIsAE" type="radio" name="setToAE" id="ed_ae_non" value="false" class="custom-radio">
                             	</div>
                             </div>
                         </div>
                     	<div class="" style="width: 29%;">
                             <label for="ed_t_sexe" class="m-0 p-0">Sexe</label>
-                            <select name="sexe" id="ed_t_sexe" class="custom-select" :class="getInvalids('sexe', invalidInputs)">
+                            <select v-model.lazy="editedTeacher.sexe" name="sexe" id="ed_t_sexe" class="custom-select" :class="getInvalids('sexe', invalidInputs)">
                                 <option value="">Choisir le sexe</option>
                                 <option value="male" >Masculin</option>
                                 <option value="female">Féminin</option>
@@ -158,7 +158,7 @@
 		},
 
 		computed: mapState([
-            'editedTeacher', 'editedTeacherClasses', 'invalidInputs', 'subjects', 'successed', 'token', 'errors', 'months', 'primaryClasses', 'secondaryClasses'
+            'editedTeacher', 'editedTeacherClasses', 'invalidInputs', 'subjects', 'successed', 'token', 'errors', 'months', 'primaryClasses', 'secondaryClasses', 'editedTeacherIsAE'
         ]),
 
 

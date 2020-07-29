@@ -48,7 +48,7 @@ class SuperAdminController extends Controller
         $user = auth()->user();
         $admin = false;
         $roles = $user->getRoles();
-        $subjects = Subject::whereLevel('secondary')->get();
+        
 
         if (in_array('admin', $roles) || in_array('superAdmin', $roles)) {
             $admin = true;
@@ -79,8 +79,7 @@ class SuperAdminController extends Controller
             'ul' => $u, 
             'pupilsblockedLength' => $pupilsBlockedsLength, 
             'PBSLength' => $PBSLength, 
-            'PBPLength' => $PBPLength,
-            'subjects' => $subjects
+            'PBPLength' => $PBPLength
         ];
         return response()->json($data);
     }
@@ -103,6 +102,7 @@ class SuperAdminController extends Controller
             'primaryClasses' => $primaryClasses, 
             'primarySubjects' => $primarySubjects, 
             'secondarySubjects' => $secondarySubjects,
+            'subjects' => $secondarySubjects,
             'months' => $months,
             'roles' => $roles,
             'token' => $token

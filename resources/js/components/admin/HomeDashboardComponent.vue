@@ -149,7 +149,7 @@
         },
 
         computed: mapState([
-            'errors'
+            'errors', 'subjects'
         ])
 	}
 </script>

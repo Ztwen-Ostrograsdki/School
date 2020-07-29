@@ -21,6 +21,7 @@ const teachers_states = {
     },
 
     editedTeacher : {},
+    editedTeacherIsAE: false,
     editedTeacherClasses : [],
     primaryTeachers : {},
     teachers: {},

@@ -27,6 +27,7 @@ const teachers_mutations = {
         state.editedTeacher = data.teacher
         state.editedTeacherClasses = data.classes
         state.token = data.token
+        state.editedTeacherIsAE = data.isAE
         
     },
     UPDATE_EDITED_TEACHER: (state, teacher) => {
