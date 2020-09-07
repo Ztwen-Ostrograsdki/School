@@ -28,6 +28,10 @@ class AdminController extends Controller
      */
     public function index()
     {
+        // $teacher = Teacher::find(1);
+        // $classesRufused = $teacher->classesConcernedByThisTeacherButNot();
+
+        // dd($classesRufused);
         return view('admin.index');
     }
 

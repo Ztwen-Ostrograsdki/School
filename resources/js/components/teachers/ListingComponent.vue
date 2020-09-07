@@ -306,9 +306,12 @@
             
 
             getEdited(teacher){
+                this.$store.commit('RESET_EDITED_TEACHER')
                 this.$store.dispatch('getTOOLS')
                 this.$store.commit('RESET_INVALID_INPUTS')
+                this.$store.commit('UNSET_EDITED_TEACHER_CLASSES')
                 this.$store.dispatch('getATeacherData', teacher)
+
 
                 
                 $('#editTeacherPersoModal .div-success').hide('slide', 'up')
@@ -327,12 +330,16 @@
                         $('#editTeacherPersoModal .buttons-div').show('fade')
                     })
                 })
+
             },
 
             editClasses(teacher){
+                this.$store.commit('RESET_EDITED_TEACHER')
                 this.$store.commit('RESET_INVALID_INPUTS')
                 this.$store.dispatch('getATeacherData', teacher)
+                this.$store.commit('RESET_EDITED_TEACHER_CLASSES1_CONFIRM')
 
+                $('#editTeacherClassesModal .div-confirm-classe-prim').hide('fade')
                 $('#editTeacherClassesModal .div-success').hide('slide', 'up')
                 $('#editTeacherClassesModal .div-success h4').text('')
                 $('#editTeacherClassesModal').animate({
@@ -349,6 +356,7 @@
                         $('#editTeacherClassesModal .buttons-div').show('fade')
                     })
                 })
+                
             },
 
             addNew(){
@@ -364,7 +372,7 @@
             },
 
             setEdited(teacher){
-                this.$store.commit('SET_EDITED_PUPIL', teacher)
+                this.$store.commit('SET_EDITED_TEACHER', teacher)
             },
 
             resetAlert(){
@@ -373,7 +381,7 @@
         },
 
         computed: mapState([
-           'AllTeachersWithClasses', 'AllTeachersWithSubject', 'teachers', 'secondaryTeachers', 'primaryTeachers', 'teachersAll', 'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'alertTeachersSearch', 'alert', 'message', 'editedTeacher', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs', 'errors'
+           'AllTeachersWithClasses', 'AllTeachersWithSubject', 'teachers', 'secondaryTeachers', 'primaryTeachers', 'teachersAll', 'pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'alertTeachersSearch', 'alert', 'message', 'editedTeacher', 'editedTeacherClasses', 'cl1', 'cl2', 'cl3', 'cl4', 'cl5', 'primaryClasses', 'secondaryClasses', 'primarySubjects', 'secondarySubjects', 'allSubjects', 'allRoles', 'allClasses', 'months', 'successed', 'invalidInputs', 'errors'
         ])
     }
 

@@ -63,20 +63,20 @@
 	                })
 	            
                 
-                $('#exampleModal .div-success').hide('slide', 'up')
-                $('#exampleModal .div-success h4').text('')
-                $('#exampleModal').animate({
+                $('#editPupilPersoModal .div-success').hide('slide', 'up')
+                $('#editPupilPersoModal .div-success h4').text('')
+                $('#editPupilPersoModal').animate({
                     top: '100'
                 })
                 
-                $('#exampleModal form').show('slide', {direction: 'up'}, 1, function(){
-                    $('#exampleModal form').animate({
+                $('#editPupilPersoModal form').show('slide', {direction: 'up'}, 1, function(){
+                    $('#editPupilPersoModal form').animate({
                         opacity: '0'
                     }, function(){
-                        $('#exampleModal form').animate({
+                        $('#editPupilPersoModal form').animate({
                             opacity: '1'
                         }, 800)
-                        $('#exampleModal .buttons-div').show('fade')
+                        $('#editPupilPersoModal .buttons-div').show('fade')
                     })
                 })
             },

@@ -18,6 +18,7 @@ let admin_menu = Vue.component('admin-menu', require('./components/admin/AsideMe
 let admin_defaultDashboard = Vue.component('admin-dashboard-default', require('./components/admin/HomeDashboardComponent.vue').default)
 
 //PUPILS COMPONENTS
+let pdf = Vue.component('pdf', require('./components/pupils/ExampleComponent.vue').default)
 let pupils_home = Vue.component('pupils-home', require('./components/pupils/HomeComponent.vue').default)
 let listing_pupils = Vue.component('listing-component-pupils', require('./components/pupils/ListingComponent.vue').default)
 let pupils_redList = Vue.component('pupils-redList', require('./components/pupils/RedListComponent.vue').default)
@@ -82,6 +83,13 @@ const routes = [
 				path: '/admin/director/pupilsm/:id',
 				component: pupils_profil,
 				name: 'pupilsProfil',
+				store
+
+			},
+			{
+				path: '/admin/director/docPDF/getApath',
+				component: pdf,
+				name: 'pdf',
 				store
 
 			}

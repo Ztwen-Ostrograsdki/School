@@ -82,6 +82,7 @@ Route::group(['prefix' => 'admin'], function(){
 		//TEACHERS
 		Route::get('teachersm/DATA&for&teachers', 'Master\TeachersController@teachersDataSender');
 		Route::get('teachersm/get&classes&of&teacher&with&data&credentials/id={id}', 'Master\TeachersController@getATeacherData');
+		Route::put('teachersm/update/update&classes&with&authorization/id={id}', 'Master\TeachersController@joinedTeacherToClasses');
 		// Route::put('teachersm/update/update&perso/id={id}', 'Master\TeachersController@persoUpdate');
 		// Route::put('teachersm/restore/id={id}', 'Master\TeachersController@restore');
 		Route::resource('teachersm', 'Master\TeachersController')->middleware('onlySuperAdmin');

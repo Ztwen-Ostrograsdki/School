@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Master\SuperAdminController;
+use App\Http\ValidatorsSpaces\TeachersValidators;
 use App\ModelHelper;
 use App\Models\Classe;
 use App\Models\Pupil;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 
 class TeachersController extends Controller
 {
+    use TeachersValidators;
 
     public function __construct()
     {
@@ -40,7 +42,11 @@ class TeachersController extends Controller
         $token = csrf_token();
         $teacher = Teacher::withTrashed('deleted_at')->whereId($id)->firstOrFail();
         $birthday = ModelHelper::birthFormattor($teacher, 0);
-        $classes = [];
+        $allClasses = Classe::whereLevel('secondary')->get();
+
+        $classes = []; //Les classes de l'enseignant
+        
+        
         if ($teacher->classes->count() > 0) {
             foreach ($teacher->classes as $classe) {
                 $classes[] = $classe->id;
@@ -60,6 +66,24 @@ class TeachersController extends Controller
             'classes' => $classes,
             'isAE' => $isAE
         ];
+
+        if ($teacher->level == "secondary") {
+            $classesConcerned = $teacher->classesConcernedByThisTeacher(); //Classes pouvant recevoir les cours de l'enseignant
+            $classesRefused = $teacher->classesConcernedByThisTeacherButNot();
+
+            $data['classesConcerned' ] = $classesConcerned;
+            $data['classesRefused' ] = $classesRefused;
+        }
+        else{
+            $classesC = Classe::whereLevel('primary')->get();
+            $classesConcerned = [];
+            foreach ($classesC as $cc) {
+                $classesConcerned[$cc->id] = $cc;
+            }
+            $classesRefused = $teacher->classesConcernedByThisTeacherButNot('primary');
+            $data['classesConcerned' ] = $classesConcerned;
+            $data['classesRefused' ] = $classesRefused;
+        }
 
         return response()->json($data);
     }
@@ -122,14 +146,13 @@ class TeachersController extends Controller
             }
             else{
                 $AllTeachersWithSubject[$teacher->id] = "Maitre";
-                if ($teacher->classes->count() > 0) {
-                    $classes = [];
-                    foreach ($teacher->classes as $classe) {
-                        $classes[] = $classe->getFormattedClasseName();
-                         $AllTeachersWithClasses[$teacher->id] = $classes;
-                    }
+                $classes = $teacher->classes;
+                if ($classes->toArray() !== []) {
+                    $AllTeachersWithClasses[$teacher->id] = [$classes[0]->getFormattedClasseName()];
                 }
-                $AllTeachersWithClasses[$teacher->id] = 'Aucune';
+                else{
+                    $AllTeachersWithClasses[$teacher->id] = "Aucune";
+                }
             }
         }
 
@@ -164,6 +187,58 @@ class TeachersController extends Controller
         return response()->json($data);
     }
 
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function joinedTeacherToClasses(Request $request, int $id)
+    {
+        if ((!$request->filled('token') || $request->token == "") || ($request->filled('token') && $request->token !== csrf_token())) {
+            return $this->teachersDataSender(null, ['status' => true, 'type' => '419']);
+        }
+
+
+        $teacher = Teacher::withTrashed('deleted_at')->whereId((int)$id)->firstOrFail();
+
+        $validator = $this->teacherValidateClasses($request->all(), $id);
+
+        if ($validator === false) {
+            return response()->json(['invalidInputs' => "Veuillez choisir au moins une classe valide"]);
+        }
+
+        if ($validator !== []) {
+            if ($teacher->level == "secondary") {
+                foreach ($validator as $classe) {
+                    $teacher->classes()->attach($classe);
+                }
+            }
+            elseif ($teacher->level == "primary") {
+
+                $oldClasse = Classe::find($teacher->classes[0]->id);
+
+                $teacher->classes()->detach($oldClasse->id);
+
+                $oldClasse->teacher_id = null;
+                $oldClasse->save();
+
+                $teacher->classes()->attach($validator[0]);
+                $newClasse = Classe::find($validator[0]);
+                $newClasse->teacher_id = $teacher->id;
+                $newClasse->save();
+            }
+
+            $updater = auth()->user();
+            $teacher->editor = $updater->name;
+            if (in_array('admin', $updater->getRoles()) || in_array('superAdmin', $updater->getRoles())) {
+                $teacher->authorized = true;
+            }
+            $teacher->save();
+        }
+
+        return $this->teachersDataSender($teacher, []);
+    }
 
     /**
      * Show the form for creating a new resource.

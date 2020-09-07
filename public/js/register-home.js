@@ -110,9 +110,6 @@ $(function(){
     let home_link_profil = $('a.home-link-profil, a.home-link-profil-sm')
     let profil_modal = $('.profil-modal')
     let home = $('#container-contents-home')
-
-
-
     home_link_profil.click(function(){
 
         if(profil_modal.css('display') !== 'none'){
@@ -153,8 +150,6 @@ $(function(){
             
         }
     })
-
-
 
 })
 

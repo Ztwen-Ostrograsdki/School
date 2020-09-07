@@ -68,6 +68,10 @@ body{
 .profil-modal .row a:hover{
     transform: scale(1.1);
 }
+
+.scaling:hover{
+    transform: scale(1.1) !important;
+}
 .profil-modal a{
     color: black !important;
 }

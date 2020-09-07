@@ -81,5 +81,55 @@ class Teacher extends Model
 		}
 	}
 
+	/**
+	 * [classesConcernedByThisTeacher description]
+	 * @return array Collection of classes Model
+	 */
+	public function classesConcernedByThisTeacher()
+	{
+		$classesConcerned = [];
+		foreach (Classe::whereLevel('secondary')->get() as $c) {
+            $classeSubjects = [];
+            foreach ($c->subjects as $classeSub) {
+                $classeSubjects[] = $classeSub->id;
+            }
+            if (in_array($this->subject->id, $classeSubjects)) {
+                $classesConcerned[$c->id] = $c;
+            }
+        }
+        return $classesConcerned;
+	}
+
+
+	/**
+	 * [classesConcernedByThisTeacherButNot description]
+	 * @return array classes array id as key with classe name as value
+	 */
+	public function classesConcernedByThisTeacherButNot($except = null)
+	{
+		$classesRufused = [];
+		$except == null ? $classesConcerned = $this->classesConcernedByThisTeacher() : $classesConcerned = Classe::whereLevel($except)->get();
+
+		foreach ($classesConcerned as $c) {
+			$subjectsAlreadyHasTeachers = [];
+			$hisTeachers = $c->teachers;
+
+			if (count($hisTeachers) > 0) {
+				foreach ($hisTeachers as $t) {
+					if ($t->id !== $this->id) {
+						$subjectsAlreadyHasTeachers[] = $t->subject_id;
+					}
+				}
+			}
+
+			if (in_array($this->subject_id, $subjectsAlreadyHasTeachers)) {
+				$classesRufused[$c->id] = $c->name;
+			}
+
+		}
+
+		return $classesRufused;
+	}
+
 	
 }

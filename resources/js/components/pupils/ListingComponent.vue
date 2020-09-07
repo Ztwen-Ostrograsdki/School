@@ -123,6 +123,7 @@
                         <span class="btn btn-primary m-0 px-3 float-right mt-1" title="Ajouter un nouvel apprenant..." data-toggle="modal" data-target="#newPupilPersoModal" @click="addNew()">
                             <i class="fa fa-user-plus"></i>
                         </span>
+                        
                     </div>
                 </div>
                 <hr class="m-0 mt-1" style="background-color: white">

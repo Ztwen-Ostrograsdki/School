@@ -14,7 +14,41 @@ const teachers_actions = {
                store.commit('ALERT_MAKER', "L'opération a échoué: Echec de connexion au serveur! Veuillez réessayer!")
             })
     },
+    updateTeacherClasses: (store, inputs) => {
+        if(inputs.teacher.level == "secondary"){
+        	axios.put('/admin/director/teachersm/update/update&classes&with&authorization/id=' + inputs.teacher.id, {
+	        	token: inputs.token,
+	        	isAE: inputs.setToAE,
+	        	classe1: parseInt(inputs.classes.c1, 10),
+	        	classe2: parseInt(inputs.classes.c2, 10),
+	        	classe3: parseInt(inputs.classes.c3, 10),
+	        	classe4: parseInt(inputs.classes.c4, 10),
+	        	classe5: parseInt(inputs.classes.c5, 10)
+	        })
+	        .then(response => {
+	        	store.commit('RESET_INVALID_INPUTS')
+	            store.commit('GET_TEACHERS_DATA', response.data)
+	        })
+        }
+        else if(inputs.teacher.level == "primary"){
+        	axios.put('/admin/director/teachersm/update/update&classes&with&authorization/id=' + inputs.teacher.id, {
+	        	token: inputs.token,
+	        	isAE: inputs.setToAE,
+	        	classe: parseInt(inputs.classes.classe, 10)
+	        })
+	        .then(response => {
+	        	store.commit('RESET_INVALID_INPUTS')
+	            store.commit('GET_TEACHERS_DATA', response.data)
+	        })
+        }
+        
+       
+           
+    },
     updateATeacherData: (store, inputs) => {
+
+    	
+    	console.log(inputs)
         // axios.put('/admin/director/teachersm/update/update&perso/id=' + inputs.teacher.id, {
         //     // token: inputs.token,
         //     // name: inputs.pupil.name,

@@ -26,10 +26,37 @@ const teachers_mutations = {
     GET_A_TEACHER_DATA: (state, data) => {
         state.editedTeacher = data.teacher
         state.editedTeacherClasses = data.classes
+        state.classesConcernedByATeacher = data.classesConcerned
+        state.classesRefused = data.classesRefused
         state.token = data.token
         state.editedTeacherIsAE = data.isAE
         
     },
+
+    SET_EDITED_TEACHER_CLASSES: (state, classes) => {
+        state.cl1 = classes.c1
+        state.cl2 = classes.c2
+        state.cl3 = classes.c3
+        state.cl4 = classes.c4
+        state.cl5 = classes.c5
+    },
+
+    RESET_EDITED_TEACHER_CLASSES1_CONFIRM: (state) => {
+        state.teacherHasNewClasse = undefined
+        state.confirm_primary_classe = false
+    },
+    SET_EDITED_TEACHER_CLASSES1_CONFIRM: (state, data) =>{
+        state.teacherHasNewClasse = data
+        state.confirm_primary_classe = true
+    },
+
+    SET_CLASSES_CONFIRM: (state, data) =>{
+        state.confirmTeacherClasses = data
+    },
+    RESET_CLASSES_CONFIRM: (state, data) =>{
+        state.confirmTeacherClasses = false
+    },
+
     UPDATE_EDITED_TEACHER: (state, teacher) => {
         state.editedTeacher = teacher
     },

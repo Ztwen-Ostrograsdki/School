@@ -115,41 +115,20 @@
 			<div>
 				<span class="fa fa-chevron-up"></span>
 			</div>
+			<!-- <pdf></pdf> -->
 		</div>
 </template>
 
 <script>
 	import { mapState } from 'vuex'
 	export default {
-		data() {
-            return {
-                ul: 0,
-                pl: 0,
-                psl: 0,
-                ppl: 0,
-                tl: 0,
-                tsl: 0,
-                tpl: 0,
-                
-            }   
-        },
+		
         created(){
-            axios.get('/admin/director/master/get&counter&for&all&data&with&authorization')
-                .then(response => {
-                    this.ul = response.data.ul
-                    this.pl = response.data.pl
-                    this.psl = response.data.psl
-                    this.ppl = response.data.ppl
-                    this.tl = response.data.tl
-                    this.tsl = response.data.tsl
-                    this.tpl = response.data.tpl
-                    this.subjects = response.data.subjects
-                }
-            )
+           
         },
 
         computed: mapState([
-            'errors', 'subjects'
+            'errors', 'subjects','pl', 'tl', 'ul', 'psl', 'ppl', 'tpl', 'tsl', 'pupilsBlockedsLength', 'user', 'admin'
         ])
 	}
 </script>
